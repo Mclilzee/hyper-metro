@@ -5,29 +5,29 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MetroStationTest {
+class StationTest {
 
-    MetroStation metroStation = new MetroStation("Berlin");
+    Station station = new Station("Berlin");
 
     @Test
     void hasCorrectName() {
         String expected = "Berlin";
 
-        assertEquals(expected, metroStation.getName());
+        assertEquals(expected, station.getName());
     }
 
     @Test
     void nextStationIsNull() {
-        assertNull(metroStation.getNextStation());
+        assertNull(station.getNextStation());
     }
 
     @Test
     @DisplayName("Next station is set correctly")
     void nextStation() {
-        MetroStation nextStation = new MetroStation("Bremen");
-        metroStation.setNextStation(nextStation);
+        Station nextStation = new Station("Bremen");
+        station.setNextStation(nextStation);
 
         String expected = "Bremen";
-        assertEquals(expected, metroStation.getNextStation().getName());
+        assertEquals(expected, station.getNextStation().getName());
     }
 }

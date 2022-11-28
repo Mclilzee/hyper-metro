@@ -1,11 +1,11 @@
 package hyper;
 
-public class MetroStation {
+public class Station {
 
     private final String name;
-    private MetroStation nextStation;
+    private Station nextStation;
 
-    public MetroStation(String name) {
+    public Station(String name) {
         this.name = name;
     }
 
@@ -13,11 +13,11 @@ public class MetroStation {
         return name;
     }
 
-    public MetroStation getNextStation() {
+    public Station getNextStation() {
         return nextStation;
     }
 
-    public void setNextStation(MetroStation nextStation) {
+    public void setNextStation(Station nextStation) {
         this.nextStation = nextStation;
     }
 }
