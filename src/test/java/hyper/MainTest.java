@@ -2,6 +2,7 @@ package hyper;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -30,12 +31,15 @@ class MainTest {
 
         String expected = "Error! Such a file doesn't exist!\r\n";
         assertEquals(expected, outputStream.toString());
-
     }
 
     @Test
-    void main() {
-        String[] testFile = {"src/text/java/hyper/test.txt"};
+    @DisplayName("Prints nothing when file is empty text")
+    void printNothing() {
+        String[] testFile = {"src/test/java/hyper/empty-file.txt"};
         Main.main(testFile);
+
+        String expected = "";
+        assertEquals(expected, outputStream.toString());
     }
 }
