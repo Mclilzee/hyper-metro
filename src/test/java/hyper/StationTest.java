@@ -17,8 +17,8 @@ class StationTest {
     }
 
     @Test
-    void nextStationIsNull() {
-        assertNull(station.getNextStation());
+    void nextStationIsEmpty() {
+        assertTrue(station.getNextStation().isEmpty());
     }
 
     @Test

@@ -29,7 +29,7 @@ class MainTest {
         String[] testFile = {"nonexistance.txt"};
         Main.main(testFile);
 
-        String expected = "Error! Such a file doesn't exist!\n";
+        String expected = "Error! Such a file doesn't exist!" + System.lineSeparator();
         assertEquals(expected, outputStream.toString());
     }
 
@@ -49,12 +49,10 @@ class MainTest {
         String[] testFile = {"src/test/java/hyper/test.txt"};
         Main.main(testFile);
 
-        String expected = """
-                          depot - Owings Mills - Old Court
-                          Owings Mills - Old Court - Milford Mill
-                          Old Court - Milford Mill - Reiserstown Plaza
-                          Milford Mill - Reiserstown Plaza - depot
-                          """;
+        String expected = String.format("depot - Owings Mills - Old Court%n" +
+                          "Owings Mills - Old Court - Milford Mill%n" +
+                          "Old Court - Milford Mill - Reiserstown Plaza%n" +
+                          "Milford Mill - Reiserstown Plaza - depot%n");
 
         assertEquals(expected, outputStream.toString());
     }

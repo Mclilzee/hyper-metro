@@ -10,7 +10,8 @@ public class Main {
 
     public static void main(String[] args) {
         MetroStations metroStations = readDataFromFile(args[0]);
-        metroStations.getThreeConnectedStations().forEach(Main::printStations);
+        metroStations.getThreeConnectedStations()
+                     .forEach(Main::printStations);
     }
 
     private static MetroStations readDataFromFile(String file) {
@@ -22,15 +23,15 @@ public class Main {
 
             return metroStations;
         } catch (IOException ex) {
-            System.out.print("Error! Such a file doesn't exist!\n");
+            System.out.println("Error! Such a file doesn't exist!");
             return new MetroStations();
         }
     }
 
     private static void printStations(Station[] stations) {
-        String stationsInformation = Arrays.stream(stations).map(Station::getName)
-                .collect(Collectors.joining(" - "));
-        System.out.print(stationsInformation + "\n");
-
+        String stationsInformation = Arrays.stream(stations)
+                                           .map(Station::getName)
+                                           .collect(Collectors.joining(" - "));
+        System.out.println(stationsInformation);
     }
 }
