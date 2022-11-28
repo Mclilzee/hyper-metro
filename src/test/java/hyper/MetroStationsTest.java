@@ -3,7 +3,6 @@ package hyper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -70,9 +69,23 @@ class MetroStationsTest {
         Station beirut = new Station("Beirut");
         metroStations.add(berlin).add(bremen).add(hamburg).add(beirut);
 
-        List<Station> actualStations = metroStations.getThreeConnectedStations().stream().flatMap(Arrays::stream).toList();
-        List<Station> expected = List.of(head, berlin, bremen, berlin, bremen, hamburg, bremen, hamburg, beirut, hamburg, beirut, head);
+        List<Station[]> actual = metroStations.getThreeConnectedStations();
+        List<Station[]> expected = List.of(new Station[]{head, berlin, bremen},
+                new Station[]{berlin, bremen, hamburg},
+                new Station[]{bremen, hamburg, beirut},
+                new Station[]{hamburg, beirut, head});
 
-        assertEquals(expected, actualStations);
+        for (int i = 0; i < expected.size(); i++) {
+            assertArrayEquals(expected.get(i), actual.get(i));
+        }
+
+    }
+
+    @Test
+    @DisplayName("Return empty list if stations unavailable")
+    void getConnectedEmptyStations() {
+        List<Station[]> expected = List.of();
+
+        assertEquals(expected, metroStations.getThreeConnectedStations());
     }
 }

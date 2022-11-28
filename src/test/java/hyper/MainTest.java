@@ -50,9 +50,11 @@ class MainTest {
         Main.main(testFile);
 
         String expected = """
+                          depot - Owings Mills - Old Court
                           Owings Mills - Old Court - Milford Mill
                           Old Court - Milford Mill - Reiserstown Plaza
-                          Milford Mill - Reiserstown Plaza - Owings Mills""";
+                          Milford Mill - Reiserstown Plaza - depot
+                          """;
 
         assertEquals(expected, outputStream.toString());
     }
