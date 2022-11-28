@@ -1,6 +1,10 @@
 package hyper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MetroStations {
+
     private final Station head = new Station("depot");
 
     public MetroStations add(Station station) {
@@ -16,18 +20,33 @@ public class MetroStations {
     }
 
     private Station getLastStation() {
-        if (head.getNextStation() == null) {
-            return head;
-        }
-
         Station station = head;
         while (true) {
-           if (station.getNextStation() == head) {
-               return station;
-           }
+            if (station.getNextStation().isEmpty() || station.getNextStation().get() == head) {
+                return station;
+            }
 
-           station = station.getNextStation();
+            station = station.getNextStation().get();
         }
     }
 
+    public List<Station[]> getThreeConnectedStations() {
+        if (head.getNextStation().isEmpty()) {
+            return List.of();
+        }
+
+        List<Station[]> stationsList = new ArrayList<>();
+        Station firstStation = head;
+        while (true) {
+            Station secondStation = firstStation.getNextStation().get();
+            Station thirdStation = secondStation.getNextStation().get();
+            stationsList.add(new Station[]{firstStation, secondStation, thirdStation});
+
+            if (thirdStation == head) {
+                return stationsList;
+            }
+
+            firstStation = secondStation;
+        }
+    }
 }

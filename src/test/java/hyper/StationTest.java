@@ -28,6 +28,7 @@ class StationTest {
         station.setNextStation(nextStation);
 
         String expected = "Bremen";
-        assertEquals(expected, station.getNextStation().getName());
+        String nextStationName = station.getNextStation().get().getName();
+        assertEquals(expected, nextStationName);
     }
 }

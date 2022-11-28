@@ -1,5 +1,7 @@
 package hyper;
 
+import java.util.Optional;
+
 public class Station {
 
     private final String name;
@@ -13,8 +15,8 @@ public class Station {
         return name;
     }
 
-    public Station getNextStation() {
-        return nextStation;
+    public Optional<Station> getNextStation() {
+        return Optional.ofNullable(nextStation);
     }
 
     public void setNextStation(Station nextStation) {
