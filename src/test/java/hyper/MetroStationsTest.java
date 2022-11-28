@@ -44,4 +44,16 @@ class MetroStationsTest {
 
         assertEquals(expected, finalStation.getName());
     }
+
+    @Test
+    @DisplayName("Last station connects back to head")
+    void lastStationConnects() {
+        Station berlin = new Station("Berlin");
+        metroStations.add(berlin);
+
+        Station station = berlin.getNextStation();
+        String expected = metroStations.getHead().getName();
+
+        assertEquals(expected, station.getName());
+    }
 }

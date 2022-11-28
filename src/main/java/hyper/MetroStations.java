@@ -1,15 +1,12 @@
 package hyper;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
 public class MetroStations {
     private final Station head = new Station("depot");
 
     public MetroStations add(Station station) {
-        getLastStation().setNextStation(station);
+        station.setNextStation(head);
+        Station lastStation = getLastStation();
+        lastStation.setNextStation(station);
 
         return this;
     }
@@ -19,9 +16,13 @@ public class MetroStations {
     }
 
     private Station getLastStation() {
+        if (head.getNextStation() == null) {
+            return head;
+        }
+
         Station station = head;
         while (true) {
-           if (station.getNextStation() == null) {
+           if (station.getNextStation() == head) {
                return station;
            }
 
