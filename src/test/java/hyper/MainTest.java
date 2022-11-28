@@ -42,4 +42,18 @@ class MainTest {
         String expected = "";
         assertEquals(expected, outputStream.toString());
     }
+
+    @Test
+    @DisplayName("Print the correct names in order")
+    void printNamesOfStations() {
+        String[] testFile = {"src/test/java/hyper/test.txt"};
+        Main.main(testFile);
+
+        String expected = """
+                          Owings Mills - Old Court - Milford Mill
+                          Old Court - Milford Mill - Reiserstown Plaza
+                          Milford Mill - Reiserstown Plaza - Owings Mills""";
+
+        assertEquals(expected, outputStream.toString());
+    }
 }
