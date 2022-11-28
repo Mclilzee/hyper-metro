@@ -14,7 +14,7 @@ public class Main {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             return List.of();
         } catch (IOException ex) {
-            System.out.println("Error! Such a file doesn't exist!");
+            System.out.print("Error! Such a file doesn't exist!\n");
             return List.of();
         }
     }

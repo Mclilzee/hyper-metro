@@ -29,7 +29,7 @@ class MainTest {
         String[] testFile = {"nonexistance.txt"};
         Main.main(testFile);
 
-        String expected = "Error! Such a file doesn't exist!\r\n";
+        String expected = "Error! Such a file doesn't exist!\n";
         assertEquals(expected, outputStream.toString());
     }
 
