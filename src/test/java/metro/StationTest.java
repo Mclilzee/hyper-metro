@@ -22,6 +22,22 @@ class StationTest {
     }
 
     @Test
+    void previousStationIsEmpty() {
+        assertTrue(station.getPreviousStation().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Previous station is set correctly")
+    void previousStation() {
+       Station frankfurt = new Station("Frankfurt");
+       station.setPreviousStation(frankfurt);
+
+       String expected = "Frankfurt";
+       String previousStationName = station.getPreviousStation().get().getName();
+       assertEquals(expected, previousStationName);
+    }
+
+    @Test
     @DisplayName("Next station is set correctly")
     void nextStation() {
         Station nextStation = new Station("Bremen");
