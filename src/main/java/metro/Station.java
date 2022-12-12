@@ -42,11 +42,11 @@ public class Station {
             return false;
         }
         Station station = (Station) o;
-        return Objects.equals(name, station.name) && Objects.equals(nextStation, station.nextStation) && Objects.equals(previousStation, station.previousStation);
+        return Objects.equals(name, station.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, nextStation, previousStation);
+        return Objects.hash(name);
     }
 }

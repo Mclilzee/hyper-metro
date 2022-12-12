@@ -85,4 +85,38 @@ class MetroStationsTest {
         List<String> expected = List.of();
         assertEquals(expected, metroStations.getThreeConnectedStations());
     }
+
+    @Test
+    void equalStations() {
+        MetroStations station = new MetroStations();
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        Station beirut = new Station("Beirut");
+        station.add(berlin).add(bremen).add(beirut);
+
+        MetroStations newStation = new MetroStations();
+        Station berlin2 = new Station("Berlin");
+        Station bremen2 = new Station("Bremen");
+        Station beirut2 = new Station("Beirut");
+        newStation.add(berlin2).add(bremen2).add(beirut2);
+
+        assertEquals(station, newStation);
+    }
+
+    @Test
+    void notEqual() {
+        MetroStations station = new MetroStations();
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        Station frankfurt = new Station("Frankfurt");
+        station.add(berlin).add(bremen).add(frankfurt);
+
+        MetroStations newStation = new MetroStations();
+        Station berlin2 = new Station("Berlin");
+        Station bremen2 = new Station("Bremen");
+        Station beirut2 = new Station("Beirut");
+        newStation.add(berlin2).add(bremen2).add(beirut2);
+
+        assertNotEquals(station, newStation);
+    }
 }

@@ -54,4 +54,11 @@ class StationTest {
 
         assertEquals(secondStation, station);
     }
+
+    @Test
+    void notEqual() {
+        Station secondStation = new Station("Bremen");
+
+        assertNotEquals(secondStation, station);
+    }
 }
