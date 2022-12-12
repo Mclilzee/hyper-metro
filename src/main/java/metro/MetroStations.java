@@ -16,9 +16,16 @@ public class MetroStations {
         return this;
     }
 
-    public void addHead(Station station) {
-        station.setNextStation(head.getNextStation().orElse(null));
+    public MetroStations addHead(Station station) {
+        Optional<Station> firstStation = head.getNextStation();
+
+        station.setNextStation(firstStation.orElse(null));
+        station.setPreviousStation(head);
         head.setNextStation(station);
+
+        firstStation.ifPresent(foundStation -> foundStation.setPreviousStation(station));
+
+        return this;
     }
 
     public Station getHead() {
