@@ -26,14 +26,13 @@ public class MetroFileReader {
 
     private static Map<String, MetroStations> getJsonMetro(Path path) {
         String json = getJsonFromFile(path);
-        MetroStationsDTO[] metroStationsDTO = gson.fromJson(json, MetroStationsDTO[].class);
+        Map metroStationsDTO = gson.fromJson(json, Map.class);
 
         if (metroStationsDTO == null) {
             System.out.println("Incorrect File");
             return new HashMap<>();
         } else {
-            return Arrays.stream(metroStationsDTO)
-                    .collect(Collectors.toMap(MetroStationsDTO::getName, MetroStationsDTO::getMetroStations));
+            return null;
         }
     }
 

@@ -10,26 +10,17 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MetroStationsDTOTest {
+class MetroStationsFactoryTest {
 
-     MetroStationsDTO metroStationsDTO;
+    Map<String, String> stationsMap = new HashMap<>();
 
     @BeforeEach
     void setup() {
-        Map<String, String> stationsMap = new HashMap<>();
         stationsMap.put("2", "Bremen");
         stationsMap.put("1", "Berlin");
         stationsMap.put("3", "Frankfurt");
-
-        metroStationsDTO = new MetroStationsDTO("Metro", stationsMap);
     }
 
-    @Test
-    void hasCorrectName() {
-        String expected = "Metro";
-
-        assertEquals(expected, metroStationsDTO.getName());
-    }
     @Test
     void hasCorrectMetroStations() {
         MetroStations expected = new MetroStations();
@@ -38,6 +29,6 @@ class MetroStationsDTOTest {
         Station third = new Station("Frankfurt");
         expected.add(first).add(second).add(third);
 
-        assertEquals(expected, metroStationsDTO.getMetroStations());
+        assertEquals(expected, MetroStationsFactory.createMetroStations(stationsMap));
     }
 }

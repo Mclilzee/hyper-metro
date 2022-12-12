@@ -37,4 +37,11 @@ class MetroFileReaderTest {
 
         assertEquals(expected, outputStream.toString());
     }
+
+    @Test
+    void returnCorrectMap() {
+        Map<String, MetroStations> map = MetroFileReader.loadMetroFromFile(metroPath);
+        assertTrue(map.containsKey("m1"));
+        assertTrue(map.containsKey("m2"));
+    }
 }
