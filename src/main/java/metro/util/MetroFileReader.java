@@ -29,6 +29,7 @@ public class MetroFileReader {
         MetroStationsDTO[] metroStationsDTO = gson.fromJson(json, MetroStationsDTO[].class);
 
         if (metroStationsDTO == null) {
+            System.out.println("Incorrect File");
             return new HashMap<>();
         } else {
             return Arrays.stream(metroStationsDTO)
