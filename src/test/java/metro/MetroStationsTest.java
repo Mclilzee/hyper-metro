@@ -3,9 +3,8 @@ package metro;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class MetroStationsTest {
 
@@ -58,32 +57,6 @@ class MetroStationsTest {
         String expected = "Berlin";
 
         assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("Get stations list of three connected stations")
-    void getConnectedThreeStationsList() {
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station hamburg = new Station("Hamburg");
-        Station beirut = new Station("Beirut");
-        metroStations.add(berlin).add(bremen).add(hamburg).add(beirut);
-
-        List<String> actual = metroStations.getThreeConnectedStations();
-        List<String> expected = List.of(
-                "depot - Berlin - Bremen",
-                "Berlin - Bremen - Hamburg",
-                "Bremen - Hamburg - Beirut",
-                "Hamburg - Beirut - depot"
-                );
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    @DisplayName("Return empty list if stations unavailable")
-    void getConnectedEmptyStations() {
-        List<String> expected = List.of();
-        assertEquals(expected, metroStations.getThreeConnectedStations());
     }
 
     @Test

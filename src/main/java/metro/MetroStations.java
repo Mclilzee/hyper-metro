@@ -3,6 +3,8 @@ package metro;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MetroStations {
@@ -31,27 +33,7 @@ public class MetroStations {
         }
     }
 
-    public List<String> getThreeConnectedStations() {
-        if (head.getNextStation().isEmpty()) {
-            return List.of();
-        }
 
-        List<String> stationConnections = new ArrayList<>();
-        Station station = head;
-        while(station.getNextStation().isPresent()) {
-            stationConnections.add(getConnectedStationsString(station));
-            station = station.getNextStation().get();
-        }
-
-        return stationConnections;
-    }
-
-    private String getConnectedStationsString(Station station) {
-        Station secondStation = station.getNextStation().orElseThrow();
-        Station thirdStation = secondStation.getNextStation().orElse(head);
-
-        return station.getName() + " - " + secondStation.getName() + " - " + thirdStation.getName();
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -63,11 +45,18 @@ public class MetroStations {
         }
         MetroStations that = (MetroStations) o;
 
-        return that.getThreeConnectedStations().equals(getThreeConnectedStations());
+        return connectedStations(that).equals(connectedStations(this));
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(head);
+        return Objects.hash(connectedStations(this));
+    }
+
+    private String connectedStations(MetroStations metroStations) {
+        Optional<Station> firstStation = metroStations.getHead().getNextStation();
+        return Stream.iterate(firstStation, Optional::isPresent, station -> station.get().getNextStation())
+                     .map(station -> station.get().getName())
+                     .collect(Collectors.joining());
     }
 }
