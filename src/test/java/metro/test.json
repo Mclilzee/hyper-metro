@@ -1,14 +1,10 @@
 {
-  "Metro-Railway": {
+  "m1": {
     "3": "Baker Street",
     "1": "Bishops-road",
-    "2": "Edgver road",
-    "6": "Kings cross",
-    "4": "Portland road",
-    "5": "Gower street",
-    "7": "Farringdon street"
+    "2": "Edgver road"
   },
-  "Hammersmith-and-City": {
+  "m2": {
     "2": "Westbourne-park",
     "1": "Hammersmith"
   }
