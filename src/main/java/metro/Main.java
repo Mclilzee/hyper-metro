@@ -1,6 +1,7 @@
 package metro;
 
-import metro.util.MetroFileReader;
+import metro.fileReader.MetroFileReader;
+import metro.fileReader.MetroMemoryFileReader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,7 +13,8 @@ public class Main {
     public static void main(String[] args) {
         Path path = Paths.get(args[0]);
         if (Files.exists(path)) {
-            new MetrosController(new Scanner(System.in), MetroFileReader.loadMetroFromFile(path)).start();
+            MetroFileReader reader = new MetroMemoryFileReader();
+            new MetrosController(new Scanner(System.in), reader.loadMetroFromFile(path)).start();
         } else {
             System.out.println("Error! Such a file doesn't exist!");
         }

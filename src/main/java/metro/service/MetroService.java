@@ -9,13 +9,15 @@ public interface MetroService {
 
     void addMetroStations(String metroStationsName);
 
-    MetroStations getMetroStations(String metroStation);
+    MetroStations getMetroStations(String metroStationsName);
 
-    void appendStation(String metroStation, String station);
+    void appendStation(String metroStationsName, String stationName);
 
-    void addHead(String metroStation, String station);
+    void addHead(String metroStationsName, String stationName);
 
-    void removeStation(String metroStation, String station);
+    void removeStation(String metroStationsName, String stationName);
+
+    void putMetroStation(String metroStationName, MetroStations metroStations);
 
     Set<String> getKeys();
 

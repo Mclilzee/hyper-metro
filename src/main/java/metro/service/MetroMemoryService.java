@@ -18,13 +18,13 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
-    public MetroStations getMetroStations(String metroStation) {
-        return map.get(metroStation);
+    public MetroStations getMetroStations(String metroStationsName) {
+        return map.get(metroStationsName);
     }
 
     @Override
-    public void appendStation(String metroStationName, String stationName) {
-        MetroStations metroStations = map.get(metroStationName);
+    public void appendStation(String metroStationsName, String stationName) {
+        MetroStations metroStations = map.get(metroStationsName);
         if (metroStations == null) {
             return;
         }
@@ -33,8 +33,8 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
-    public void addHead(String metroStationName, String stationName) {
-        MetroStations metroStations = map.get(metroStationName);
+    public void addHead(String metroStationsName, String stationName) {
+        MetroStations metroStations = map.get(metroStationsName);
         if (metroStations == null) {
             return;
         }
@@ -43,13 +43,18 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
-    public void removeStation(String metroStationName, String stationName) {
-        MetroStations metroStations = map.get(metroStationName);
+    public void removeStation(String metroStationsName, String stationName) {
+        MetroStations metroStations = map.get(metroStationsName);
         if (metroStations == null) {
             return;
         }
 
         metroStations.removeStation(stationName);
+    }
+
+    @Override
+    public void putMetroStation(String metroStationName, MetroStations metroStations) {
+
     }
 
     @Override
