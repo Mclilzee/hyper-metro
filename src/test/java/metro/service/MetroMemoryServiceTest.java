@@ -82,6 +82,36 @@ class MetroMemoryServiceTest {
     }
 
     @Test
+    void putMetroStations() {
+        MetroStations metroStations = new MetroStations();
+        metroStations.append("Berlin").append("Bremen").append("Beirut");
+
+        metroMemoryService.putMetroStation("Germany", metroStations);
+
+        assertTrue(metroMemoryService.getKeys().contains("Germany"));
+        assertEquals(metroMemoryService.getMetroStations("Germany"), metroStations);
+    }
+
+    @Test
+    void putMetroStationDoesNotOverwrite() {
+        MetroStations metroStations = new MetroStations();
+        metroStations.append("Berlin").append("Bremen").append("Beirut");
+
+        metroMemoryService.addMetroStations("Germany");
+        metroMemoryService.putMetroStation("Germany", metroStations);
+
+        assertNotEquals(metroMemoryService.getMetroStations("Germany"), metroStations);
+    }
+
+    @Test
+    void putMetroStationsDoesNotPutNull() {
+        metroMemoryService.putMetroStation("Germany", null);
+
+        Set<String> expected = Set.of();
+        assertEquals(expected, metroMemoryService.getKeys());
+    }
+
+    @Test
     @DisplayName("Return empty key set if no keys present")
     void getMetroServiceEmptyKeySet() {
         Set<String> keys = metroMemoryService.getKeys();

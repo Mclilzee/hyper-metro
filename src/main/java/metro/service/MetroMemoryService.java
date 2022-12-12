@@ -18,6 +18,15 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
+    public void putMetroStation(String metroStationName, MetroStations metroStations) {
+        if (metroStations == null) {
+            return;
+        }
+
+        map.putIfAbsent(metroStationName, metroStations);
+    }
+
+    @Override
     public MetroStations getMetroStations(String metroStationsName) {
         return map.get(metroStationsName);
     }
@@ -52,10 +61,6 @@ public class MetroMemoryService implements MetroService {
         metroStations.removeStation(stationName);
     }
 
-    @Override
-    public void putMetroStation(String metroStationName, MetroStations metroStations) {
-
-    }
 
     @Override
     public Set<String> getKeys() {
