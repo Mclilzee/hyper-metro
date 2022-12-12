@@ -10,6 +10,7 @@ public class ThreeStationsPrinter implements MetroPrinter {
 
     @Override
     public void printMetroStations(MetroStations metroStations) {
+        getThreeConnectedStations(metroStations).forEach(System.out::println);
 
     }
 

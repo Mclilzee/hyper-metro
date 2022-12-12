@@ -42,11 +42,10 @@ class ThreeStationsPrinterTest {
         ThreeStationsPrinter printer = new ThreeStationsPrinter();
         printer.printMetroStations(metroStations);
 
-        String expected = """
-        depot - Berlin - Bremen%n"
-        Berlin - Bremen - Hamburg%n
-        Bremen - Hamburg - Beirut%n
-        Hamburg - Beirut - depot%n""".formatted();
+        String expected = "depot - Berlin - Bremen" + System.lineSeparator() +
+        "Berlin - Bremen - Hamburg" + System.lineSeparator() +
+        "Bremen - Hamburg - Beirut" + System.lineSeparator() +
+        "Hamburg - Beirut - depot" + System.lineSeparator();
 
         assertEquals(expected, outputStream.toString());
     }
