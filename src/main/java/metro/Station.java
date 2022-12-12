@@ -1,5 +1,6 @@
 package metro;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class Station {
@@ -30,5 +31,22 @@ public class Station {
 
     public void setPreviousStation(Station previousStation) {
         this.previousStation = previousStation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Station station = (Station) o;
+        return Objects.equals(name, station.name) && Objects.equals(nextStation, station.nextStation) && Objects.equals(previousStation, station.previousStation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, nextStation, previousStation);
     }
 }

@@ -47,4 +47,11 @@ class StationTest {
         String nextStationName = station.getNextStation().get().getName();
         assertEquals(expected, nextStationName);
     }
+
+    @Test
+    void equalsCorrect() {
+        Station secondStation = new Station("Berlin");
+
+        assertEquals(secondStation, station);
+    }
 }
