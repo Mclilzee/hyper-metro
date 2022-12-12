@@ -1,4 +1,9 @@
-package metro;
+package metro.service;
+
+import metro.MetroStations;
+
+import java.util.List;
+import java.util.Set;
 
 public interface MetroService {
 
@@ -11,4 +16,8 @@ public interface MetroService {
     void addHead(String metroStation, String station);
 
     void removeStation(String metroStation, String station);
+
+    Set<String> getKeys();
+
+    List<MetroStations> getValues();
 }

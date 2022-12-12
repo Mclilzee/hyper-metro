@@ -1,11 +1,12 @@
-package metro.util;
+package metro.service;
 
-import metro.MetroService;
 import metro.MetroStations;
-import metro.Station;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MetroMapService implements MetroService {
 
@@ -52,4 +53,13 @@ public class MetroMapService implements MetroService {
         metroStations.removeStation(stationName);
     }
 
+    @Override
+    public Set<String> getKeys() {
+        return map.keySet();
+    }
+
+    @Override
+    public List<MetroStations> getValues() {
+        return map.values().stream().toList();
+    }
 }
