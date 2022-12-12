@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
-public class MetroMapService implements MetroService {
+public class MetroMemoryService implements MetroService {
 
     private Map<String, MetroStations> map = new HashMap<>();
 
