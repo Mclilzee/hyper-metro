@@ -33,27 +33,4 @@ class MainTest {
         assertEquals(expected, outputStream.toString());
     }
 
-    @Test
-    @DisplayName("Prints nothing when file is empty text")
-    void printNothing() {
-        String[] testFile = {"src/test/java/metro/empty-file.json"};
-        Main.main(testFile);
-
-        String expected = "";
-        assertEquals(expected, outputStream.toString());
-    }
-
-    @Test
-    @DisplayName("Print the correct names in order")
-    void printNamesOfStations() {
-        String[] testFile = {"src/test/java/metro/test.json"};
-        Main.main(testFile);
-
-        String expected = String.format("depot - Owings Mills - Old Court%n" +
-                          "Owings Mills - Old Court - Milford Mill%n" +
-                          "Old Court - Milford Mill - Reiserstown Plaza%n" +
-                          "Milford Mill - Reiserstown Plaza - depot%n");
-
-        assertEquals(expected, outputStream.toString());
-    }
 }
