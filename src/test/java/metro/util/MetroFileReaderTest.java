@@ -1,6 +1,7 @@
 package metro.util;
 
 import metro.MetroStations;
+import metro.Station;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,7 +43,22 @@ class MetroFileReaderTest {
     @Test
     void returnCorrectMap() {
         Map<String, MetroStations> map = MetroFileReader.loadMetroFromFile(metroPath);
-        assertTrue(map.containsKey("m1"));
-        assertTrue(map.containsKey("m2"));
+
+        Station bishops = new Station("Bishops-road");
+        Station edgver = new Station("Edgver road");
+        Station baker = new Station("Baker Street");
+        MetroStations m1 = new MetroStations();
+        m1.add(bishops).add(edgver).add(baker);
+
+        Station hammersmith = new Station("Hammersmith");
+        Station westbourne = new Station("Westbourne-park");
+        MetroStations m2 = new MetroStations();
+        m2.add(hammersmith).add(westbourne);
+
+        Map<String, MetroStations> expected = new HashMap<>();
+        expected.put("m1", m1);
+        expected.put("m2", m2);
+
+        assertEquals(expected, map);
     }
 }

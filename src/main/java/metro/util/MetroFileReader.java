@@ -6,10 +6,8 @@ import metro.MetroStations;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MetroFileReader {
@@ -26,13 +24,14 @@ public class MetroFileReader {
 
     private static Map<String, MetroStations> getJsonMetro(Path path) {
         String json = getJsonFromFile(path);
-        Map metroStationsDTO = gson.fromJson(json, Map.class);
+        Map<String, Map<String, String>> metroStations = gson.fromJson(json, Map.class);
 
-        if (metroStationsDTO == null) {
+        if (metroStations == null) {
             System.out.println("Incorrect File");
             return new HashMap<>();
         } else {
-            return null;
+            return metroStations.entrySet().stream()
+                    .collect(Collectors.toMap(Map.Entry::getKey, entry -> MetroStationsFactory.createMetroStations(entry.getValue())));
         }
     }
 
