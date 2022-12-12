@@ -18,12 +18,19 @@ class MetroFileReaderTest {
 
     Path metroPath = Paths.get("src/test/java/metro/util/test.json");
     Path emptyFilePath = Paths.get("src/test/java/metro/util/empty-file.json");
+    Path incorrectJsonPath = Paths.get("src/test/java/metro/util/incorrect.json");
 
     static ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     @BeforeAll
     static void init() {
         System.setOut(new PrintStream(outputStream));
+    }
+
+    @Test
+    void handleIncorrectJson() {
+        Map<String, MetroStations> map = MetroFileReader.loadMetroFromFile(incorrectJsonPath);
+        assertTrue(map.isEmpty());
     }
 
     @Test
