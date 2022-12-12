@@ -42,7 +42,7 @@ class MetroFileReaderTest {
     @Test
     void emptyFilePrintsCorrectMessage() {
         MetroFileReader.loadMetroFromFile(emptyFilePath);
-        String expected = "Incorrect File\r\n";
+        String expected = "Incorrect File" + System.lineSeparator();
 
         assertEquals(expected, outputStream.toString());
     }
