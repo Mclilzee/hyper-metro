@@ -43,7 +43,33 @@ public class MetroStations {
         }
     }
 
+    public void removeStation(Station station) {
+        Optional<Station> foundStation = findStation(station);
+        if (foundStation.isEmpty()) {
+            return;
+        }
 
+        Station previous = foundStation.get().getPreviousStation().orElseThrow();
+        Station next = foundStation.get().getNextStation().orElseThrow();
+
+        previous.setNextStation(next);
+        next.setPreviousStation(previous);
+    }
+
+    private Optional<Station> findStation(Station searchStation) {
+        Station station = head;
+        while (true) {
+            if (station == searchStation) {
+                return Optional.of(station);
+            }
+
+            if (station.getNextStation().isEmpty()) {
+                return Optional.empty();
+            }
+
+            station = station.getNextStation().get();
+        }
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -69,5 +95,4 @@ public class MetroStations {
                      .map(station -> station.get().getName())
                      .collect(Collectors.joining());
     }
-
 }

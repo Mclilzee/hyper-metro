@@ -70,6 +70,30 @@ class MetroStationsTest {
     }
 
     @Test
+    @DisplayName("Removing station set next correctly")
+    void removeStationNext() {
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        metroStations.append(berlin).append(bremen);
+        metroStations.removeStation(berlin);
+
+        assertEquals(metroStations.getHead().getNextStation(), Optional.of(bremen));
+        assertTrue(bremen.getNextStation().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Removing station set previous correctly")
+    void removeStationPrevious() {
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        metroStations.append(berlin).append(bremen);
+        metroStations.removeStation(berlin);
+
+        assertEquals(bremen.getPreviousStation(), Optional.of(metroStations.getHead()));
+        assertTrue(metroStations.getHead().getPreviousStation().isEmpty());
+    }
+
+    @Test
     void equalStations() {
         Station berlin = new Station("Berlin");
         Station bremen = new Station("Bremen");
