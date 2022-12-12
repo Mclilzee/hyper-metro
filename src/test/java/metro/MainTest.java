@@ -36,7 +36,7 @@ class MainTest {
     @Test
     @DisplayName("Prints nothing when file is empty text")
     void printNothing() {
-        String[] testFile = {"src/test/java/hyper/empty-file.txt"};
+        String[] testFile = {"src/test/java/metro/empty-file.txt"};
         Main.main(testFile);
 
         String expected = "";
@@ -46,7 +46,7 @@ class MainTest {
     @Test
     @DisplayName("Print the correct names in order")
     void printNamesOfStations() {
-        String[] testFile = {"src/test/java/hyper/test.txt"};
+        String[] testFile = {"src/test/java/metro/test.txt"};
         Main.main(testFile);
 
         String expected = String.format("depot - Owings Mills - Old Court%n" +
