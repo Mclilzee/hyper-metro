@@ -1,14 +1,13 @@
 package metro.util;
 
 import metro.MetroStations;
-import metro.Station;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MetroStationsFactoryTest {
 
@@ -24,10 +23,7 @@ class MetroStationsFactoryTest {
     @Test
     void hasCorrectMetroStations() {
         MetroStations expected = new MetroStations();
-        Station first = new Station("Berlin");
-        Station second = new Station("Bremen");
-        Station third = new Station("Frankfurt");
-        expected.append(first).append(second).append(third);
+        expected.append("Berlin").append("Bremen").append("Frankfurt");
 
         assertEquals(expected, MetroStationsFactory.createMetroStations(stationsMap));
     }

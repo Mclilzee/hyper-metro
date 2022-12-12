@@ -51,16 +51,11 @@ class MetroFileReaderTest {
     void returnCorrectMap() {
         Map<String, MetroStations> map = MetroFileReader.loadMetroFromFile(metroPath);
 
-        Station bishops = new Station("Bishops-road");
-        Station edgver = new Station("Edgver road");
-        Station baker = new Station("Baker Street");
         MetroStations m1 = new MetroStations();
-        m1.append(bishops).append(edgver).append(baker);
+        m1.append("Bishops-road").append("Edgver road").append("Baker Street");
 
-        Station hammersmith = new Station("Hammersmith");
-        Station westbourne = new Station("Westbourne-park");
         MetroStations m2 = new MetroStations();
-        m2.append(hammersmith).append(westbourne);
+        m2.append("Hammersmith").append("Westbourne-park");
 
         Map<String, MetroStations> expected = new HashMap<>();
         expected.put("m1", m1);

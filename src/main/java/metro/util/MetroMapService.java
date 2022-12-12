@@ -29,7 +29,7 @@ public class MetroMapService implements MetroService {
             return;
         }
 
-        metroStations.append(new Station(stationName));
+        metroStations.append(stationName);
     }
 
     @Override
@@ -39,12 +39,17 @@ public class MetroMapService implements MetroService {
             return;
         }
 
-        metroStations.addHead(new Station(stationName));
+        metroStations.addHead(stationName);
     }
 
     @Override
-    public void removeStation(String metroStation, String station) {
+    public void removeStation(String metroStationName, String stationName) {
+        MetroStations metroStations = map.get(metroStationName);
+        if (metroStations == null) {
+            return;
+        }
 
+        metroStations.removeStation(stationName);
     }
 
 }

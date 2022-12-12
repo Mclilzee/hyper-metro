@@ -3,8 +3,6 @@ package metro;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class MetroStationsTest {
@@ -24,103 +22,121 @@ class MetroStationsTest {
     @Test
     @DisplayName("Append multiple stations connect correctly with next")
     void stationAppendNext() {
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        metroStations.append(berlin).append(bremen);
+        metroStations.append("Berlin").append("Bremen");
 
-        assertEquals(metroStations.getHead().getNextStation(), Optional.of(berlin));
-        assertEquals(berlin.getNextStation(), Optional.of(bremen));
-        assertTrue(bremen.getNextStation().isEmpty());
+        Station actualFirstStation = metroStations.getHead().getNextStation().orElseThrow();
+        Station actualNextStation = actualFirstStation.getNextStation().orElseThrow();
+
+        String expectedFirstStation = "Berlin";
+        String expectedNextStation = "Bremen";
+
+        assertEquals(expectedFirstStation, actualFirstStation.getName());
+        assertEquals(expectedNextStation, actualNextStation.getName());
+        assertTrue(actualNextStation.getNextStation().isEmpty());
     }
 
     @Test
     @DisplayName("Append multiple stations connect correctly with previous")
     void stationAppendPrevious() {
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        metroStations.append(berlin).append(bremen);
+        metroStations.append("Berlin").append("Bremen");
 
-        assertEquals(bremen.getPreviousStation(), Optional.of(berlin));
-        assertEquals(berlin.getPreviousStation(), Optional.of(metroStations.getHead()));
+        Station actualLastStation = metroStations.getHead().getNextStation().orElseThrow()
+                                                 .getNextStation().orElseThrow();
+        Station actualPreviousStation = actualLastStation.getPreviousStation().orElseThrow();
+
+        String expectedLastStation = "Bremen";
+        String expectedPreviousStation = "Berlin";
+
+        assertEquals(expectedLastStation, actualLastStation.getName());
+        assertEquals(expectedPreviousStation, actualPreviousStation.getName());
         assertTrue(metroStations.getHead().getPreviousStation().isEmpty());
     }
 
     @Test
     @DisplayName("Add station head set next correctly")
     void stationAddHeadNext() {
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        metroStations.addHead(berlin).addHead(bremen);
+        metroStations.addHead("Berlin").addHead("Bremen");
 
-        assertEquals(metroStations.getHead().getNextStation(), Optional.of(bremen));
-        assertEquals(bremen.getNextStation(), Optional.of(berlin));
-        assertTrue(berlin.getNextStation().isEmpty());
+        Station actualFirstStation = metroStations.getHead().getNextStation().orElseThrow();
+        Station actualNextStation = actualFirstStation.getNextStation().orElseThrow();
+
+        String expectedFirstStation = "Bremen";
+        String expectedNextStation = "Berlin";
+
+        assertEquals(expectedFirstStation, actualFirstStation.getName());
+        assertEquals(expectedNextStation, actualNextStation.getName());
+        assertTrue(actualNextStation.getNextStation().isEmpty());
     }
 
     @Test
     @DisplayName("Add station head set previous correctly")
     void stationAddHeadPrevious() {
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        metroStations.addHead(berlin).addHead(bremen);
+        metroStations.addHead("Berlin").addHead("Bremen");
 
-        assertEquals(berlin.getPreviousStation(), Optional.of(bremen));
-        assertEquals(bremen.getPreviousStation(), Optional.of(metroStations.getHead()));
+        Station actualLastStation = metroStations.getHead().getNextStation().orElseThrow()
+                                                 .getNextStation().orElseThrow();
+        Station actualPreviousStation = actualLastStation.getPreviousStation().orElseThrow();
+
+        String expectedLastStation = "Berlin";
+        String expectedPreviousStation = "Bremen";
+
+        assertEquals(expectedLastStation, actualLastStation.getName());
+        assertEquals(expectedPreviousStation, actualPreviousStation.getName());
         assertTrue(metroStations.getHead().getPreviousStation().isEmpty());
     }
 
     @Test
     @DisplayName("Removing station set next correctly")
     void removeStationNext() {
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        metroStations.append(berlin).append(bremen);
-        metroStations.removeStation(berlin);
+        metroStations.append("Berlin").append("Bremen").append("Beirut");
+        metroStations.removeStation("Bremen");
 
-        assertEquals(metroStations.getHead().getNextStation(), Optional.of(bremen));
-        assertTrue(bremen.getNextStation().isEmpty());
+        Station actualFirstStation = metroStations.getHead().getNextStation().orElseThrow();
+        Station actualNextStation = actualFirstStation.getNextStation().orElseThrow();
+
+        String expectedFirstStation = "Berlin";
+        String expectedNextStation = "Beirut";
+
+        assertEquals(expectedFirstStation, actualFirstStation.getName());
+        assertEquals(expectedNextStation, actualNextStation.getName());
+        assertTrue(actualNextStation.getNextStation().isEmpty());
     }
 
     @Test
     @DisplayName("Removing station set previous correctly")
     void removeStationPrevious() {
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        metroStations.append(berlin).append(bremen);
-        metroStations.removeStation(berlin);
+        metroStations.append("Berlin").append("Bremen").append("Beirut");
+        metroStations.removeStation("Bremen");
 
-        assertEquals(bremen.getPreviousStation(), Optional.of(metroStations.getHead()));
+        Station actualLastStation = metroStations.getHead().getNextStation().orElseThrow()
+                                                 .getNextStation()
+                                                 .orElseThrow();
+        Station actualPreviousStation = actualLastStation.getPreviousStation().orElseThrow();
+
+        String expectedLastStation = "Beirut";
+        String expectedPreviousStation = "Berlin";
+
+        assertEquals(expectedLastStation, actualLastStation.getName());
+        assertEquals(expectedPreviousStation, actualPreviousStation.getName());
         assertTrue(metroStations.getHead().getPreviousStation().isEmpty());
     }
 
     @Test
     void equalStations() {
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station beirut = new Station("Beirut");
-        metroStations.append(berlin).append(bremen).append(beirut);
+        metroStations.append("Berlin").append("Bremen").append("Beirut");
 
         MetroStations newStation = new MetroStations();
-        Station berlin2 = new Station("Berlin");
-        Station bremen2 = new Station("Bremen");
-        Station beirut2 = new Station("Beirut");
-        newStation.append(berlin2).append(bremen2).append(beirut2);
+        newStation.append("Berlin").append("Bremen").append("Beirut");
 
         assertEquals(metroStations, newStation);
     }
 
     @Test
     void notEqual() {
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
-        metroStations.append(berlin).append(bremen).append(frankfurt);
+        metroStations.append("Berlin").append("Bremen").append("Frankfurt");
 
         MetroStations newStation = new MetroStations();
-        Station berlin2 = new Station("Berlin");
-        Station bremen2 = new Station("Bremen");
-        Station beirut2 = new Station("Beirut");
-        newStation.append(berlin2).append(bremen2).append(beirut2);
+        newStation.append("Berlin").append("Bremen").append("Beirut");
 
         assertNotEquals(metroStations, newStation);
     }

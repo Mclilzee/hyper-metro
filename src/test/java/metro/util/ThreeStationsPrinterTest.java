@@ -1,7 +1,6 @@
 package metro.util;
 
 import metro.MetroStations;
-import metro.Station;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ThreeStationsPrinterTest {
 
@@ -30,14 +29,10 @@ class ThreeStationsPrinterTest {
     @DisplayName("print stations list of three connected stations")
     void getConnectedThreeStationsList() {
         MetroStations metroStations = new MetroStations();
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station hamburg = new Station("Hamburg");
-        Station beirut = new Station("Beirut");
-        metroStations.append(berlin)
-                     .append(bremen)
-                     .append(hamburg)
-                     .append(beirut);
+        metroStations.append("Berlin")
+                     .append("Bremen")
+                     .append("Hamburg")
+                     .append("Beirut");
 
         ThreeStationsPrinter printer = new ThreeStationsPrinter();
         printer.printMetroStations(metroStations);

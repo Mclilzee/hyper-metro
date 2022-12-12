@@ -23,7 +23,7 @@ class MetroMapServiceTest {
         metroMapService.addMetroStations("Beirut");
 
         MetroStations germany = metroMapService.getMetroStations("Germany");
-        germany.append(new Station("Berlin"));
+        germany.append("Berlin");
 
         assertNotNull(metroMapService.getMetroStations("Germany"));
         assertNotNull(metroMapService.getMetroStations("Beirut"));
@@ -32,10 +32,9 @@ class MetroMapServiceTest {
 
     @Test
     void addMetroStationDoesNotOverwrite() {
-        Station berlin = new Station("Berlin");
         metroMapService.addMetroStations("Germany");
         MetroStations metroStations = metroMapService.getMetroStations("Germany");
-        metroStations.append(berlin);
+        metroStations.append("Berlin");
 
         metroMapService.addMetroStations("Germany");
 
@@ -48,7 +47,7 @@ class MetroMapServiceTest {
         metroMapService.appendStation("Germany", "Berlin");
 
         MetroStations expected = new MetroStations();
-        expected.append(new Station("Berlin"));
+        expected.append("Berlin");
 
         assertEquals(expected, metroMapService.getMetroStations("Germany"));
     }
@@ -59,7 +58,22 @@ class MetroMapServiceTest {
         metroMapService.addHead("Germany", "Berlin");
 
         MetroStations expected = new MetroStations();
-        expected.addHead(new Station("Berlin"));
+        expected.addHead("Berlin");
+
+        assertEquals(expected, metroMapService.getMetroStations("Germany"));
+    }
+
+    @Test
+    void removeStation() {
+        metroMapService.addMetroStations("Germany");
+        metroMapService.appendStation("Germany", "Berlin");
+        metroMapService.appendStation("Germany", "Bremen");
+        metroMapService.appendStation("Germany", "Beirut");
+
+        metroMapService.removeStation("Germany", "Bremen");
+
+        MetroStations expected = new MetroStations();
+        expected.append("Berlin").append("Beirut");
 
         assertEquals(expected, metroMapService.getMetroStations("Germany"));
     }

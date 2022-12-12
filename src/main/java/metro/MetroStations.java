@@ -9,16 +9,19 @@ public class MetroStations {
 
     private final Station head = new Station("depot");
 
-    public MetroStations append(Station station) {
+    public MetroStations append(String stationName) {
+        Station station = new Station(stationName);
+
         Station lastStation = getLastStation();
         lastStation.setNextStation(station);
         station.setPreviousStation(lastStation);
         return this;
     }
 
-    public MetroStations addHead(Station station) {
-        Optional<Station> firstStation = head.getNextStation();
+    public MetroStations addHead(String stationName) {
+        Station station = new Station(stationName);
 
+        Optional<Station> firstStation = head.getNextStation();
         station.setNextStation(firstStation.orElse(null));
         station.setPreviousStation(head);
         head.setNextStation(station);
@@ -43,8 +46,8 @@ public class MetroStations {
         }
     }
 
-    public void removeStation(Station station) {
-        Optional<Station> foundStation = findStation(station);
+    public void removeStation(String stationName) {
+        Optional<Station> foundStation = findStation(stationName);
         if (foundStation.isEmpty()) {
             return;
         }
@@ -56,10 +59,10 @@ public class MetroStations {
         next.setPreviousStation(previous);
     }
 
-    private Optional<Station> findStation(Station searchStation) {
+    private Optional<Station> findStation(String stationName) {
         Station station = head;
         while (true) {
-            if (station == searchStation) {
+            if (Objects.equals(station.getName(), stationName)) {
                 return Optional.of(station);
             }
 
