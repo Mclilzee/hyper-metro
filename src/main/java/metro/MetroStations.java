@@ -1,7 +1,5 @@
 package metro;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,7 +9,7 @@ public class MetroStations {
 
     private final Station head = new Station("depot");
 
-    public MetroStations add(Station station) {
+    public MetroStations append(Station station) {
         Station lastStation = getLastStation();
         lastStation.setNextStation(station);
         station.setPreviousStation(lastStation);

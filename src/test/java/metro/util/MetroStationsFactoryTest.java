@@ -27,7 +27,7 @@ class MetroStationsFactoryTest {
         Station first = new Station("Berlin");
         Station second = new Station("Bremen");
         Station third = new Station("Frankfurt");
-        expected.add(first).add(second).add(third);
+        expected.append(first).append(second).append(third);
 
         assertEquals(expected, MetroStationsFactory.createMetroStations(stationsMap));
     }

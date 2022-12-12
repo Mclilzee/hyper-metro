@@ -55,12 +55,12 @@ class MetroFileReaderTest {
         Station edgver = new Station("Edgver road");
         Station baker = new Station("Baker Street");
         MetroStations m1 = new MetroStations();
-        m1.add(bishops).add(edgver).add(baker);
+        m1.append(bishops).append(edgver).append(baker);
 
         Station hammersmith = new Station("Hammersmith");
         Station westbourne = new Station("Westbourne-park");
         MetroStations m2 = new MetroStations();
-        m2.add(hammersmith).add(westbourne);
+        m2.append(hammersmith).append(westbourne);
 
         Map<String, MetroStations> expected = new HashMap<>();
         expected.put("m1", m1);

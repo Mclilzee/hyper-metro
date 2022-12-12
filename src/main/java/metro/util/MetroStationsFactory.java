@@ -11,7 +11,7 @@ public class MetroStationsFactory {
         stationsMap = new TreeMap<>(stationsMap);
         MetroStations metroStations = new MetroStations();
         for (String metroName : stationsMap.values()) {
-            metroStations.add(new Station(metroName));
+            metroStations.append(new Station(metroName));
         }
 
         return metroStations;

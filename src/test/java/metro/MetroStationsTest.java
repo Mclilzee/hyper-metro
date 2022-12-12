@@ -22,9 +22,9 @@ class MetroStationsTest {
 
     @Test
     @DisplayName("Adding station makes head reference it")
-    void addStation() {
+    void appendStation() {
         Station berlin = new Station("Berlin");
-        metroStations.add(berlin);
+        metroStations.append(berlin);
 
         Station nextStation = metroStations.getHead().getNextStation().get();
         String expected = "Berlin";
@@ -37,7 +37,7 @@ class MetroStationsTest {
     void stationsSetNextCorrectly() {
         Station berlin = new Station("Berlin");
         Station bremen = new Station("Bremen");
-        metroStations.add(berlin).add(bremen);
+        metroStations.append(berlin).append(bremen);
 
         Station nextStation = metroStations.getHead().getNextStation().get();
         Station finalStation = nextStation.getNextStation().get();
@@ -51,7 +51,7 @@ class MetroStationsTest {
     void stationsPreviousConnect() {
         Station berlin = new Station("Berlin");
         Station bremen = new Station("Bremen");
-        metroStations.add(berlin).add(bremen);
+        metroStations.append(berlin).append(bremen);
 
         String actual = bremen.getPreviousStation().get().getName();
         String expected = "Berlin";
@@ -60,36 +60,40 @@ class MetroStationsTest {
     }
 
     @Test
+    @DisplayName("Add head of station")
+    void addStationHead() {
+
+    }
+
+    @Test
     void equalStations() {
-        MetroStations station = new MetroStations();
         Station berlin = new Station("Berlin");
         Station bremen = new Station("Bremen");
         Station beirut = new Station("Beirut");
-        station.add(berlin).add(bremen).add(beirut);
+        metroStations.append(berlin).append(bremen).append(beirut);
 
         MetroStations newStation = new MetroStations();
         Station berlin2 = new Station("Berlin");
         Station bremen2 = new Station("Bremen");
         Station beirut2 = new Station("Beirut");
-        newStation.add(berlin2).add(bremen2).add(beirut2);
+        newStation.append(berlin2).append(bremen2).append(beirut2);
 
-        assertEquals(station, newStation);
+        assertEquals(metroStations, newStation);
     }
 
     @Test
     void notEqual() {
-        MetroStations station = new MetroStations();
         Station berlin = new Station("Berlin");
         Station bremen = new Station("Bremen");
         Station frankfurt = new Station("Frankfurt");
-        station.add(berlin).add(bremen).add(frankfurt);
+        metroStations.append(berlin).append(bremen).append(frankfurt);
 
         MetroStations newStation = new MetroStations();
         Station berlin2 = new Station("Berlin");
         Station bremen2 = new Station("Bremen");
         Station beirut2 = new Station("Beirut");
-        newStation.add(berlin2).add(bremen2).add(beirut2);
+        newStation.append(berlin2).append(bremen2).append(beirut2);
 
-        assertNotEquals(station, newStation);
+        assertNotEquals(metroStations, newStation);
     }
 }

@@ -34,10 +34,10 @@ class ThreeStationsPrinterTest {
         Station bremen = new Station("Bremen");
         Station hamburg = new Station("Hamburg");
         Station beirut = new Station("Beirut");
-        metroStations.add(berlin)
-                     .add(bremen)
-                     .add(hamburg)
-                     .add(beirut);
+        metroStations.append(berlin)
+                     .append(bremen)
+                     .append(hamburg)
+                     .append(beirut);
 
         ThreeStationsPrinter printer = new ThreeStationsPrinter();
         printer.printMetroStations(metroStations);
