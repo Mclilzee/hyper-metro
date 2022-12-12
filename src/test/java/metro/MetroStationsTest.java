@@ -3,8 +3,9 @@ package metro;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class MetroStationsTest {
 
@@ -32,37 +33,44 @@ class MetroStationsTest {
         assertEquals(expected, nextStation.getName());
     }
 
-    @Test
-    @DisplayName("Add multiple stations connect correctly with next")
-    void stationsSetNextCorrectly() {
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        metroStations.append(berlin).append(bremen);
-
-        Station nextStation = metroStations.getHead().getNextStation().get();
-        Station finalStation = nextStation.getNextStation().get();
-        String expected = "Bremen";
-
-        assertEquals(expected, finalStation.getName());
-    }
 
     @Test
-    @DisplayName("Add multiple stations connect correctly with previous")
-    void stationsPreviousConnect() {
+    @DisplayName("Add head of station")
+    void addStationHead() {
         Station berlin = new Station("Berlin");
         Station bremen = new Station("Bremen");
+        Station beirut = new Station("Beirut");
         metroStations.append(berlin).append(bremen);
+        metroStations.addHead(beirut);
 
-        String actual = bremen.getPreviousStation().get().getName();
-        String expected = "Berlin";
+        String expected = "Beirut";
+        String actual = metroStations.getHead().getNextStation().get().getName();
 
         assertEquals(expected, actual);
     }
 
     @Test
-    @DisplayName("Add head of station")
-    void addStationHead() {
+    @DisplayName("Append multiple stations connect correctly with next")
+    void stationsSetNextCorrectly() {
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        metroStations.append(berlin).append(bremen);
 
+        assertEquals(metroStations.getHead().getNextStation(), Optional.of(berlin));
+        assertEquals(berlin.getNextStation(), Optional.of(bremen));
+        assertTrue(bremen.getNextStation().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Append multiple stations connect correctly with previous")
+    void stationAppendPrevious() {
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        metroStations.append(berlin).append(bremen);
+
+        assertEquals(bremen.getPreviousStation(), Optional.of(berlin));
+        assertEquals(berlin.getPreviousStation(), Optional.of(metroStations.getHead()));
+        assertTrue(metroStations.getHead().getPreviousStation().isEmpty());
     }
 
     @Test

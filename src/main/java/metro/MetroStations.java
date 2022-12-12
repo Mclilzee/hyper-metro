@@ -16,6 +16,11 @@ public class MetroStations {
         return this;
     }
 
+    public void addHead(Station station) {
+        station.setNextStation(head.getNextStation().orElse(null));
+        head.setNextStation(station);
+    }
+
     public Station getHead() {
         return head;
     }
@@ -57,4 +62,5 @@ public class MetroStations {
                      .map(station -> station.get().getName())
                      .collect(Collectors.joining());
     }
+
 }
