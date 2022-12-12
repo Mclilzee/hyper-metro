@@ -33,8 +33,13 @@ public class MetroMapService implements MetroService {
     }
 
     @Override
-    public void addHead(String metroStation, String station) {
+    public void addHead(String metroStationName, String stationName) {
+        MetroStations metroStations = map.get(metroStationName);
+        if (metroStations == null) {
+            return;
+        }
 
+        metroStations.addHead(new Station(stationName));
     }
 
     @Override
