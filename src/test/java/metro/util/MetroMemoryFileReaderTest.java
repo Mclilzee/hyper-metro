@@ -44,7 +44,7 @@ class MetroMemoryFileReaderTest {
     @Test
     void emptyFilePrintsCorrectMessage() {
         reader.loadMetroFromFile(emptyFilePath);
-        String expected = "Incorrect File" + System.lineSeparator();
+        String expected = "Incorrect file" + System.lineSeparator();
 
         assertEquals(expected, outputStream.toString());
     }

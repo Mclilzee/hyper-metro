@@ -30,6 +30,10 @@ public class MetroMemoryFileReader implements MetroFileReader {
             return service;
         }
 
-        return null;
+        for (var entrySet : map.get().entrySet()) {
+            service.putMetroStation(entrySet.getKey(), MetroStationsFactory.createMetroStations(entrySet.getValue()));
+        }
+
+        return service;
     }
 }
