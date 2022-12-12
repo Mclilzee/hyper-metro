@@ -15,7 +15,7 @@ public class ThreeStationsPrinter implements MetroPrinter {
     }
 
     private List<String> getThreeConnectedStations(MetroStations metroStations) {
-        if (metroStations.getHead().getNextStation().isEmpty()) {
+        if (metroStations == null || metroStations.getHead().getNextStation().isEmpty()) {
             return List.of();
         }
 

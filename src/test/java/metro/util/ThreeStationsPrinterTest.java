@@ -53,6 +53,19 @@ class ThreeStationsPrinterTest {
     @Test
     @DisplayName("print nothing if stations unavailable")
     void getConnectedEmptyStations() {
+        MetroStations metroStations = new MetroStations();
+        ThreeStationsPrinter printer = new ThreeStationsPrinter();
+        printer.printMetroStations(metroStations);
+
+        String expected = "";
+
+        assertEquals(expected, outputStream.toString());
+    }
+
+    @Test
+    void printNothingIfStationIsNull() {
+        ThreeStationsPrinter printer = new ThreeStationsPrinter();
+        printer.printMetroStations(null);
         String expected = "";
 
         assertEquals(expected, outputStream.toString());
