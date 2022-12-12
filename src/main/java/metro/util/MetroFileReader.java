@@ -6,7 +6,6 @@ import metro.MetroStations;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.Map;
 
 public class MetroFileReader {
@@ -23,7 +22,7 @@ public class MetroFileReader {
 
     private static Map<String, MetroStations> getJsonMetro(Path path) {
         String json = getJsonFromFile(path);
-        MetroStationsMapDTO[] jsonFormat = gson.fromJson(json, MetroStationsMapDTO[].class);
+        MetroStationsDTO[] jsonFormat = gson.fromJson(json, MetroStationsDTO[].class);
 
 
         return null;
