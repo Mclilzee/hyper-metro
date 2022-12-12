@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class MetroMemoryService implements MetroService {
 
-    private Map<String, MetroStations> map = new HashMap<>();
+    private final Map<String, MetroStations> map = new HashMap<>();
 
 
     @Override

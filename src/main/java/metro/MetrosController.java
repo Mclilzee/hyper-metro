@@ -2,13 +2,12 @@ package metro;
 
 import metro.service.MetroService;
 
-import java.util.Map;
 import java.util.Scanner;
 
 public class MetrosController {
 
-    private Scanner scanner;
-    private MetroService metroService;
+    private final Scanner scanner;
+    private final MetroService metroService;
 
     public MetrosController(Scanner scanner, MetroService metroService) {
         this.scanner = scanner;

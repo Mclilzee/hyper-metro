@@ -4,6 +4,6 @@ import metro.MetroStations;
 
 public interface MetroPrinter {
 
-    public void printMetroStations(MetroStations metroStations);
+    void printMetroStations(MetroStations metroStations);
 
 }
