@@ -34,8 +34,8 @@ class MetroStationsTest {
     }
 
     @Test
-    @DisplayName("Add multiple stations connect correctly")
-    void addMultipleStations() {
+    @DisplayName("Add multiple stations connect correctly with next")
+    void stationsSetNextCorrectly() {
         Station berlin = new Station("Berlin");
         Station bremen = new Station("Bremen");
         metroStations.add(berlin).add(bremen);
@@ -48,44 +48,41 @@ class MetroStationsTest {
     }
 
     @Test
-    @DisplayName("Last station connects back to head")
-    void lastStationConnects() {
+    @DisplayName("Add multiple stations connect correctly with previous")
+    void stationsPreviousConnect() {
         Station berlin = new Station("Berlin");
-        metroStations.add(berlin);
+        Station bremen = new Station("Bremen");
+        metroStations.add(berlin).add(bremen);
 
-        Station station = berlin.getNextStation().get();
-        String expected = metroStations.getHead().getName();
+        String actual = bremen.getPreviousStation().get().getName();
+        String expected = "Berlin";
 
-        assertEquals(expected, station.getName());
+        assertEquals(expected, actual);
     }
 
     @Test
     @DisplayName("Get stations list of three connected stations")
     void getConnectedThreeStationsList() {
-        Station head = metroStations.getHead();
         Station berlin = new Station("Berlin");
         Station bremen = new Station("Bremen");
         Station hamburg = new Station("Hamburg");
         Station beirut = new Station("Beirut");
         metroStations.add(berlin).add(bremen).add(hamburg).add(beirut);
 
-        List<Station[]> actual = metroStations.getThreeConnectedStations();
-        List<Station[]> expected = List.of(new Station[]{head, berlin, bremen},
-                new Station[]{berlin, bremen, hamburg},
-                new Station[]{bremen, hamburg, beirut},
-                new Station[]{hamburg, beirut, head});
-
-        for (int i = 0; i < expected.size(); i++) {
-            assertArrayEquals(expected.get(i), actual.get(i));
-        }
-
+        List<String> actual = metroStations.getThreeConnectedStations();
+        List<String> expected = List.of(
+                "depot - Berlin - Bremen",
+                "Berlin - Bremen - Hamburg",
+                "Bremen - Hamburg - Beirut",
+                "Hamburg - Beirut - depot"
+                );
+        assertEquals(expected, actual);
     }
 
     @Test
     @DisplayName("Return empty list if stations unavailable")
     void getConnectedEmptyStations() {
-        List<Station[]> expected = List.of();
-
+        List<String> expected = List.of();
         assertEquals(expected, metroStations.getThreeConnectedStations());
     }
 }
