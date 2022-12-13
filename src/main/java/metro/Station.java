@@ -1,13 +1,13 @@
 package metro;
 
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class Station {
 
     private final String name;
     private Station nextStation;
     private Station previousStation;
+    private final List<LineConnection> lineConnections = new ArrayList<>();
 
     public Station(String name) {
         this.name = name;
@@ -31,6 +31,14 @@ public class Station {
 
     public void setPreviousStation(Station previousStation) {
         this.previousStation = previousStation;
+    }
+
+    public void addLineConnection(String metroStationsName, String stationName) {
+        lineConnections.add(new LineConnection(metroStationsName, stationName));
+    }
+
+    public List<LineConnection> getLineConnections() {
+        return Collections.unmodifiableList(lineConnections);
     }
 
     @Override

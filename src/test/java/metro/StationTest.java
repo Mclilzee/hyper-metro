@@ -3,6 +3,9 @@ package metro;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import javax.sound.sampled.Line;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class StationTest {
@@ -60,5 +63,34 @@ class StationTest {
         Station secondStation = new Station("Bremen");
 
         assertNotEquals(secondStation, station);
+    }
+
+    @Test
+    void initEmptyConnectionsList() {
+        List<LineConnection> expected = List.of();
+
+        assertEquals(expected, station.getLineConnections());
+    }
+
+    @Test
+    void addLineConnections() {
+        station.addLineConnection("Germany", "Berlin");
+        station.addLineConnection("Lebanon", "Beirut");
+
+        List<LineConnection> expected = List.of(
+                new LineConnection("Germany", "Berlin"),
+                new LineConnection("Lebanon", "Beirut")
+                                               );
+
+
+        assertEquals(expected, station.getLineConnections());
+    }
+
+    @Test
+    void lineConnectionsListIsUnmodifiable() {
+        station.addLineConnection("Germany", "Berlin");
+        station.addLineConnection("Lebanon", "Beirut");
+
+        assertThrows(UnsupportedOperationException.class, () -> station.getLineConnections().add(null));
     }
 }
