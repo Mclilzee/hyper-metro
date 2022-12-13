@@ -1,4 +1,4 @@
-package metro.util;
+package metro.fileReader;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -14,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MetroJsonReaderTest {
-    Path metroPath = Paths.get("src/test/java/metro/util/test.json");
-    Path emptyFilePath = Paths.get("src/test/java/metro/util/empty-file.json");
-    Path incorrectJsonPath = Paths.get("src/test/java/metro/util/incorrect.json");
+    Path metroPath = Paths.get("src/test/java/metro/fileReader/test.json");
+    Path emptyFilePath = Paths.get("src/test/java/metro/fileReader/empty-file.json");
+    Path incorrectJsonPath = Paths.get("src/test/java/metro/fileReader/incorrect.json");
 
     static ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 

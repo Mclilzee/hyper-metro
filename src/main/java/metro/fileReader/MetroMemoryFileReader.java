@@ -2,13 +2,9 @@ package metro.fileReader;
 
 import metro.service.MetroMemoryService;
 import metro.service.MetroService;
-import metro.util.MetroJsonReader;
 import metro.util.MetroLineFactory;
 
 import java.nio.file.Path;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class MetroMemoryFileReader implements MetroFileReader {
 

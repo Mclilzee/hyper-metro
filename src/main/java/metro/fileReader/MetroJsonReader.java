@@ -1,4 +1,4 @@
-package metro.util;
+package metro.fileReader;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
@@ -17,7 +17,7 @@ public class MetroJsonReader {
     private static final Type jsonFormat = new TypeToken<Map<String, Map<String, String>>>() {
     }.getType();
 
-    public static Optional<Map<String, Map<String, String>>> parseMetroJson(Path path) {
+    static Optional<Map<String, Map<String, String>>> parseMetroJson(Path path) {
         try {
             String json = Files.readString(path);
             return Optional.ofNullable(gson.fromJson(json, jsonFormat));
