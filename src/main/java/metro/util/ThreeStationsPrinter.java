@@ -3,36 +3,32 @@ package metro.util;
 import metro.MetroStations;
 import metro.Station;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ThreeStationsPrinter implements MetroPrinter {
 
     @Override
     public void printMetroStations(MetroStations metroStations) {
-        getThreeConnectedStations(metroStations).forEach(System.out::println);
+        getConnectedStationsString(metroStations).forEach(System.out::println);
 
     }
 
-    private List<String> getThreeConnectedStations(MetroStations metroStations) {
-        if (metroStations == null || metroStations.getHead().getNextStation().isEmpty()) {
+    private List<String> getConnectedStationsString(MetroStations metroStations) {
+        if (metroStations == null) {
             return List.of();
         }
 
-        List<String> stationConnections = new ArrayList<>();
-        Station station = metroStations.getHead();
-        while(station.getNextStation().isPresent()) {
-            stationConnections.add(getConnectedStationsString(station));
-            station = station.getNextStation().get();
-        }
-
-        return stationConnections;
+        List<Station> stations = metroStations.getStationsConnection();
+        return stations.stream()
+                .limit(stations.size() - 1)
+                .map(this::generateStationsString)
+                .toList();
     }
 
-    private String getConnectedStationsString(Station station) {
+    private String generateStationsString(Station station) {
         Station secondStation = station.getNextStation().orElseThrow();
         Station thirdStation = secondStation.getNextStation().orElse(new Station("depot"));
 
-        return station.getName() + " - " + secondStation.getName() + " - " + thirdStation.getName();
+        return String.format("%s - %s - %s", station.getName(), secondStation.getName(), thirdStation.getName());
     }
 }
