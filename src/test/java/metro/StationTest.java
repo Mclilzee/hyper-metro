@@ -3,7 +3,6 @@ package metro;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import javax.sound.sampled.Line;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -78,8 +77,8 @@ class StationTest {
         station.addLineConnection("Lebanon", "Beirut");
 
         List<LineConnection> expected = List.of(
-                new LineConnection("Germany", "Berlin"),
-                new LineConnection("Lebanon", "Beirut")
+                new LineConnection("Berlin", "Germany"),
+                new LineConnection("Beirut", "Lebanon")
                                                );
 
 

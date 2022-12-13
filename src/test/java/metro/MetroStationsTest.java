@@ -165,7 +165,7 @@ class MetroStationsTest {
 
        Station station = metroStations.getHead().getNextStation().orElseThrow();
 
-       List<LineConnection> expected = List.of(new LineConnection("Lebanon", "Beirut"));
+       List<LineConnection> expected = List.of(new LineConnection("Beirut", "Lebanon"));
 
        assertEquals(expected, station.getLineConnections());
     }

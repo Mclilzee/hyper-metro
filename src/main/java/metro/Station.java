@@ -34,7 +34,7 @@ public class Station {
     }
 
     public void addLineConnection(String metroStationsName, String stationName) {
-        lineConnections.add(new LineConnection(metroStationsName, stationName));
+        lineConnections.add(new LineConnection(stationName, metroStationsName));
     }
 
     public List<LineConnection> getLineConnections() {
