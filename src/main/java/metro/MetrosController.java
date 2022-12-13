@@ -53,8 +53,8 @@ public class MetrosController {
     }
 
     private void parseControllerInput(Matcher matcher) {
-        String metroStationsName = matcher.group(3).replaceAll("\"", "");
-        String stationName = matcher.group(4).replaceAll("\"", "");
+        String metroStationsName = removeQuotes(matcher.group(3));
+        String stationName = removeQuotes(matcher.group(4));
         switch (matcher.group(2).toLowerCase()) {
             case "/append" -> appendStation(metroStationsName, stationName);
             case "/remove" -> removeStation(metroStationsName, stationName);
@@ -75,7 +75,7 @@ public class MetrosController {
     }
 
     private void printStation(Matcher matcher) {
-        String metroStationsName = matcher.group(6).replaceAll("\"", "");
+        String metroStationsName = removeQuotes(matcher.group(6));
 
         MetroPrinter printer = new LineConnectionsPrinter();
         MetroStations metroStations = metroService.getMetroStations(metroStationsName);
