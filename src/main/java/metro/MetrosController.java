@@ -19,13 +19,13 @@ public class MetrosController {
     }
 
     public void start() {
-        Pattern outputPattern = Pattern.compile("^(\\\\output) (\".*\"|[^\"\\s]+)$", Pattern.CASE_INSENSITIVE);
-        Pattern controlPattern = Pattern.compile("^(\\\\remove|\\\\add-head|\\\\append) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+)$",
+        Pattern outputPattern = Pattern.compile("^(/output) (\".*\"|[^\"\\s]+)$", Pattern.CASE_INSENSITIVE);
+        Pattern controlPattern = Pattern.compile("^(/remove|/add-head|/append) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+)$",
                 Pattern.CASE_INSENSITIVE);
 
         while (true) {
             String input = scanner.nextLine();
-            if (input.equalsIgnoreCase("\\exit")) {
+            if (input.equalsIgnoreCase("/exit")) {
                 return;
             }
 
@@ -49,9 +49,9 @@ public class MetrosController {
         String metroStationsName = matcher.group(2).replaceAll("\"", "");
         String stationName = matcher.group(3).replaceAll("\"", "");
         switch (matcher.group(1).toLowerCase()) {
-            case "\\append" -> appendStation(metroStationsName, stationName);
-            case "\\remove" -> removeStation(metroStationsName, stationName);
-            case "\\add-head" -> addHeadStation(metroStationsName, stationName);
+            case "/append" -> appendStation(metroStationsName, stationName);
+            case "/remove" -> removeStation(metroStationsName, stationName);
+            case "/add-head" -> addHeadStation(metroStationsName, stationName);
         }
     }
 
