@@ -51,11 +51,16 @@ public class MetrosController {
         switch (matcher.group(1).toLowerCase()) {
             case "\\append" -> appendStation(metroStationsName, stationName);
             case "\\remove" -> removeStation(metroStationsName, stationName);
+            case "\\add-head" -> addHeadStation(metroStationsName, stationName);
         }
     }
 
     private void appendStation(String metroStationName, String stationName) {
         metroService.appendStation(metroStationName, stationName);
+    }
+
+    private void addHeadStation(String metroStationsName, String stationName) {
+        metroService.addHead(metroStationsName, stationName);
     }
 
     private void removeStation(String metroStationName, String stationName) {
