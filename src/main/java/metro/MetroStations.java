@@ -1,5 +1,6 @@
 package metro;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,13 +60,13 @@ public class MetroStations {
         next.setPreviousStation(previous);
     }
 
-    public void addLineConnection(String stationName, String connectedMetrosStationsName, String connectedStationName) {
+    public void addLineConnection(String stationName, String connectedMetrosStationName, String connectedStationName) {
         Optional<Station> station = findStation(stationName);
         if (station.isEmpty()) {
             return;
         }
 
-        station.get().addLineConnection(connectedMetrosStationsName, connectedStationName);
+        station.get().addLineConnection(connectedMetrosStationName, connectedStationName);
     }
 
     private Optional<Station> findStation(String stationName) {
@@ -83,6 +84,13 @@ public class MetroStations {
         }
     }
 
+    public List<Station> getStationsConnection() {
+        Optional<Station> firstStation = Optional.of(head);
+        return Stream.iterate(firstStation, Optional::isPresent, station -> station.get().getNextStation())
+                     .map(Optional::orElseThrow)
+                     .toList();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -93,18 +101,11 @@ public class MetroStations {
         }
         MetroStations that = (MetroStations) o;
 
-        return connectedStations(that).equals(connectedStations(this));
+        return getStationsConnection().equals(that.getStationsConnection());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(connectedStations(this));
-    }
-
-    private String connectedStations(MetroStations metroStations) {
-        Optional<Station> firstStation = metroStations.getHead().getNextStation();
-        return Stream.iterate(firstStation, Optional::isPresent, station -> station.get().getNextStation())
-                     .map(station -> station.get().getName())
-                     .collect(Collectors.joining());
+        return Objects.hash(getStationsConnection().toString());
     }
 }

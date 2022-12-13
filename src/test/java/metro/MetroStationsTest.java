@@ -3,6 +3,8 @@ package metro;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MetroStationsTest {
@@ -17,6 +19,21 @@ class MetroStationsTest {
         String expectedHeadName = "depot";
 
         assertEquals(expectedHeadName, head.getName());
+    }
+
+    @Test
+    @DisplayName("Returns complete list of connected stations")
+    void getConnectedStations() {
+        metroStations.append("Berlin").append("Bremen").append("Beirut");
+
+        List<Station> expected = List.of(
+                new Station("depot"),
+                new Station("Berlin"),
+                new Station("Bremen"),
+                new Station("Beirut")
+                                        );
+
+        assertEquals(expected, metroStations.getStationsConnection());
     }
 
     @Test
@@ -139,5 +156,17 @@ class MetroStationsTest {
         newStation.append("Berlin").append("Bremen").append("Beirut");
 
         assertNotEquals(metroStations, newStation);
+    }
+
+    @Test
+    void addConnectionLine() {
+       metroStations.append("Berlin");
+       metroStations.addLineConnection("Berlin", "Lebanon", "Beirut");
+
+       Station station = metroStations.getHead().getNextStation().orElseThrow();
+
+       List<LineConnection> expected = List.of(new LineConnection("Lebanon", "Beirut"));
+
+       assertEquals(expected, station.getLineConnections());
     }
 }
