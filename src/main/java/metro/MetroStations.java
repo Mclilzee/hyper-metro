@@ -59,6 +59,15 @@ public class MetroStations {
         next.setPreviousStation(previous);
     }
 
+    public void addLineConnection(String stationName, String connectedMetrosStationsName, String connectedStationName) {
+        Optional<Station> station = findStation(stationName);
+        if (station.isEmpty()) {
+            return;
+        }
+
+        station.get().addLineConnection(connectedMetrosStationsName, connectedStationName);
+    }
+
     private Optional<Station> findStation(String stationName) {
         Station station = head;
         while (true) {
