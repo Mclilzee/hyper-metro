@@ -1,30 +1,13 @@
 package metro.printing;
 
 import metro.MetroStations;
-import metro.printing.ThreeStationsPrinter;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ThreeStationsPrinterTest {
-
-    static ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-    @BeforeAll
-    static void init() {
-        System.setOut(new PrintStream(outputStream));
-    }
-
-    @BeforeEach
-    void setup() {
-        outputStream.reset();
-    }
+    MetroPrinter printer = new ThreeStationsPrinter();
 
     @Test
     @DisplayName("print stations list of three connected stations")
@@ -35,15 +18,14 @@ class ThreeStationsPrinterTest {
                      .append("Hamburg")
                      .append("Beirut");
 
-        ThreeStationsPrinter printer = new ThreeStationsPrinter();
-        printer.printMetroStations(metroStations);
+        String actual = printer.getMetroStationsPrintString(metroStations);
+        String expected = """
+                          depot - Berlin - Bremen
+                          Berlin - Bremen - Hamburg
+                          Bremen - Hamburg - Beirut
+                          Hamburg - Beirut - depot""";
 
-        String expected = "depot - Berlin - Bremen" + System.lineSeparator() +
-        "Berlin - Bremen - Hamburg" + System.lineSeparator() +
-        "Bremen - Hamburg - Beirut" + System.lineSeparator() +
-        "Hamburg - Beirut - depot" + System.lineSeparator();
-
-        assertEquals(expected, outputStream.toString());
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -51,19 +33,20 @@ class ThreeStationsPrinterTest {
     void getConnectedEmptyStations() {
         MetroStations metroStations = new MetroStations();
         ThreeStationsPrinter printer = new ThreeStationsPrinter();
-        printer.printMetroStations(metroStations);
 
+        String actual = printer.getMetroStationsPrintString(metroStations);
         String expected = "";
 
-        assertEquals(expected, outputStream.toString());
+        assertEquals(expected, actual);
     }
 
     @Test
     void printNothingIfStationIsNull() {
         ThreeStationsPrinter printer = new ThreeStationsPrinter();
-        printer.printMetroStations(null);
+
+        String actual = printer.getMetroStationsPrintString(null);
         String expected = "";
 
-        assertEquals(expected, outputStream.toString());
+        assertEquals(expected, actual);
     }
 }

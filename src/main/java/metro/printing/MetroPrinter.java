@@ -4,6 +4,6 @@ import metro.MetroStations;
 
 public interface MetroPrinter {
 
-    void printMetroStations(MetroStations metroStations);
+    String getMetroStationsPrintString(MetroStations metroStations);
 
 }

@@ -1,5 +1,6 @@
 package metro;
 
+import metro.printing.LineConnectionsPrinter;
 import metro.service.MetroService;
 import metro.printing.MetroPrinter;
 import metro.printing.ThreeStationsPrinter;
@@ -68,8 +69,9 @@ public class MetrosController {
     }
 
     private void printStation(String metroStationsName) {
-        MetroPrinter printer = new ThreeStationsPrinter();
-        printer.printMetroStations(metroService.getMetroStations(metroStationsName));
+        MetroPrinter printer = new LineConnectionsPrinter();
+        MetroStations metroStations = metroService.getMetroStations(metroStationsName);
+        System.out.println(printer.getMetroStationsPrintString(metroStations));
     }
 
     private String removeQuotes(String input) {

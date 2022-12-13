@@ -1,5 +1,7 @@
 package metro;
 
+import metro.printing.LineConnectionsPrinter;
+import metro.printing.MetroPrinter;
 import metro.service.MetroMemoryService;
 import metro.service.MetroService;
 import org.junit.jupiter.api.BeforeAll;
@@ -57,9 +59,11 @@ class MetrosControllerTest {
         metroService.appendStation("Germany", "Beirut");
         controller.start();
 
-        String expected = "depot - Berlin - Bremen" + System.lineSeparator() +
-                "Berlin - Bremen - Beirut" + System.lineSeparator() +
-                "Bremen - Beirut - depot" + System.lineSeparator();
+        MetroStations metroStations = metroService.getMetroStations("Germany");
+
+        // Use specific printer and add lineSeparator for printing
+        MetroPrinter printer = new LineConnectionsPrinter();
+        String expected = printer.getMetroStationsPrintString(metroStations) + System.lineSeparator();
 
         assertEquals(expected, outputStream.toString());
     }
@@ -73,9 +77,11 @@ class MetrosControllerTest {
         metroService.appendStation("Hammer City", "Beirut");
         controller.start();
 
-        String expected = "depot - Berlin - Bremen" + System.lineSeparator() +
-                "Berlin - Bremen - Beirut" + System.lineSeparator() +
-                "Bremen - Beirut - depot" + System.lineSeparator();
+        MetroStations metroStations = metroService.getMetroStations("Hammer City");
+
+        // Use specific printer and add lineSeparator for printing
+        MetroPrinter printer = new LineConnectionsPrinter();
+        String expected = printer.getMetroStationsPrintString(metroStations) + System.lineSeparator();
 
         assertEquals(expected, outputStream.toString());
     }

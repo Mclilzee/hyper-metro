@@ -5,20 +5,21 @@ import metro.MetroStations;
 import metro.Station;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LineConnectionsPrinter implements MetroPrinter{
 
     @Override
-    public void printMetroStations(MetroStations metroStations) {
+    public String getMetroStationsPrintString(MetroStations metroStations) {
         if (metroStations == null || metroStations.getStationsConnection().size() <= 1) {
-            return;
+            return "";
         }
 
-        metroStations.getStationsConnection().stream()
+       String printString =  metroStations.getStationsConnection().stream()
                 .flatMap(station -> getStationFullStrings(station).stream())
-                .forEach(System.out::println);
+                .collect(Collectors.joining("\n"));
 
-        System.out.println("depot");
+        return printString + "\ndepot";
     }
 
     private List<String> getStationFullStrings(Station station) {

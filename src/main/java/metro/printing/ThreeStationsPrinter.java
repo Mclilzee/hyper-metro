@@ -4,20 +4,21 @@ import metro.MetroStations;
 import metro.Station;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ThreeStationsPrinter implements MetroPrinter {
 
     @Override
-    public void printMetroStations(MetroStations metroStations) {
+    public String getMetroStationsPrintString(MetroStations metroStations) {
         if (metroStations == null) {
-            return ;
+            return "";
         }
 
         List<Station> stations = metroStations.getStationsConnection();
-        stations.stream()
+        return stations.stream()
                 .limit(stations.size() - 1)
                 .map(this::generateStationsString)
-                .forEach(System.out::println);
+                .collect(Collectors.joining("\n"));
 
     }
 
