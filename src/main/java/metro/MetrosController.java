@@ -19,8 +19,8 @@ public class MetrosController {
     }
 
     public void start() {
-        Pattern pattern = Pattern.compile("^(/remove|/add-head|/append) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+)" +
-                        "|(/output) (\".*\"|[^\"\\s]+)$",
+        Pattern pattern = Pattern.compile("^((/remove|/add-head|/append) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+)" +
+                        "|(/output) (\".*\"|[^\"\\s]+))$",
                 Pattern.CASE_INSENSITIVE);
 
         while (true) {
@@ -29,18 +29,20 @@ public class MetrosController {
                 return;
             }
 
-            Matcher matcher = pattern.matcher(input);
-            if (matcher.find()) {
-                parseInput(matcher);
-            } else {
-                System.out.println("Invalid command");
-            }
+            processInput(pattern.matcher(input));
+        }
+    }
 
+    private void processInput(Matcher matcher) {
+        if (matcher.find()) {
+            parseInput(matcher);
+        } else {
+            System.out.println("Invalid command");
         }
     }
 
     private void parseInput(Matcher matcher) {
-        String matcherString = matcher.group(0).toLowerCase();
+        String matcherString = matcher.group().toLowerCase();
         if (matcherString.startsWith("/output")) {
             printStation(matcher);
         } else if (matcherString.startsWith("/connect")) {
@@ -51,9 +53,9 @@ public class MetrosController {
     }
 
     private void parseControllerInput(Matcher matcher) {
-        String metroStationsName = matcher.group(2).replaceAll("\"", "");
-        String stationName = matcher.group(3).replaceAll("\"", "");
-        switch (matcher.group(1).toLowerCase()) {
+        String metroStationsName = matcher.group(3).replaceAll("\"", "");
+        String stationName = matcher.group(4).replaceAll("\"", "");
+        switch (matcher.group(2).toLowerCase()) {
             case "/append" -> appendStation(metroStationsName, stationName);
             case "/remove" -> removeStation(metroStationsName, stationName);
             case "/add-head" -> addHeadStation(metroStationsName, stationName);
@@ -73,7 +75,7 @@ public class MetrosController {
     }
 
     private void printStation(Matcher matcher) {
-        String metroStationsName = matcher.group(5).replaceAll("\"", "");
+        String metroStationsName = matcher.group(6).replaceAll("\"", "");
 
         MetroPrinter printer = new LineConnectionsPrinter();
         MetroStations metroStations = metroService.getMetroStations(metroStationsName);
