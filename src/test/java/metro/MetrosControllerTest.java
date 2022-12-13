@@ -81,4 +81,25 @@ class MetrosControllerTest {
         assertTrue(metroService.getValues().contains(expected));
     }
 
+
+    @ParameterizedTest
+    @ValueSource(strings = {"\\remove Germany Bremen",
+            "\\remove \"Germany\" Bremen",
+            "\\remove Germany \"Bremen\"",
+            "\\remove \"Germany\" \"Bremen\""})
+    void removeStation(String input) {
+        MetrosController controller = new MetrosController(new Scanner(input + "\n\\exit"), metroService);
+        metroService.addMetroStations("Germany");
+        metroService.appendStation("Germany", "Berlin");
+        metroService.appendStation("Germany", "Bremen");
+        metroService.appendStation("Germany", "Beirut");
+
+        controller.start();
+
+        MetroStations expected = new MetroStations();
+        expected.append("Berlin").append("Beirut");
+
+        assertTrue(metroService.getValues().contains(expected));
+    }
+
 }

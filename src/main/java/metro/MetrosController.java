@@ -31,7 +31,8 @@ public class MetrosController {
 
             Matcher matcher = outputPattern.matcher(input);
             if (matcher.find()) {
-                printStation(matcher.group(2));
+                String metroStationsName = matcher.group(2).replaceAll("\"", "");
+                printStation(metroStationsName);
                 continue;
             }
 
@@ -42,22 +43,31 @@ public class MetrosController {
     private void parseControllerInput(Matcher matcher) {
         if (!matcher.find()) {
             System.out.println("Invalid command");
+            return;
         }
 
+        String metroStationsName = matcher.group(2).replaceAll("\"", "");
+        String stationName = matcher.group(3).replaceAll("\"", "");
         switch (matcher.group(1).toLowerCase()) {
-            case "\\append" -> appendStation(matcher.group(2), matcher.group(3));
+            case "\\append" -> appendStation(metroStationsName, stationName);
+            case "\\remove" -> removeStation(metroStationsName, stationName);
         }
     }
 
     private void appendStation(String metroStationName, String stationName) {
-        String parseMetroStationsName = metroStationName.replaceAll("\"", "");
-        String parseStationsName = stationName.replaceAll("\"", "");
-        metroService.appendStation(parseMetroStationsName, parseStationsName);
+        metroService.appendStation(metroStationName, stationName);
     }
 
-    private void printStation(String input) {
-        String parseInput = input.replaceAll("\"", "");
+    private void removeStation(String metroStationName, String stationName) {
+        metroService.removeStation(metroStationName, stationName);
+    }
+
+    private void printStation(String metroStationsName) {
         MetroPrinter printer = new ThreeStationsPrinter();
-        printer.printMetroStations(metroService.getMetroStations(parseInput));
+        printer.printMetroStations(metroService.getMetroStations(metroStationsName));
+    }
+
+    private String removeQuotes(String input) {
+        return input.replaceAll("\"", "");
     }
 }
