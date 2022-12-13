@@ -2,14 +2,20 @@ package metro.util;
 
 import metro.MetroStations;
 
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+
+import static java.util.Comparator.comparingInt;
 
 public class MetroStationsFactory {
     public static MetroStations createMetroStations(Map<String, String> stationsMap) {
-        stationsMap = new TreeMap<>(stationsMap);
+        List<String> stationNames = stationsMap.entrySet().stream()
+                                               .sorted(comparingInt(entrySet -> Integer.parseInt(entrySet.getKey())))
+                                               .map(Map.Entry::getValue)
+                                               .toList();
+
         MetroStations metroStations = new MetroStations();
-        for (String stationName : stationsMap.values()) {
+        for (String stationName : stationNames) {
             metroStations.append(stationName);
         }
 
