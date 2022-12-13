@@ -5,6 +5,8 @@ import metro.service.MetroService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -35,9 +37,21 @@ class MetrosControllerTest {
         controller.start();
     }
 
-    @Test
-    void printMetroInformation() {
-        MetrosController controller = new MetrosController(new Scanner("\\output Germany\n\\exit"), metroService);
+    @ParameterizedTest
+    @ValueSource(strings = {"\\output something else", "\\remove thre value present", "\\append \"missing qute",
+    "\\output \"first value\" second", "\\append three values present", "\\add-head ends with\""})
+    void printInvalidCommand(String input) {
+        MetrosController controller = new MetrosController(new Scanner(input + "\n\\exit"), metroService);
+        controller.start();
+
+        String expected = "Invalid command" + System.lineSeparator();
+        assertEquals(expected, outputStream.toString());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"\\output Germany", "\\output \"Germany\""})
+    void printMetroInformation(String input) {
+        MetrosController controller = new MetrosController(new Scanner(input + "\n\\exit"), metroService);
         metroService.addMetroStations("Germany");
         metroService.appendStation("Germany", "Berlin");
         metroService.appendStation("Germany", "Bremen");
@@ -51,25 +65,13 @@ class MetrosControllerTest {
         assertEquals(expected, outputStream.toString());
     }
 
-    @Test
-    void printMetroInformationParseQuotes() {
-        MetrosController controller = new MetrosController(new Scanner("\\output \"Germany\"\n\\exit"), metroService);
-        metroService.addMetroStations("Germany");
-        metroService.appendStation("Germany", "Berlin");
-        metroService.appendStation("Germany", "Bremen");
-        metroService.appendStation("Germany", "Beirut");
-        controller.start();
-
-        String expected = "depot - Berlin - Bremen" + System.lineSeparator() +
-                "Berlin - Bremen - Beirut" + System.lineSeparator() +
-                "Bremen - Beirut - depot" + System.lineSeparator();
-
-        assertEquals(expected, outputStream.toString());
-    }
-
-    @Test
-    void appendStation() {
-        MetrosController controller = new MetrosController(new Scanner("\\append Germany Berlin\n\\append Germany Bremen\n\\exit"), metroService);
+    @ParameterizedTest
+    @ValueSource(strings = {"\\append Germany Berlin\n\\append Germany Bremen",
+            "\\append \"Germany\" Berlin\n\\append \"Germany\" Bremen",
+            "\\append Germany \"Berlin\"\n\\append Germany \"Bremen\"",
+            "\\append \"Germany\" \"Berlin\"\n\\append \"Germany\" \"Bremen\""})
+    void appendStation(String input) {
+        MetrosController controller = new MetrosController(new Scanner(input + "\n\\exit"), metroService);
         metroService.addMetroStations("Germany");
         controller.start();
 

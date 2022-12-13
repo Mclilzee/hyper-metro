@@ -34,7 +34,25 @@ public class MetrosController {
                 printStation(matcher.group(2));
                 continue;
             }
+
+            parseControllerInput(controlPattern.matcher(input));
         }
+    }
+
+    private void parseControllerInput(Matcher matcher) {
+        if (!matcher.find()) {
+            System.out.println("Invalid command");
+        }
+
+        switch (matcher.group(1).toLowerCase()) {
+            case "\\append" -> appendStation(matcher.group(2), matcher.group(3));
+        }
+    }
+
+    private void appendStation(String metroStationName, String stationName) {
+        String parseMetroStationsName = metroStationName.replaceAll("\"", "");
+        String parseStationsName = stationName.replaceAll("\"", "");
+        metroService.appendStation(parseMetroStationsName, parseStationsName);
     }
 
     private void printStation(String input) {
