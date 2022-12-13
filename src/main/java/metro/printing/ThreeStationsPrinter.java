@@ -1,4 +1,4 @@
-package metro.util;
+package metro.printing;
 
 import metro.MetroStations;
 import metro.Station;
@@ -9,20 +9,16 @@ public class ThreeStationsPrinter implements MetroPrinter {
 
     @Override
     public void printMetroStations(MetroStations metroStations) {
-        getConnectedStationsString(metroStations).forEach(System.out::println);
-
-    }
-
-    private List<String> getConnectedStationsString(MetroStations metroStations) {
         if (metroStations == null) {
-            return List.of();
+            return ;
         }
 
         List<Station> stations = metroStations.getStationsConnection();
-        return stations.stream()
+        stations.stream()
                 .limit(stations.size() - 1)
                 .map(this::generateStationsString)
-                .toList();
+                .forEach(System.out::println);
+
     }
 
     private String generateStationsString(Station station) {

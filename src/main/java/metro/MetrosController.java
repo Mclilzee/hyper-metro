@@ -1,8 +1,8 @@
 package metro;
 
 import metro.service.MetroService;
-import metro.util.MetroPrinter;
-import metro.util.ThreeStationsPrinter;
+import metro.printing.MetroPrinter;
+import metro.printing.ThreeStationsPrinter;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

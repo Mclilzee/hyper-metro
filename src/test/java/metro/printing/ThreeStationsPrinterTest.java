@@ -1,6 +1,7 @@
-package metro.util;
+package metro.printing;
 
 import metro.MetroStations;
+import metro.printing.ThreeStationsPrinter;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
