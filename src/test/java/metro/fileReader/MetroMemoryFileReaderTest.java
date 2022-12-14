@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -58,20 +59,24 @@ class MetroMemoryFileReaderTest {
         MetroLine m2 = new MetroLine();
         m2.append("Hammersmith").append("Westbourne-park");
 
-        MetroService expected = new MetroMemoryService();
-        expected.addMetroLine("Metro-Railway");
-        expected.appendStation("Metro-Railway", "Bishops-road");
-        expected.appendStation("Metro-Railway", "Edgver road");
-        expected.appendStation("Metro-Railway", "Baker Street");
+        MetroService mockService = new MetroMemoryService();
+        mockService.addMetroLine("Metro-Railway");
+        mockService.appendStation("Metro-Railway", "Bishops-road");
+        mockService.appendStation("Metro-Railway", "Edgver road");
+        mockService.appendStation("Metro-Railway", "Baker Street");
 
-        expected.addMetroLine("Hammersmith-and-City");
-        expected.appendStation("Hammersmith-and-City", "Hammersmith");
-        expected.appendStation("Hammersmith-and-City", "Westbourne-park");
+        mockService.addMetroLine("Hammersmith-and-City");
+        mockService.appendStation("Hammersmith-and-City", "Hammersmith");
+        mockService.appendStation("Hammersmith-and-City", "Westbourne-park");
 
-        expected.connectMetroLine("Metro-Railway", "Baker Street", "Hammersmith-and-City", "Baker Street");
-        expected.connectMetroLine("Hammersmith-and-City", "Baker Street", "Metro-Railway", "Baker Street");
+        mockService.connectMetroLine("Metro-Railway", "Baker Street", "Hammersmith-and-City", "Baker Street");
+        mockService.connectMetroLine("Hammersmith-and-City", "Baker Street", "Metro-Railway", "Baker Street");
 
-        assertTrue(service.getValues().containsAll(expected.getValues()));
+        List<MetroLine> actual = service.getValues();
+        List<MetroLine> expected = service.getValues();
+
+
+        assertEquals(expected, actual);
     }
 
     @Test

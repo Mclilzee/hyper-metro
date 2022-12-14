@@ -48,9 +48,45 @@ class MetroLineTest {
     }
 
     @Test
+    @DisplayName("Append multiple stations using name connect correctly with next")
+    void stationNameAppendNext() {
+        metroLine.append("Berlin").append("Bremen");
+
+        Station actualFirstStation = metroLine.getHead().getNextStation().orElseThrow();
+        Station actualNextStation = actualFirstStation.getNextStation().orElseThrow();
+
+        String expectedFirstStation = "Berlin";
+        String expectedNextStation = "Bremen";
+
+        assertEquals(expectedFirstStation, actualFirstStation.getName());
+        assertEquals(expectedNextStation, actualNextStation.getName());
+        assertTrue(actualNextStation.getNextStation().isEmpty());
+    }
+
+    @Test
+    @DisplayName("Append multiple stations using name connect correctly with previous")
+    void stationNameAppendPrevious() {
+        metroLine.append("Berlin").append("Bremen");
+
+        Station actualLastStation = metroLine.getHead().getNextStation().orElseThrow()
+                                             .getNextStation().orElseThrow();
+        Station actualPreviousStation = actualLastStation.getPreviousStation().orElseThrow();
+
+        String expectedLastStation = "Bremen";
+        String expectedPreviousStation = "Berlin";
+
+        assertEquals(expectedLastStation, actualLastStation.getName());
+        assertEquals(expectedPreviousStation, actualPreviousStation.getName());
+        assertTrue(metroLine.getHead().getPreviousStation().isEmpty());
+    }
+
+
+    @Test
     @DisplayName("Append multiple stations connect correctly with next")
     void stationAppendNext() {
-        metroLine.append("Berlin").append("Bremen");
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        metroLine.append(berlin).append(bremen);
 
         Station actualFirstStation = metroLine.getHead().getNextStation().orElseThrow();
         Station actualNextStation = actualFirstStation.getNextStation().orElseThrow();
@@ -66,7 +102,9 @@ class MetroLineTest {
     @Test
     @DisplayName("Append multiple stations connect correctly with previous")
     void stationAppendPrevious() {
-        metroLine.append("Berlin").append("Bremen");
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        metroLine.append(berlin).append(bremen);
 
         Station actualLastStation = metroLine.getHead().getNextStation().orElseThrow()
                                              .getNextStation().orElseThrow();

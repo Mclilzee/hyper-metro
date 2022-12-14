@@ -18,6 +18,13 @@ public class MetroLine {
         return this;
     }
 
+    public MetroLine append(Station station) {
+        Station lastStation = getLastStation();
+        lastStation.setNextStation(station);
+        station.setPreviousStation(lastStation);
+        return this;
+    }
+
     public MetroLine addHead(String stationName) {
         Station station = new Station(stationName);
 
