@@ -1,6 +1,5 @@
 package metro;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -45,16 +44,16 @@ public class MetroLine {
     private Station getLastStation() {
         Station station = head;
         while (true) {
-            if (station.getNextStation().isEmpty()) {
+            if (station.getNextStation().isPresent()) {
+                station = station.getNextStation().get();
+            } else {
                 return station;
             }
-
-            station = station.getNextStation().get();
         }
     }
 
     public void removeStation(String stationName) {
-        Optional<Station> foundStation = findStation(stationName);
+        Optional<Station> foundStation = findStationByName(stationName);
         if (foundStation.isEmpty()) {
             return;
         }
@@ -67,7 +66,7 @@ public class MetroLine {
     }
 
     public void addLineConnection(String stationName, String connectedMetrosStationName, String connectedStationName) {
-        Optional<Station> station = findStation(stationName);
+        Optional<Station> station = findStationByName(stationName);
         if (station.isEmpty()) {
             return;
         }
@@ -75,19 +74,13 @@ public class MetroLine {
         station.get().addLineConnection(connectedMetrosStationName, connectedStationName);
     }
 
-    private Optional<Station> findStation(String stationName) {
-        Station station = head;
-        while (true) {
-            if (Objects.equals(station.getName(), stationName)) {
-                return Optional.of(station);
-            }
+    public boolean containsStation(String stationName) {
+        return findStationByName(stationName).isPresent();
+    }
 
-            if (station.getNextStation().isEmpty()) {
-                return Optional.empty();
-            }
-
-            station = station.getNextStation().get();
-        }
+    private Optional<Station> findStationByName(String stationName) {
+        return stream().filter(station -> station.getName().equals(stationName))
+                .findFirst();
     }
 
     public Stream<Station> stream() {

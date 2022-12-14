@@ -197,6 +197,23 @@ class MetroMemoryServiceTest {
     }
 
     @Test
+    void connectBothWaysCorrectly() {
+        metroMemoryService.addMetroLine("Germany");
+        metroMemoryService.appendStation("Germany", "Berlin");
+
+        metroMemoryService.addMetroLine("Lebanon");
+        metroMemoryService.appendStation("Lebanon", "Beirut");
+
+        metroMemoryService.connectMetroLine("Germany", "Berlin", "Lebanon", "Beirut");
+
+        Station station = metroMemoryService.getMetroLine("Lebanon").orElseThrow().getHead().getNextStation()
+                                            .orElseThrow();
+
+        List<LineConnection> expected = List.of(new LineConnection("Germany", "Berlin"));
+        assertEquals(expected, station.getLineConnections());
+    }
+
+    @Test
     void handleNotFoundMainStation() {
         metroMemoryService.addMetroLine("Lebanon");
         metroMemoryService.appendStation("Lebanon", "Beirut");

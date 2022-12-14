@@ -60,21 +60,17 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
-    public void connectMetroLine(String metroLineName, String stationName, String toMetroLine, String toStation) {
-        if (!map.containsKey(toMetroLine) || !map.containsKey(metroLineName)) {
+    public void connectMetroLine(String firstMetroLineName, String firstStationName, String secondMetroLineName, String secondStationName) {
+        MetroLine firstMetroLine = map.get(firstMetroLineName);
+        MetroLine secondMetroLine = map.get(secondMetroLineName);
+        if (firstMetroLine == null || secondMetroLine == null) {
             return;
         }
 
-        if (connectingMetroLineContainsStation(toMetroLine, toStation)) {
-            MetroLine metroLine = map.get(metroLineName);
-            metroLine.addLineConnection(stationName, toMetroLine, toStation);
+        if (firstMetroLine.containsStation(firstStationName) && secondMetroLine.containsStation(secondStationName)) {
+            firstMetroLine.addLineConnection(firstStationName, secondMetroLineName, secondStationName);
+            secondMetroLine.addLineConnection(secondStationName, firstMetroLineName, firstStationName);
         }
-    }
-
-    private boolean connectingMetroLineContainsStation(String metroLine, String station) {
-        return map.get(metroLine).stream()
-                  .map(Station::getName)
-                  .anyMatch(station::equals);
     }
 
     @Override
