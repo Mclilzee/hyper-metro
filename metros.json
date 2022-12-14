@@ -1,15 +1,36 @@
 {
   "Metro-Railway": {
-    "3": "Baker Street",
-    "1": "Bishops-road",
-    "2": "Edgver road",
-    "6": "Kings cross",
-    "4": "Portland road",
-    "5": "Gower street",
-    "7": "Farringdon street"
+    "3": {
+      "name": "Baker street",
+      "transfer": [{
+        "line": "Hammersmith-and-City",
+        "station": "Baker street"
+      }]
+    },
+    "1": {
+      "name": "Bishops-road",
+      "transfer": []
+    },
+    "2": {
+      "name": "Edgver road",
+      "transfer": []
+    }
   },
   "Hammersmith-and-City": {
-    "2": "Westbourne-park",
-    "1": "Hammersmith"
+    "2": {
+      "name": "Westbourne-park",
+      "transfer": []
+    },
+    "1": {
+      "name": "Hammersmith",
+      "transfer": []
+    },
+    "3": {
+      "name": "Baker street",
+      "transfer": [{
+        "line": "Metro-Railway",
+        "station": "Baker street"
+      }]
+    }
   }
 }

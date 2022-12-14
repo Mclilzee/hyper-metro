@@ -8,11 +8,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -39,9 +42,7 @@ class MetrosControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/output something else", "/remove three value present", "/append \"missing qute",
-    "/output \"first value\" second", "/append three values present", "/add-head ends with\"",
-    "/connect only three values", "/connect two values", "/connect missing \""})
+    @ValueSource(strings = {"/output something else", "/remove three value present", "/append \"missing qute", "/output \"first value\" second", "/append three values present", "/add-head ends with\"", "/connect only three values", "/connect two values", "/connect missing \""})
     void printInvalidCommand(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
         controller.start();
@@ -60,7 +61,8 @@ class MetrosControllerTest {
         metroService.appendStation("Germany", "Beirut");
         controller.start();
 
-        MetroLine metroLine = metroService.getMetroLine("Germany").orElseThrow();
+        MetroLine metroLine = metroService.getMetroLine("Germany")
+                                          .orElseThrow();
 
         // Use specific printer and add lineSeparator for printing
         MetroPrinter printer = new LineConnectionsPrinter();
@@ -78,7 +80,8 @@ class MetrosControllerTest {
         metroService.appendStation("Hammer City", "Beirut");
         controller.start();
 
-        MetroLine metroLine = metroService.getMetroLine("Hammer City").orElseThrow();
+        MetroLine metroLine = metroService.getMetroLine("Hammer City")
+                                          .orElseThrow();
 
         // Use specific printer and add lineSeparator for printing
         MetroPrinter printer = new LineConnectionsPrinter();
@@ -88,19 +91,18 @@ class MetrosControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/append Germany Berlin\n/append Germany Bremen",
-            "/append \"Germany\" Berlin\n/append \"Germany\" Bremen",
-            "/append Germany \"Berlin\"\n/append Germany \"Bremen\"",
-            "/append \"Germany\" \"Berlin\"\n/append \"Germany\" \"Bremen\""})
+    @ValueSource(strings = {"/append Germany Berlin\n/append Germany Bremen", "/append \"Germany\" Berlin\n/append \"Germany\" Bremen", "/append Germany \"Berlin\"\n/append Germany \"Bremen\"", "/append \"Germany\" \"Berlin\"\n/append \"Germany\" \"Bremen\""})
     void appendStation(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
         metroService.addMetroLine("Germany");
         controller.start();
 
         MetroLine expected = new MetroLine();
-        expected.append("Berlin").append("Bremen");
+        expected.append("Berlin")
+                .append("Bremen");
 
-        assertTrue(metroService.getValues().contains(expected));
+        assertTrue(metroService.getValues()
+                               .contains(expected));
     }
 
     @Test
@@ -112,24 +114,23 @@ class MetrosControllerTest {
         MetroLine expected = new MetroLine();
         expected.append("Beirut Tower");
 
-        assertTrue(metroService.getValues().contains(expected));
+        assertTrue(metroService.getValues()
+                               .contains(expected));
     }
 
-
     @ParameterizedTest
-    @ValueSource(strings = {"/add-head Germany Berlin\n/add-head Germany Bremen",
-            "/add-head \"Germany\" Berlin\n/add-head \"Germany\" Bremen",
-            "/add-head Germany \"Berlin\"\n/add-head Germany \"Bremen\"",
-            "/add-head \"Germany\" \"Berlin\"\n/add-head \"Germany\" \"Bremen\""})
+    @ValueSource(strings = {"/add-head Germany Berlin\n/add-head Germany Bremen", "/add-head \"Germany\" Berlin\n/add-head \"Germany\" Bremen", "/add-head Germany \"Berlin\"\n/add-head Germany \"Bremen\"", "/add-head \"Germany\" \"Berlin\"\n/add-head \"Germany\" \"Bremen\""})
     void addHeadStation(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
         metroService.addMetroLine("Germany");
         controller.start();
 
         MetroLine expected = new MetroLine();
-        expected.addHead("Berlin").addHead("Bremen");
+        expected.addHead("Berlin")
+                .addHead("Bremen");
 
-        assertTrue(metroService.getValues().contains(expected));
+        assertTrue(metroService.getValues()
+                               .contains(expected));
     }
 
     @Test
@@ -141,14 +142,12 @@ class MetrosControllerTest {
         MetroLine expected = new MetroLine();
         expected.addHead("Berlin Bridge");
 
-        assertTrue(metroService.getValues().contains(expected));
+        assertTrue(metroService.getValues()
+                               .contains(expected));
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/remove Germany Bremen",
-            "/remove \"Germany\" Bremen",
-            "/remove Germany \"Bremen\"",
-            "/remove \"Germany\" \"Bremen\""})
+    @ValueSource(strings = {"/remove Germany Bremen", "/remove \"Germany\" Bremen", "/remove Germany \"Bremen\"", "/remove \"Germany\" \"Bremen\""})
     void removeStation(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
         metroService.addMetroLine("Germany");
@@ -159,9 +158,11 @@ class MetrosControllerTest {
         controller.start();
 
         MetroLine expected = new MetroLine();
-        expected.append("Berlin").append("Beirut");
+        expected.append("Berlin")
+                .append("Beirut");
 
-        assertTrue(metroService.getValues().contains(expected));
+        assertTrue(metroService.getValues()
+                               .contains(expected));
     }
 
     @Test
@@ -175,9 +176,11 @@ class MetrosControllerTest {
         controller.start();
 
         MetroLine expected = new MetroLine();
-        expected.append("Berlin Town").append("Beirut Sea");
+        expected.append("Berlin Town")
+                .append("Beirut Sea");
 
-        assertTrue(metroService.getValues().contains(expected));
+        assertTrue(metroService.getValues()
+                               .contains(expected));
     }
 
     @Test
@@ -192,10 +195,12 @@ class MetrosControllerTest {
 
         MetroLine expected = new MetroLine();
         expected.append("Berlin");
-        Station station = expected.getHead().getNextStation()
+        Station station = expected.getHead()
+                                  .getNextStation()
                                   .orElseThrow();
         station.addLineConnection("Lebanon", "Beirut");
 
-        assertTrue(metroService.getValues().contains(expected));
+        assertTrue(metroService.getValues()
+                               .contains(expected));
     }
 }
