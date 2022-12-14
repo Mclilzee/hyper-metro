@@ -77,8 +77,8 @@ class StationTest {
         station.addLineConnection("Lebanon", "Beirut");
 
         List<LineConnection> expected = List.of(
-                new LineConnection("Berlin", "Germany"),
-                new LineConnection("Beirut", "Lebanon")
+                new LineConnection("Germany", "Berlin"),
+                new LineConnection("Lebanon", "Beirut")
                                                );
 
 

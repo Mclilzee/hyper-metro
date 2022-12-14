@@ -4,6 +4,7 @@ import metro.printing.LineConnectionsPrinter;
 import metro.service.MetroService;
 import metro.printing.MetroPrinter;
 
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -76,10 +77,13 @@ public class MetrosController {
 
     private void printStation(Matcher matcher) {
         String metroLineName = removeQuotes(matcher.group(6));
+        Optional<MetroLine> metroLine = metroService.getMetroLine(metroLineName);
+        if (metroLine.isEmpty()) {
+            return;
+        }
 
         MetroPrinter printer = new LineConnectionsPrinter();
-        MetroLine metroLine = metroService.getMetroLine(metroLineName);
-        System.out.println(printer.getMetroLinePrintString(metroLine));
+        System.out.println(printer.getMetroLinePrintString(metroLine.get()));
     }
 
     private String removeQuotes(String input) {

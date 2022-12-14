@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LineConnectionTest {
 
-    LineConnection lineConnection = new LineConnection("Berlin", "Germany");
+    LineConnection lineConnection = new LineConnection("Germany", "Berlin");
 
     @Test
     void metroLineName() {

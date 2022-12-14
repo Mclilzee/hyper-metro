@@ -59,7 +59,7 @@ class MetrosControllerTest {
         metroService.appendStation("Germany", "Beirut");
         controller.start();
 
-        MetroLine metroLine = metroService.getMetroLine("Germany");
+        MetroLine metroLine = metroService.getMetroLine("Germany").orElseThrow();
 
         // Use specific printer and add lineSeparator for printing
         MetroPrinter printer = new LineConnectionsPrinter();
@@ -77,7 +77,7 @@ class MetrosControllerTest {
         metroService.appendStation("Hammer City", "Beirut");
         controller.start();
 
-        MetroLine metroLine = metroService.getMetroLine("Hammer City");
+        MetroLine metroLine = metroService.getMetroLine("Hammer City").orElseThrow();
 
         // Use specific printer and add lineSeparator for printing
         MetroPrinter printer = new LineConnectionsPrinter();

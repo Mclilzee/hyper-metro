@@ -1,11 +1,9 @@
 package metro.service;
 
 import metro.MetroLine;
+import metro.Station;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class MetroMemoryService implements MetroService {
 
@@ -18,17 +16,17 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
-    public void putMetroLine(String MetroLineName, MetroLine metroLine) {
+    public void putMetroLine(String metroLineName, MetroLine metroLine) {
         if (metroLine == null) {
             return;
         }
 
-        map.putIfAbsent(MetroLineName, metroLine);
+        map.putIfAbsent(metroLineName, metroLine);
     }
 
     @Override
-    public MetroLine getMetroLine(String metroLineName) {
-        return map.get(metroLineName);
+    public Optional<MetroLine> getMetroLine(String metroLineName) {
+        return Optional.ofNullable(map.get(metroLineName));
     }
 
     @Override
@@ -61,6 +59,23 @@ public class MetroMemoryService implements MetroService {
         metroLine.removeStation(stationName);
     }
 
+    @Override
+    public void connectMetroLine(String metroLineName, String stationName, String toMetroLine, String toStation) {
+        if (!map.containsKey(toMetroLine) || !map.containsKey(metroLineName)) {
+            return;
+        }
+
+        if (connectingMetroLineContainsStation(toMetroLine, toStation)) {
+            MetroLine metroLine = map.get(metroLineName);
+            metroLine.addLineConnection(stationName, toMetroLine, toStation);
+        }
+    }
+
+    private boolean connectingMetroLineContainsStation(String metroLine, String station) {
+        return map.get(metroLine).getStationsConnection().stream()
+                .map(Station::getName)
+                .anyMatch(station::equals);
+    }
 
     @Override
     public Set<String> getKeys() {
