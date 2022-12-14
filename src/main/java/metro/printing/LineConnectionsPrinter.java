@@ -11,11 +11,11 @@ public class LineConnectionsPrinter implements MetroPrinter{
 
     @Override
     public String getMetroLinePrintString(MetroLine metroLine) {
-        if (metroLine == null || metroLine.getStationsConnection().size() <= 1) {
+        if (metroLine == null || metroLine.stream().toList().size() <= 1) {
             return "";
         }
 
-       String printString =  metroLine.getStationsConnection().stream()
+       String printString =  metroLine.stream()
                                       .flatMap(station -> getStationFullStrings(station).stream())
                                       .collect(Collectors.joining("\n"));
 

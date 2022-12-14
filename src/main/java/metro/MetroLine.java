@@ -83,11 +83,10 @@ public class MetroLine {
         }
     }
 
-    public List<Station> getStationsConnection() {
+    public Stream<Station> stream() {
         Optional<Station> firstStation = Optional.of(head);
-        return Stream.iterate(firstStation, Optional::isPresent, station -> station.get().getNextStation())
-                     .map(Optional::orElseThrow)
-                     .toList();
+        return Stream.iterate(firstStation, Optional::isPresent, station -> station.flatMap(Station::getNextStation))
+                     .map(Optional::orElseThrow);
     }
 
     @Override
@@ -100,11 +99,11 @@ public class MetroLine {
         }
         MetroLine that = (MetroLine) o;
 
-        return getStationsConnection().equals(that.getStationsConnection());
+        return stream().toList().equals(that.stream().toList());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getStationsConnection().toString());
+        return Objects.hash(stream().toList().toString());
     }
 }

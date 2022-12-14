@@ -72,9 +72,9 @@ public class MetroMemoryService implements MetroService {
     }
 
     private boolean connectingMetroLineContainsStation(String metroLine, String station) {
-        return map.get(metroLine).getStationsConnection().stream()
-                .map(Station::getName)
-                .anyMatch(station::equals);
+        return map.get(metroLine).stream()
+                  .map(Station::getName)
+                  .anyMatch(station::equals);
     }
 
     @Override

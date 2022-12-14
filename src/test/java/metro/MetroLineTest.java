@@ -22,7 +22,7 @@ class MetroLineTest {
     }
 
     @Test
-    @DisplayName("Returns complete list of connected stations")
+    @DisplayName("Returns complete stream of connected stations")
     void getConnectedStations() {
         metroLine.append("Berlin").append("Bremen").append("Beirut");
 
@@ -33,7 +33,7 @@ class MetroLineTest {
                 new Station("Beirut")
                                         );
 
-        assertEquals(expected, metroLine.getStationsConnection());
+        assertEquals(expected, metroLine.stream().toList());
     }
 
     @Test
@@ -120,6 +120,27 @@ class MetroLineTest {
     }
 
     @Test
+    @DisplayName("Does nothing if station not found")
+    void removeStationNotFound() {
+
+        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.removeStation("Dongos");
+
+        Station actualFirstStation = metroLine.getHead().getNextStation().orElseThrow();
+        Station actualNextStation = actualFirstStation.getNextStation().orElseThrow();
+        Station actualLastStation = actualNextStation.getNextStation().orElseThrow();
+
+        String expectedFirstStation = "Berlin";
+        String expectedNextStation = "Bremen";
+        String expectedLastStation = "Beirut";
+
+        assertEquals(expectedFirstStation, actualFirstStation.getName());
+        assertEquals(expectedNextStation, actualNextStation.getName());
+        assertEquals(expectedLastStation, actualLastStation.getName());
+        assertTrue(actualLastStation.getNextStation().isEmpty());
+    }
+
+    @Test
     @DisplayName("Removing station set previous correctly")
     void removeStationPrevious() {
         metroLine.append("Berlin").append("Bremen").append("Beirut");
@@ -139,6 +160,18 @@ class MetroLineTest {
     }
 
     @Test
+    void addConnectionLine() {
+        metroLine.append("Berlin");
+        metroLine.addLineConnection("Berlin", "Lebanon", "Beirut");
+
+        Station station = metroLine.getHead().getNextStation().orElseThrow();
+
+        List<LineConnection> expected = List.of(new LineConnection("Lebanon", "Beirut"));
+
+        assertEquals(expected, station.getLineConnections());
+    }
+
+    @Test
     void equalStations() {
         metroLine.append("Berlin").append("Bremen").append("Beirut");
 
@@ -146,6 +179,16 @@ class MetroLineTest {
         newStation.append("Berlin").append("Bremen").append("Beirut");
 
         assertEquals(metroLine, newStation);
+    }
+
+    @Test
+    void hasSameHashCode() {
+        metroLine.append("Berlin").append("Bremen").append("Beirut");
+
+        MetroLine newStation = new MetroLine();
+        newStation.append("Berlin").append("Bremen").append("Beirut");
+
+        assertEquals(metroLine.hashCode(), newStation.hashCode());
     }
 
     @Test
@@ -159,14 +202,12 @@ class MetroLineTest {
     }
 
     @Test
-    void addConnectionLine() {
-       metroLine.append("Berlin");
-       metroLine.addLineConnection("Berlin", "Lebanon", "Beirut");
+    void notEqualsNull() {
+        assertNotEquals(metroLine, null);
+    }
 
-       Station station = metroLine.getHead().getNextStation().orElseThrow();
-
-       List<LineConnection> expected = List.of(new LineConnection("Lebanon", "Beirut"));
-
-       assertEquals(expected, station.getLineConnections());
+    @Test
+    void notEqualWrongObject() {
+        assertNotEquals(metroLine, new Object());
     }
 }

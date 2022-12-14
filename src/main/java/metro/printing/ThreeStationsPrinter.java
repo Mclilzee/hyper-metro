@@ -14,7 +14,7 @@ public class ThreeStationsPrinter implements MetroPrinter {
             return "";
         }
 
-        List<Station> stations = metroLine.getStationsConnection();
+        List<Station> stations = metroLine.stream().toList();
         return stations.stream()
                 .limit(stations.size() - 1)
                 .map(this::generateStationsString)

@@ -50,19 +50,7 @@ class StationTest {
         assertEquals(expected, nextStationName);
     }
 
-    @Test
-    void equalsCorrect() {
-        Station secondStation = new Station("Berlin");
 
-        assertEquals(secondStation, station);
-    }
-
-    @Test
-    void notEqual() {
-        Station secondStation = new Station("Bremen");
-
-        assertNotEquals(secondStation, station);
-    }
 
     @Test
     void initEmptyConnectionsList() {
@@ -91,5 +79,26 @@ class StationTest {
         station.addLineConnection("Lebanon", "Beirut");
 
         assertThrows(UnsupportedOperationException.class, () -> station.getLineConnections().add(null));
+    }
+
+    @Test
+    void equalsCorrect() {
+        Station secondStation = new Station("Berlin");
+
+        assertEquals(secondStation, station);
+    }
+
+    @Test
+    void notEqual() {
+        Station secondStation = new Station("Bremen");
+
+        assertNotEquals(secondStation, station);
+    }
+
+    @Test
+    void containsSameHashcode() {
+        Station secondStation = new Station("Berlin");
+
+        assertEquals(secondStation.hashCode(), station.hashCode());
     }
 }
