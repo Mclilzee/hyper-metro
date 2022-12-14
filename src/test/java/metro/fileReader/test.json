@@ -1,11 +1,36 @@
 {
-  "m1": {
-    "3": "Baker Street",
-    "1": "Bishops-road",
-    "2": "Edgver road"
+  "Metro-Railway": {
+    "3": {
+      "name": "Baker street",
+      "transfer": [{
+        "line": "Hammersmith-and-City",
+        "station": "Baker street"
+      }]
+    },
+    "1": {
+      "name": "Bishops-road",
+      "transfer": []
+    },
+    "2": {
+      "name": "Edgver road",
+      "transfer": []
+    }
   },
-  "m2": {
-    "2": "Westbourne-park",
-    "1": "Hammersmith"
+  "Hammersmith-and-City": {
+    "2": {
+      "name": "Westbourne-park",
+      "transfer": []
+    },
+    "1": {
+      "name": "Hammersmith",
+      "transfer": []
+    },
+    "3": {
+      "name": "Baker street",
+      "transfer": [{
+        "line": "Metro-Railway",
+        "station": "Baker street"
+      }]
+    }
   }
 }
