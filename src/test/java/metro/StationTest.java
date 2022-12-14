@@ -96,6 +96,16 @@ class StationTest {
     }
 
     @Test
+    @DisplayName("Not equal if connected stations are not the same")
+    void notEqualConnectedStations() {
+        Station secondStation = new Station("Berlin");
+        secondStation.addLineConnection("Metro", "Frankfurt");
+
+        assertNotEquals(secondStation, station);
+
+    }
+
+    @Test
     void containsSameHashcode() {
         Station secondStation = new Station("Berlin");
 

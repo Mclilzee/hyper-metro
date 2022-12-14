@@ -85,7 +85,7 @@ public class MetroLine {
 
     public Stream<Station> stream() {
         Optional<Station> firstStation = Optional.of(head);
-        return Stream.iterate(firstStation, Optional::isPresent, station -> station.flatMap(Station::getNextStation))
+        return Stream.iterate(firstStation, Optional::isPresent, station -> station.get().getNextStation())
                      .map(Optional::orElseThrow);
     }
 

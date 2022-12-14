@@ -26,14 +26,25 @@ class MetroLineTest {
     void getConnectedStations() {
         metroLine.append("Berlin").append("Bremen").append("Beirut");
 
-        List<Station> expected = List.of(
-                new Station("depot"),
-                new Station("Berlin"),
-                new Station("Bremen"),
-                new Station("Beirut")
-                                        );
+        List<Station> actual = metroLine.stream().toList();
 
-        assertEquals(expected, metroLine.stream().toList());
+        // create the correct connection to be evaluated in equals
+        Station depot = new Station("depot");
+        Station berlin = new Station("Berlin");
+        berlin.setPreviousStation(depot);
+        depot.setNextStation(berlin);
+
+        Station bremen = new Station("Bremen");
+        bremen.setPreviousStation(berlin);
+        berlin.setNextStation(bremen);
+
+        Station beirut = new Station("Beirut");
+        beirut.setPreviousStation(bremen);
+        bremen.setNextStation(beirut);
+
+        List<Station> expected = List.of(depot, berlin, bremen, beirut);
+
+        assertEquals(expected, actual);
     }
 
     @Test
