@@ -80,6 +80,15 @@ class MetroLineTest {
         assertTrue(metroLine.getHead().getPreviousStation().isEmpty());
     }
 
+    @Test
+    @DisplayName("Metro line return correct boolean if it contains station")
+    void metroLineContainsStation() {
+        metroLine.append("Berlin").append("Bremen");
+
+        assertTrue(metroLine.containsStation("Bremen"));
+        assertFalse(metroLine.containsStation("Lebanon"));
+    }
+
 
     @Test
     @DisplayName("Append multiple stations connect correctly with next")
