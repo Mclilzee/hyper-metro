@@ -40,7 +40,8 @@ class MetrosControllerTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"/output something else", "/remove three value present", "/append \"missing qute",
-    "/output \"first value\" second", "/append three values present", "/add-head ends with\""})
+    "/output \"first value\" second", "/append three values present", "/add-head ends with\"",
+    "/connect only three values", "/connect two values", "/connect missing \""})
     void printInvalidCommand(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
         controller.start();
@@ -179,4 +180,22 @@ class MetrosControllerTest {
         assertTrue(metroService.getValues().contains(expected));
     }
 
+    @Test
+    void connectStationsCorrectly() {
+        MetrosController controller = new MetrosController(new Scanner("/connect Germany Berlin Lebanon Beirut\n/exit"), metroService);
+        metroService.addMetroLine("Germany");
+        metroService.appendStation("Germany", "Berlin");
+
+        metroService.addMetroLine("Lebanon");
+        metroService.appendStation("Lebanon", "Beirut");
+        controller.start();
+
+        MetroLine expected = new MetroLine();
+        expected.append("Berlin");
+        Station station = expected.getHead().getNextStation()
+                                  .orElseThrow();
+        station.addLineConnection("Lebanon", "Beirut");
+
+        assertTrue(metroService.getValues().contains(expected));
+    }
 }
