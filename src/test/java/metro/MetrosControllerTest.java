@@ -203,4 +203,26 @@ class MetrosControllerTest {
         assertTrue(metroService.getValues()
                                .contains(expected));
     }
+
+
+    @Test
+    void connectStationsCorrectlyWithSpaces() {
+        MetrosController controller = new MetrosController(new Scanner("/connect Hammersmith-and-City Hammersmith Metro-Railway \"Edgver road\"\n/exit"), metroService);
+        metroService.addMetroLine("Hammersmith-and-City");
+        metroService.appendStation("Hammersmith-and-City", "Hammersmith");
+
+        metroService.addMetroLine("Metro-Railway");
+        metroService.appendStation("Metro-Railway", "Edgver road");
+        controller.start();
+
+        MetroLine expected = new MetroLine();
+        expected.append("Hammersmith");
+        Station station = expected.getHead()
+                                  .getNextStation()
+                                  .orElseThrow();
+        station.addLineConnection("Metro-Railway", "Edgver road");
+
+        assertTrue(metroService.getValues()
+                               .contains(expected));
+    }
 }

@@ -23,7 +23,7 @@ public class MetrosController {
         Pattern pattern = Pattern.compile(
                 "^((/remove|/add-head|/append) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+)" +
                         "|(/output) (\".*\"|[^\"\\s]+)" +
-                        "|(/connect) (\".*\"|[^\"\\\\s]+) (\".*\"|[^\"\\\\s]+) (\".*\"|[^\"\\\\s]+) (\".*\"|[^\"\\\\s]+))$",
+                        "|(/connect) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+))$",
                 Pattern.CASE_INSENSITIVE
                                          );
 
