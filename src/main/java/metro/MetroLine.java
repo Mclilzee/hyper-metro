@@ -3,14 +3,13 @@ package metro;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class MetroStations {
+public class MetroLine {
 
     private final Station head = new Station("depot");
 
-    public MetroStations append(String stationName) {
+    public MetroLine append(String stationName) {
         Station station = new Station(stationName);
 
         Station lastStation = getLastStation();
@@ -19,7 +18,7 @@ public class MetroStations {
         return this;
     }
 
-    public MetroStations addHead(String stationName) {
+    public MetroLine addHead(String stationName) {
         Station station = new Station(stationName);
 
         Optional<Station> firstStation = head.getNextStation();
@@ -99,7 +98,7 @@ public class MetroStations {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        MetroStations that = (MetroStations) o;
+        MetroLine that = (MetroLine) o;
 
         return getStationsConnection().equals(that.getStationsConnection());
     }

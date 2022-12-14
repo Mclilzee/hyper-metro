@@ -53,33 +53,33 @@ public class MetrosController {
     }
 
     private void parseControllerInput(Matcher matcher) {
-        String metroStationsName = removeQuotes(matcher.group(3));
+        String metroLineName = removeQuotes(matcher.group(3));
         String stationName = removeQuotes(matcher.group(4));
         switch (matcher.group(2).toLowerCase()) {
-            case "/append" -> appendStation(metroStationsName, stationName);
-            case "/remove" -> removeStation(metroStationsName, stationName);
-            case "/add-head" -> addHeadStation(metroStationsName, stationName);
+            case "/append" -> appendStation(metroLineName, stationName);
+            case "/remove" -> removeStation(metroLineName, stationName);
+            case "/add-head" -> addHeadStation(metroLineName, stationName);
         }
     }
 
-    private void appendStation(String metroStationName, String stationName) {
-        metroService.appendStation(metroStationName, stationName);
+    private void appendStation(String MetroLineName, String stationName) {
+        metroService.appendStation(MetroLineName, stationName);
     }
 
-    private void addHeadStation(String metroStationsName, String stationName) {
-        metroService.addHead(metroStationsName, stationName);
+    private void addHeadStation(String metroLineName, String stationName) {
+        metroService.addHead(metroLineName, stationName);
     }
 
-    private void removeStation(String metroStationName, String stationName) {
-        metroService.removeStation(metroStationName, stationName);
+    private void removeStation(String MetroLineName, String stationName) {
+        metroService.removeStation(MetroLineName, stationName);
     }
 
     private void printStation(Matcher matcher) {
-        String metroStationsName = removeQuotes(matcher.group(6));
+        String metroLineName = removeQuotes(matcher.group(6));
 
         MetroPrinter printer = new LineConnectionsPrinter();
-        MetroStations metroStations = metroService.getMetroStations(metroStationsName);
-        System.out.println(printer.getMetroStationsPrintString(metroStations));
+        MetroLine metroLine = metroService.getMetroLine(metroLineName);
+        System.out.println(printer.getMetroLinePrintString(metroLine));
     }
 
     private String removeQuotes(String input) {

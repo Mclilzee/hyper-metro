@@ -1,6 +1,6 @@
 package metro.service;
 
-import metro.MetroStations;
+import metro.MetroLine;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,56 +9,56 @@ import java.util.Set;
 
 public class MetroMemoryService implements MetroService {
 
-    private final Map<String, MetroStations> map = new HashMap<>();
+    private final Map<String, MetroLine> map = new HashMap<>();
 
 
     @Override
-    public void addMetroStations(String metroStationsName) {
-        map.putIfAbsent(metroStationsName, new MetroStations());
+    public void addMetroLine(String metroLineName) {
+        map.putIfAbsent(metroLineName, new MetroLine());
     }
 
     @Override
-    public void putMetroStation(String metroStationName, MetroStations metroStations) {
-        if (metroStations == null) {
+    public void putMetroLine(String MetroLineName, MetroLine metroLine) {
+        if (metroLine == null) {
             return;
         }
 
-        map.putIfAbsent(metroStationName, metroStations);
+        map.putIfAbsent(MetroLineName, metroLine);
     }
 
     @Override
-    public MetroStations getMetroStations(String metroStationsName) {
-        return map.get(metroStationsName);
+    public MetroLine getMetroLine(String metroLineName) {
+        return map.get(metroLineName);
     }
 
     @Override
-    public void appendStation(String metroStationsName, String stationName) {
-        MetroStations metroStations = map.get(metroStationsName);
-        if (metroStations == null) {
+    public void appendStation(String metroLineName, String stationName) {
+        MetroLine metroLine = map.get(metroLineName);
+        if (metroLine == null) {
             return;
         }
 
-        metroStations.append(stationName);
+        metroLine.append(stationName);
     }
 
     @Override
-    public void addHead(String metroStationsName, String stationName) {
-        MetroStations metroStations = map.get(metroStationsName);
-        if (metroStations == null) {
+    public void addHead(String metroLineName, String stationName) {
+        MetroLine metroLine = map.get(metroLineName);
+        if (metroLine == null) {
             return;
         }
 
-        metroStations.addHead(stationName);
+        metroLine.addHead(stationName);
     }
 
     @Override
-    public void removeStation(String metroStationsName, String stationName) {
-        MetroStations metroStations = map.get(metroStationsName);
-        if (metroStations == null) {
+    public void removeStation(String metroLineName, String stationName) {
+        MetroLine metroLine = map.get(metroLineName);
+        if (metroLine == null) {
             return;
         }
 
-        metroStations.removeStation(stationName);
+        metroLine.removeStation(stationName);
     }
 
 
@@ -68,7 +68,7 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
-    public List<MetroStations> getValues() {
+    public List<MetroLine> getValues() {
         return map.values().stream().toList();
     }
 }

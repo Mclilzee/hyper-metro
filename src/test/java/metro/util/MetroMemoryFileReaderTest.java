@@ -1,6 +1,6 @@
 package metro.util;
 
-import metro.MetroStations;
+import metro.MetroLine;
 import metro.fileReader.MetroMemoryFileReader;
 import metro.service.MetroMemoryService;
 import metro.service.MetroService;
@@ -53,19 +53,19 @@ class MetroMemoryFileReaderTest {
     void returnCorrectMap() {
         MetroService service = reader.loadMetroFromFile(metroPath);
 
-        MetroStations m1 = new MetroStations();
+        MetroLine m1 = new MetroLine();
         m1.append("Bishops-road").append("Edgver road").append("Baker Street");
 
-        MetroStations m2 = new MetroStations();
+        MetroLine m2 = new MetroLine();
         m2.append("Hammersmith").append("Westbourne-park");
 
         MetroService expected = new MetroMemoryService();
-        expected.addMetroStations("m1");
+        expected.addMetroLine("m1");
         expected.appendStation("m1", "Bishops-road");
         expected.appendStation("m1", "Edgver road");
         expected.appendStation("m1", "Baker Street");
 
-        expected.addMetroStations("m2");
+        expected.addMetroLine("m2");
         expected.appendStation("m2", "Hammersmith");
         expected.appendStation("m2", "Westbourne-park");
 

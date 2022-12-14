@@ -1,6 +1,6 @@
 package metro.printing;
 
-import metro.MetroStations;
+import metro.MetroLine;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,10 +11,10 @@ class LineConnectionsPrinterTest {
 
     @Test
     void printStationsWithNoLineConnections() {
-        MetroStations metroStations = new MetroStations();
-        metroStations.append("Berlin").append("Bremen").append("Beirut");
+        MetroLine metroLine = new MetroLine();
+        metroLine.append("Berlin").append("Bremen").append("Beirut");
 
-        String actual =printer.getMetroStationsPrintString(metroStations);
+        String actual =printer.getMetroLinePrintString(metroLine);
         String expected = """
                           depot
                           Berlin
@@ -27,11 +27,11 @@ class LineConnectionsPrinterTest {
 
     @Test
     void printStationWithLineConnections() {
-        MetroStations metroStations = new MetroStations();
-        metroStations.append("Berlin").append("Bremen").append("Beirut");
-        metroStations.addLineConnection("Bremen", "Germany", "Beirut");
+        MetroLine metroLine = new MetroLine();
+        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.addLineConnection("Bremen", "Germany", "Beirut");
 
-        String actual = printer.getMetroStationsPrintString(metroStations);
+        String actual = printer.getMetroLinePrintString(metroLine);
         String expected = """
                           depot
                           Berlin
@@ -44,13 +44,13 @@ class LineConnectionsPrinterTest {
 
     @Test
     void printStationWithMultipleConnections() {
-        MetroStations metroStations = new MetroStations();
-        metroStations.append("Berlin").append("Bremen").append("Beirut");
-        metroStations.addLineConnection("Bremen", "Germany", "Beirut");
-        metroStations.addLineConnection("Bremen", "Lebanon", "Aramoun");
-        metroStations.addLineConnection("Beirut", "France", "Paris");
+        MetroLine metroLine = new MetroLine();
+        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.addLineConnection("Bremen", "Germany", "Beirut");
+        metroLine.addLineConnection("Bremen", "Lebanon", "Aramoun");
+        metroLine.addLineConnection("Beirut", "France", "Paris");
 
-        String actual = printer.getMetroStationsPrintString(metroStations);
+        String actual = printer.getMetroLinePrintString(metroLine);
         String expected = """
                           depot
                           Berlin
@@ -64,9 +64,9 @@ class LineConnectionsPrinterTest {
 
     @Test
     void printNothingIfMetroIsEmpty() {
-        MetroStations metroStations = new MetroStations();
+        MetroLine metroLine = new MetroLine();
 
-        String actual = printer.getMetroStationsPrintString(metroStations);
+        String actual = printer.getMetroLinePrintString(metroLine);
         String expected = "";
 
         assertEquals(expected, actual);
@@ -74,7 +74,7 @@ class LineConnectionsPrinterTest {
 
     @Test
     void printNothingIfNullPassed() {
-        String actual =printer.getMetroStationsPrintString(null);
+        String actual =printer.getMetroLinePrintString(null);
         String expected = "";
 
         assertEquals(expected, actual);

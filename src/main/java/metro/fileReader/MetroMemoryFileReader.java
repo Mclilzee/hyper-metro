@@ -3,7 +3,7 @@ package metro.fileReader;
 import metro.service.MetroMemoryService;
 import metro.service.MetroService;
 import metro.util.MetroJsonReader;
-import metro.util.MetroStationsFactory;
+import metro.util.MetroLineFactory;
 
 import java.nio.file.Path;
 import java.util.Map;
@@ -31,7 +31,7 @@ public class MetroMemoryFileReader implements MetroFileReader {
         }
 
         for (var entrySet : map.get().entrySet()) {
-            service.putMetroStation(entrySet.getKey(), MetroStationsFactory.createMetroStations(entrySet.getValue()));
+            service.putMetroLine(entrySet.getKey(), MetroLineFactory.createMetroLine(entrySet.getValue()));
         }
 
         return service;

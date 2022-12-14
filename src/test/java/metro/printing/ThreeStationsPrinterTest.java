@@ -1,6 +1,6 @@
 package metro.printing;
 
-import metro.MetroStations;
+import metro.MetroLine;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +12,13 @@ class ThreeStationsPrinterTest {
     @Test
     @DisplayName("print stations list of three connected stations")
     void getConnectedThreeStationsList() {
-        MetroStations metroStations = new MetroStations();
-        metroStations.append("Berlin")
-                     .append("Bremen")
-                     .append("Hamburg")
-                     .append("Beirut");
+        MetroLine metroLine = new MetroLine();
+        metroLine.append("Berlin")
+                 .append("Bremen")
+                 .append("Hamburg")
+                 .append("Beirut");
 
-        String actual = printer.getMetroStationsPrintString(metroStations);
+        String actual = printer.getMetroLinePrintString(metroLine);
         String expected = """
                           depot - Berlin - Bremen
                           Berlin - Bremen - Hamburg
@@ -31,10 +31,10 @@ class ThreeStationsPrinterTest {
     @Test
     @DisplayName("print nothing if stations unavailable")
     void getConnectedEmptyStations() {
-        MetroStations metroStations = new MetroStations();
+        MetroLine metroLine = new MetroLine();
         ThreeStationsPrinter printer = new ThreeStationsPrinter();
 
-        String actual = printer.getMetroStationsPrintString(metroStations);
+        String actual = printer.getMetroLinePrintString(metroLine);
         String expected = "";
 
         assertEquals(expected, actual);
@@ -44,7 +44,7 @@ class ThreeStationsPrinterTest {
     void printNothingIfStationIsNull() {
         ThreeStationsPrinter printer = new ThreeStationsPrinter();
 
-        String actual = printer.getMetroStationsPrintString(null);
+        String actual = printer.getMetroLinePrintString(null);
         String expected = "";
 
         assertEquals(expected, actual);

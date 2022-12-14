@@ -39,7 +39,7 @@ class MetrosControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/output something else", "/remove thre value present", "/append \"missing qute",
+    @ValueSource(strings = {"/output something else", "/remove three value present", "/append \"missing qute",
     "/output \"first value\" second", "/append three values present", "/add-head ends with\""})
     void printInvalidCommand(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
@@ -53,17 +53,17 @@ class MetrosControllerTest {
     @ValueSource(strings = {"/output Germany", "/output \"Germany\""})
     void printMetroInformation(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
-        metroService.addMetroStations("Germany");
+        metroService.addMetroLine("Germany");
         metroService.appendStation("Germany", "Berlin");
         metroService.appendStation("Germany", "Bremen");
         metroService.appendStation("Germany", "Beirut");
         controller.start();
 
-        MetroStations metroStations = metroService.getMetroStations("Germany");
+        MetroLine metroLine = metroService.getMetroLine("Germany");
 
         // Use specific printer and add lineSeparator for printing
         MetroPrinter printer = new LineConnectionsPrinter();
-        String expected = printer.getMetroStationsPrintString(metroStations) + System.lineSeparator();
+        String expected = printer.getMetroLinePrintString(metroLine) + System.lineSeparator();
 
         assertEquals(expected, outputStream.toString());
     }
@@ -71,17 +71,17 @@ class MetrosControllerTest {
     @Test
     void printMetroInformationWithSpaces() {
         MetrosController controller = new MetrosController(new Scanner("/output \"Hammer City\"\n/exit"), metroService);
-        metroService.addMetroStations("Hammer City");
+        metroService.addMetroLine("Hammer City");
         metroService.appendStation("Hammer City", "Berlin");
         metroService.appendStation("Hammer City", "Bremen");
         metroService.appendStation("Hammer City", "Beirut");
         controller.start();
 
-        MetroStations metroStations = metroService.getMetroStations("Hammer City");
+        MetroLine metroLine = metroService.getMetroLine("Hammer City");
 
         // Use specific printer and add lineSeparator for printing
         MetroPrinter printer = new LineConnectionsPrinter();
-        String expected = printer.getMetroStationsPrintString(metroStations) + System.lineSeparator();
+        String expected = printer.getMetroLinePrintString(metroLine) + System.lineSeparator();
 
         assertEquals(expected, outputStream.toString());
     }
@@ -93,10 +93,10 @@ class MetrosControllerTest {
             "/append \"Germany\" \"Berlin\"\n/append \"Germany\" \"Bremen\""})
     void appendStation(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
-        metroService.addMetroStations("Germany");
+        metroService.addMetroLine("Germany");
         controller.start();
 
-        MetroStations expected = new MetroStations();
+        MetroLine expected = new MetroLine();
         expected.append("Berlin").append("Bremen");
 
         assertTrue(metroService.getValues().contains(expected));
@@ -105,10 +105,10 @@ class MetrosControllerTest {
     @Test
     void appendStationWithSpaces() {
         MetrosController controller = new MetrosController(new Scanner("/append \"Hammer City\" \"Beirut Tower\"\n/exit"), metroService);
-        metroService.addMetroStations("Hammer City");
+        metroService.addMetroLine("Hammer City");
         controller.start();
 
-        MetroStations expected = new MetroStations();
+        MetroLine expected = new MetroLine();
         expected.append("Beirut Tower");
 
         assertTrue(metroService.getValues().contains(expected));
@@ -122,10 +122,10 @@ class MetrosControllerTest {
             "/add-head \"Germany\" \"Berlin\"\n/add-head \"Germany\" \"Bremen\""})
     void addHeadStation(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
-        metroService.addMetroStations("Germany");
+        metroService.addMetroLine("Germany");
         controller.start();
 
-        MetroStations expected = new MetroStations();
+        MetroLine expected = new MetroLine();
         expected.addHead("Berlin").addHead("Bremen");
 
         assertTrue(metroService.getValues().contains(expected));
@@ -134,10 +134,10 @@ class MetrosControllerTest {
     @Test
     void addHeadStationWithSpaces() {
         MetrosController controller = new MetrosController(new Scanner("/add-head \"Germany Town\" \"Berlin Bridge\"\n/exit"), metroService);
-        metroService.addMetroStations("Germany Town");
+        metroService.addMetroLine("Germany Town");
         controller.start();
 
-        MetroStations expected = new MetroStations();
+        MetroLine expected = new MetroLine();
         expected.addHead("Berlin Bridge");
 
         assertTrue(metroService.getValues().contains(expected));
@@ -150,14 +150,14 @@ class MetrosControllerTest {
             "/remove \"Germany\" \"Bremen\""})
     void removeStation(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
-        metroService.addMetroStations("Germany");
+        metroService.addMetroLine("Germany");
         metroService.appendStation("Germany", "Berlin");
         metroService.appendStation("Germany", "Bremen");
         metroService.appendStation("Germany", "Beirut");
 
         controller.start();
 
-        MetroStations expected = new MetroStations();
+        MetroLine expected = new MetroLine();
         expected.append("Berlin").append("Beirut");
 
         assertTrue(metroService.getValues().contains(expected));
@@ -166,14 +166,14 @@ class MetrosControllerTest {
     @Test
     void removeStationWithSpaces() {
         MetrosController controller = new MetrosController(new Scanner("/remove \"German Village\" \"Bremen Circus\"\n/exit"), metroService);
-        metroService.addMetroStations("German Village");
+        metroService.addMetroLine("German Village");
         metroService.appendStation("German Village", "Berlin Town");
         metroService.appendStation("German Village", "Bremen Circus");
         metroService.appendStation("German Village", "Beirut Sea");
 
         controller.start();
 
-        MetroStations expected = new MetroStations();
+        MetroLine expected = new MetroLine();
         expected.append("Berlin Town").append("Beirut Sea");
 
         assertTrue(metroService.getValues().contains(expected));

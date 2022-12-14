@@ -7,14 +7,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MetroStationsTest {
+class MetroLineTest {
 
-    MetroStations metroStations = new MetroStations();
+    MetroLine metroLine = new MetroLine();
 
     @Test
     @DisplayName("Metro start with depot main station")
     void metroInit() {
-        Station head = metroStations.getHead();
+        Station head = metroLine.getHead();
 
         String expectedHeadName = "depot";
 
@@ -24,7 +24,7 @@ class MetroStationsTest {
     @Test
     @DisplayName("Returns complete list of connected stations")
     void getConnectedStations() {
-        metroStations.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.append("Berlin").append("Bremen").append("Beirut");
 
         List<Station> expected = List.of(
                 new Station("depot"),
@@ -33,15 +33,15 @@ class MetroStationsTest {
                 new Station("Beirut")
                                         );
 
-        assertEquals(expected, metroStations.getStationsConnection());
+        assertEquals(expected, metroLine.getStationsConnection());
     }
 
     @Test
     @DisplayName("Append multiple stations connect correctly with next")
     void stationAppendNext() {
-        metroStations.append("Berlin").append("Bremen");
+        metroLine.append("Berlin").append("Bremen");
 
-        Station actualFirstStation = metroStations.getHead().getNextStation().orElseThrow();
+        Station actualFirstStation = metroLine.getHead().getNextStation().orElseThrow();
         Station actualNextStation = actualFirstStation.getNextStation().orElseThrow();
 
         String expectedFirstStation = "Berlin";
@@ -55,10 +55,10 @@ class MetroStationsTest {
     @Test
     @DisplayName("Append multiple stations connect correctly with previous")
     void stationAppendPrevious() {
-        metroStations.append("Berlin").append("Bremen");
+        metroLine.append("Berlin").append("Bremen");
 
-        Station actualLastStation = metroStations.getHead().getNextStation().orElseThrow()
-                                                 .getNextStation().orElseThrow();
+        Station actualLastStation = metroLine.getHead().getNextStation().orElseThrow()
+                                             .getNextStation().orElseThrow();
         Station actualPreviousStation = actualLastStation.getPreviousStation().orElseThrow();
 
         String expectedLastStation = "Bremen";
@@ -66,15 +66,15 @@ class MetroStationsTest {
 
         assertEquals(expectedLastStation, actualLastStation.getName());
         assertEquals(expectedPreviousStation, actualPreviousStation.getName());
-        assertTrue(metroStations.getHead().getPreviousStation().isEmpty());
+        assertTrue(metroLine.getHead().getPreviousStation().isEmpty());
     }
 
     @Test
     @DisplayName("Add station head set next correctly")
     void stationAddHeadNext() {
-        metroStations.addHead("Berlin").addHead("Bremen");
+        metroLine.addHead("Berlin").addHead("Bremen");
 
-        Station actualFirstStation = metroStations.getHead().getNextStation().orElseThrow();
+        Station actualFirstStation = metroLine.getHead().getNextStation().orElseThrow();
         Station actualNextStation = actualFirstStation.getNextStation().orElseThrow();
 
         String expectedFirstStation = "Bremen";
@@ -88,10 +88,10 @@ class MetroStationsTest {
     @Test
     @DisplayName("Add station head set previous correctly")
     void stationAddHeadPrevious() {
-        metroStations.addHead("Berlin").addHead("Bremen");
+        metroLine.addHead("Berlin").addHead("Bremen");
 
-        Station actualLastStation = metroStations.getHead().getNextStation().orElseThrow()
-                                                 .getNextStation().orElseThrow();
+        Station actualLastStation = metroLine.getHead().getNextStation().orElseThrow()
+                                             .getNextStation().orElseThrow();
         Station actualPreviousStation = actualLastStation.getPreviousStation().orElseThrow();
 
         String expectedLastStation = "Berlin";
@@ -99,16 +99,16 @@ class MetroStationsTest {
 
         assertEquals(expectedLastStation, actualLastStation.getName());
         assertEquals(expectedPreviousStation, actualPreviousStation.getName());
-        assertTrue(metroStations.getHead().getPreviousStation().isEmpty());
+        assertTrue(metroLine.getHead().getPreviousStation().isEmpty());
     }
 
     @Test
     @DisplayName("Removing station set next correctly")
     void removeStationNext() {
-        metroStations.append("Berlin").append("Bremen").append("Beirut");
-        metroStations.removeStation("Bremen");
+        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.removeStation("Bremen");
 
-        Station actualFirstStation = metroStations.getHead().getNextStation().orElseThrow();
+        Station actualFirstStation = metroLine.getHead().getNextStation().orElseThrow();
         Station actualNextStation = actualFirstStation.getNextStation().orElseThrow();
 
         String expectedFirstStation = "Berlin";
@@ -122,12 +122,12 @@ class MetroStationsTest {
     @Test
     @DisplayName("Removing station set previous correctly")
     void removeStationPrevious() {
-        metroStations.append("Berlin").append("Bremen").append("Beirut");
-        metroStations.removeStation("Bremen");
+        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.removeStation("Bremen");
 
-        Station actualLastStation = metroStations.getHead().getNextStation().orElseThrow()
-                                                 .getNextStation()
-                                                 .orElseThrow();
+        Station actualLastStation = metroLine.getHead().getNextStation().orElseThrow()
+                                             .getNextStation()
+                                             .orElseThrow();
         Station actualPreviousStation = actualLastStation.getPreviousStation().orElseThrow();
 
         String expectedLastStation = "Beirut";
@@ -135,35 +135,35 @@ class MetroStationsTest {
 
         assertEquals(expectedLastStation, actualLastStation.getName());
         assertEquals(expectedPreviousStation, actualPreviousStation.getName());
-        assertTrue(metroStations.getHead().getPreviousStation().isEmpty());
+        assertTrue(metroLine.getHead().getPreviousStation().isEmpty());
     }
 
     @Test
     void equalStations() {
-        metroStations.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.append("Berlin").append("Bremen").append("Beirut");
 
-        MetroStations newStation = new MetroStations();
+        MetroLine newStation = new MetroLine();
         newStation.append("Berlin").append("Bremen").append("Beirut");
 
-        assertEquals(metroStations, newStation);
+        assertEquals(metroLine, newStation);
     }
 
     @Test
     void notEqual() {
-        metroStations.append("Berlin").append("Bremen").append("Frankfurt");
+        metroLine.append("Berlin").append("Bremen").append("Frankfurt");
 
-        MetroStations newStation = new MetroStations();
+        MetroLine newStation = new MetroLine();
         newStation.append("Berlin").append("Bremen").append("Beirut");
 
-        assertNotEquals(metroStations, newStation);
+        assertNotEquals(metroLine, newStation);
     }
 
     @Test
     void addConnectionLine() {
-       metroStations.append("Berlin");
-       metroStations.addLineConnection("Berlin", "Lebanon", "Beirut");
+       metroLine.append("Berlin");
+       metroLine.addLineConnection("Berlin", "Lebanon", "Beirut");
 
-       Station station = metroStations.getHead().getNextStation().orElseThrow();
+       Station station = metroLine.getHead().getNextStation().orElseThrow();
 
        List<LineConnection> expected = List.of(new LineConnection("Beirut", "Lebanon"));
 

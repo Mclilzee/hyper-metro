@@ -1,25 +1,25 @@
 package metro.service;
 
-import metro.MetroStations;
+import metro.MetroLine;
 
 import java.util.List;
 import java.util.Set;
 
 public interface MetroService {
 
-    void addMetroStations(String metroStationsName);
+    void addMetroLine(String metroLineName);
 
-    MetroStations getMetroStations(String metroStationsName);
+    MetroLine getMetroLine(String metroLineName);
 
-    void appendStation(String metroStationsName, String stationName);
+    void appendStation(String metroLineName, String stationName);
 
-    void addHead(String metroStationsName, String stationName);
+    void addHead(String metroLineName, String stationName);
 
-    void removeStation(String metroStationsName, String stationName);
+    void removeStation(String metroLineName, String stationName);
 
-    void putMetroStation(String metroStationName, MetroStations metroStations);
+    void putMetroLine(String MetroLineName, MetroLine metroLine);
 
     Set<String> getKeys();
 
-    List<MetroStations> getValues();
+    List<MetroLine> getValues();
 }

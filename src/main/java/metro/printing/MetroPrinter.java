@@ -1,9 +1,9 @@
 package metro.printing;
 
-import metro.MetroStations;
+import metro.MetroLine;
 
 public interface MetroPrinter {
 
-    String getMetroStationsPrintString(MetroStations metroStations);
+    String getMetroLinePrintString(MetroLine metroLine);
 
 }

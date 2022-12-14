@@ -1,24 +1,24 @@
 package metro.util;
 
-import metro.MetroStations;
+import metro.MetroLine;
 
 import java.util.List;
 import java.util.Map;
 
 import static java.util.Comparator.comparingInt;
 
-public class MetroStationsFactory {
-    public static MetroStations createMetroStations(Map<String, String> stationsMap) {
+public class MetroLineFactory {
+    public static MetroLine createMetroLine(Map<String, String> stationsMap) {
         List<String> stationNames = stationsMap.entrySet().stream()
                                                .sorted(comparingInt(entrySet -> Integer.parseInt(entrySet.getKey())))
                                                .map(Map.Entry::getValue)
                                                .toList();
 
-        MetroStations metroStations = new MetroStations();
+        MetroLine metroLine = new MetroLine();
         for (String stationName : stationNames) {
-            metroStations.append(stationName);
+            metroLine.append(stationName);
         }
 
-        return metroStations;
+        return metroLine;
     }
 }

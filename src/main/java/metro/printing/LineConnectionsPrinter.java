@@ -1,7 +1,7 @@
 package metro.printing;
 
 import metro.LineConnection;
-import metro.MetroStations;
+import metro.MetroLine;
 import metro.Station;
 
 import java.util.List;
@@ -10,14 +10,14 @@ import java.util.stream.Collectors;
 public class LineConnectionsPrinter implements MetroPrinter{
 
     @Override
-    public String getMetroStationsPrintString(MetroStations metroStations) {
-        if (metroStations == null || metroStations.getStationsConnection().size() <= 1) {
+    public String getMetroLinePrintString(MetroLine metroLine) {
+        if (metroLine == null || metroLine.getStationsConnection().size() <= 1) {
             return "";
         }
 
-       String printString =  metroStations.getStationsConnection().stream()
-                .flatMap(station -> getStationFullStrings(station).stream())
-                .collect(Collectors.joining("\n"));
+       String printString =  metroLine.getStationsConnection().stream()
+                                      .flatMap(station -> getStationFullStrings(station).stream())
+                                      .collect(Collectors.joining("\n"));
 
         return printString + "\ndepot";
     }

@@ -33,8 +33,8 @@ public class Station {
         this.previousStation = previousStation;
     }
 
-    public void addLineConnection(String metroStationsName, String stationName) {
-        lineConnections.add(new LineConnection(stationName, metroStationsName));
+    public void addLineConnection(String metroLineName, String stationName) {
+        lineConnections.add(new LineConnection(stationName, metroLineName));
     }
 
     public List<LineConnection> getLineConnections() {

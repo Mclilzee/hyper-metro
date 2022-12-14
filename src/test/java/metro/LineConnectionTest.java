@@ -9,10 +9,10 @@ class LineConnectionTest {
     LineConnection lineConnection = new LineConnection("Berlin", "Germany");
 
     @Test
-    void metroStationsName() {
+    void metroLineName() {
         String expected = "Germany";
 
-        assertEquals(expected, lineConnection.metroStationsName());
+        assertEquals(expected, lineConnection.metroLineName());
     }
 
     @Test
