@@ -20,9 +20,12 @@ public class MetrosController {
     }
 
     public void start() {
-        Pattern pattern = Pattern.compile("^((/remove|/add-head|/append) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+)" +
-                        "|(/output) (\".*\"|[^\"\\s]+))$",
-                Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile(
+                "^((/remove|/add-head|/append) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+)" +
+                        "|(/output) (\".*\"|[^\"\\s]+)" +
+                        "|(/connect) (\".*\"|[^\"\\\\s]+) (\".*\"|[^\"\\\\s]+) (\".*\"|[^\"\\\\s]+) (\".*\"|[^\"\\\\s]+))$",
+                Pattern.CASE_INSENSITIVE
+                                         );
 
         while (true) {
             String input = scanner.nextLine();
@@ -47,6 +50,7 @@ public class MetrosController {
         if (matcherString.startsWith("/output")) {
             printStation(matcher);
         } else if (matcherString.startsWith("/connect")) {
+            connectStations(matcher);
         } else {
             parseControllerInput(matcher);
         }
@@ -63,6 +67,26 @@ public class MetrosController {
         }
     }
 
+    private void printStation(Matcher matcher) {
+        String metroLineName = removeQuotes(matcher.group(6));
+        Optional<MetroLine> metroLine = metroService.getMetroLine(metroLineName);
+        if (metroLine.isEmpty()) {
+            return;
+        }
+
+        MetroPrinter printer = new LineConnectionsPrinter();
+        System.out.println(printer.getMetroLinePrintString(metroLine.get()));
+    }
+
+    private void connectStations(Matcher matcher) {
+        String metroLineName = removeQuotes(matcher.group(8));
+        String stationName = removeQuotes(matcher.group(9));
+        String toMetroLine = removeQuotes(matcher.group(10));
+        String toStation = removeQuotes(matcher.group(11));
+
+        metroService.connectMetroLine(metroLineName, stationName, toMetroLine, toStation);
+    }
+
     private void appendStation(String MetroLineName, String stationName) {
         metroService.appendStation(MetroLineName, stationName);
     }
@@ -73,17 +97,6 @@ public class MetrosController {
 
     private void removeStation(String MetroLineName, String stationName) {
         metroService.removeStation(MetroLineName, stationName);
-    }
-
-    private void printStation(Matcher matcher) {
-        String metroLineName = removeQuotes(matcher.group(6));
-        Optional<MetroLine> metroLine = metroService.getMetroLine(metroLineName);
-        if (metroLine.isEmpty()) {
-            return;
-        }
-
-        MetroPrinter printer = new LineConnectionsPrinter();
-        System.out.println(printer.getMetroLinePrintString(metroLine.get()));
     }
 
     private String removeQuotes(String input) {
