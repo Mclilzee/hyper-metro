@@ -1,10 +1,10 @@
 {
   "Metro-Railway": {
     "3": {
-      "name": "Baker street",
+      "name": "Baker Street",
       "transfer": [{
         "line": "Hammersmith-and-City",
-        "station": "Baker street"
+        "station": "Baker Street"
       }]
     },
     "1": {
@@ -26,10 +26,10 @@
       "transfer": []
     },
     "3": {
-      "name": "Baker street",
+      "name": "Baker Street",
       "transfer": [{
         "line": "Metro-Railway",
-        "station": "Baker street"
+        "station": "Baker Street"
       }]
     }
   }

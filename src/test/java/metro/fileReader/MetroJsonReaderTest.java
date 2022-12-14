@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,17 +38,22 @@ class MetroJsonReaderTest {
 
     @Test
     void parseCorrectMap() {
-        Map<String, Map<String, String>> actual = MetroJsonReader.parseMetroJson(metroPath).orElseThrow();
+        Map<String, Map<String, StationDTO>> actual = MetroJsonReader.parseMetroJson(metroPath).orElseThrow();
 
-        Map<String, Map<String, String>> expected = new HashMap<>();
-        expected.put("m1", new HashMap<>());
-        expected.get("m1").put("3", "Baker Street");
-        expected.get("m1").put("1", "Bishops-road");
-        expected.get("m1").put("2", "Edgver road");
+        Map<String, Map<String, StationDTO>> expected = new HashMap<>();
+        expected.put("Metro-Railway", new HashMap<>());
+        ConnectionDTO metroRailwayConnection = new ConnectionDTO("Hammersmith-and-City", "Baker Street");
 
-        expected.put("m2", new HashMap<>());
-        expected.get("m2").put("2", "Westbourne-park");
-        expected.get("m2").put("1", "Hammersmith");
+        expected.get("Metro-Railway").put("3", new StationDTO("Baker Street", List.of(metroRailwayConnection)));
+        expected.get("Metro-Railway").put("1", new StationDTO("Bishops-road", List.of()));
+        expected.get("Metro-Railway").put("2", new StationDTO("Edgver road", List.of()));
+
+        expected.put("Hammersmith-and-City", new HashMap<>());
+        ConnectionDTO hammerSmithConnection = new ConnectionDTO("Metro-Railway", "Baker Street");
+
+        expected.get("Hammersmith-and-City").put("2", new StationDTO("Westbourne-park", List.of()));
+        expected.get("Hammersmith-and-City").put("1", new StationDTO("Hammersmith", List.of()));
+        expected.get("Hammersmith-and-City").put("3", new StationDTO("Baker Street", List.of(hammerSmithConnection)));
 
         assertEquals(expected, actual);
     }

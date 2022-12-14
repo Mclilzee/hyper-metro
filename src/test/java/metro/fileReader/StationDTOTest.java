@@ -39,6 +39,22 @@ class StationDTOTest {
     }
 
     @Test
+    void getTransferNull() {
+        jsonString = """
+                        {
+                        "name" :"Baker street",
+                        "transfer":null
+                        }
+                        """;
+
+        StationDTO stationDTO = gson.fromJson(jsonString, StationDTO.class);
+
+        List<ConnectionDTO> expected = List.of();
+
+        assertEquals(expected, stationDTO.getTransfer());
+    }
+
+    @Test
     void setMultipleTransfers() {
         jsonString = """
                      {
@@ -64,5 +80,30 @@ class StationDTOTest {
                                               );
 
         assertEquals(expected, stationDTO.getTransfer());
+    }
+
+    @Test
+    void equals() {
+        StationDTO stationDTO = new StationDTO("Berlin", List.of());
+        StationDTO otherStationDTO = new StationDTO("Berlin", List.of());
+
+        assertEquals(stationDTO, otherStationDTO);
+    }
+
+    @Test
+    void equalsWithTransfers() {
+        List<ConnectionDTO> firstConnections = List.of(
+                new ConnectionDTO("Germany", "Berlin"),
+                new ConnectionDTO("Germany", "Bremen")
+                                                      );
+        List<ConnectionDTO> secondConnections = List.of(
+                new ConnectionDTO("Germany", "Berlin"),
+                new ConnectionDTO("Germany", "Bremen")
+                                                      );
+
+        StationDTO stationDTO = new StationDTO("Berlin", firstConnections);
+        StationDTO otherStationDTO = new StationDTO("Berlin", secondConnections);
+
+        assertEquals(stationDTO, otherStationDTO);
     }
 }

@@ -49,7 +49,7 @@ class MetroMemoryFileReaderTest {
     }
 
     @Test
-    void returnCorrectMap() {
+    void containsCorrectValues() {
         MetroService service = reader.loadMetroFromFile(metroPath);
 
         MetroLine m1 = new MetroLine();
@@ -59,16 +59,41 @@ class MetroMemoryFileReaderTest {
         m2.append("Hammersmith").append("Westbourne-park");
 
         MetroService expected = new MetroMemoryService();
-        expected.addMetroLine("m1");
-        expected.appendStation("m1", "Bishops-road");
-        expected.appendStation("m1", "Edgver road");
-        expected.appendStation("m1", "Baker Street");
+        expected.addMetroLine("Metro-Railway");
+        expected.appendStation("Metro-Railway", "Bishops-road");
+        expected.appendStation("Metro-Railway", "Edgver road");
+        expected.appendStation("Metro-Railway", "Baker Street");
 
-        expected.addMetroLine("m2");
-        expected.appendStation("m2", "Hammersmith");
-        expected.appendStation("m2", "Westbourne-park");
+        expected.addMetroLine("Hammersmith-and-City");
+        expected.appendStation("Hammersmith-and-City", "Hammersmith");
+        expected.appendStation("Hammersmith-and-City", "Westbourne-park");
+
+        expected.connectMetroLine("Metro-Railway", "Baker Street", "Hammersmith-and-City", "Baker Street");
+        expected.connectMetroLine("Hammersmith-and-City", "Baker Street", "Metro-Railway", "Baker Street");
+
+        assertTrue(service.getValues().containsAll(expected.getValues()));
+    }
+
+    @Test
+    void containsCorrectKeys() {
+        MetroService service = reader.loadMetroFromFile(metroPath);
+
+        MetroLine m1 = new MetroLine();
+        m1.append("Bishops-road").append("Edgver road").append("Baker Street");
+
+        MetroLine m2 = new MetroLine();
+        m2.append("Hammersmith").append("Westbourne-park");
+
+        MetroService expected = new MetroMemoryService();
+        expected.addMetroLine("Metro-Railway");
+        expected.appendStation("Metro-Railway", "Bishops-road");
+        expected.appendStation("Metro-Railway", "Edgver road");
+        expected.appendStation("Metro-Railway", "Baker Street");
+
+        expected.addMetroLine("Hammersmith-and-City");
+        expected.appendStation("Hammersmith-and-City", "Hammersmith");
+        expected.appendStation("Hammersmith-and-City", "Westbourne-park");
 
         assertEquals(expected.getKeys(), service.getKeys());
-        assertTrue(service.getValues().containsAll(expected.getValues()));
     }
 }
