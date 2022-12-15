@@ -97,7 +97,7 @@ class MetrosControllerTest {
         metroService.addMetroLine("Germany");
         controller.start();
 
-        MetroLine expected = new MetroLine();
+        MetroLine expected = new MetroLine("");
         expected.append("Berlin")
                 .append("Bremen");
 
@@ -111,7 +111,7 @@ class MetrosControllerTest {
         metroService.addMetroLine("Hammer City");
         controller.start();
 
-        MetroLine expected = new MetroLine();
+        MetroLine expected = new MetroLine("");
         expected.append("Beirut Tower");
 
         assertTrue(metroService.getValues()
@@ -125,7 +125,7 @@ class MetrosControllerTest {
         metroService.addMetroLine("Germany");
         controller.start();
 
-        MetroLine expected = new MetroLine();
+        MetroLine expected = new MetroLine("");
         expected.addHead("Berlin")
                 .addHead("Bremen");
 
@@ -139,7 +139,7 @@ class MetrosControllerTest {
         metroService.addMetroLine("Germany Town");
         controller.start();
 
-        MetroLine expected = new MetroLine();
+        MetroLine expected = new MetroLine("");
         expected.addHead("Berlin Bridge");
 
         assertTrue(metroService.getValues()
@@ -157,7 +157,7 @@ class MetrosControllerTest {
 
         controller.start();
 
-        MetroLine expected = new MetroLine();
+        MetroLine expected = new MetroLine("");
         expected.append("Berlin")
                 .append("Beirut");
 
@@ -175,7 +175,7 @@ class MetrosControllerTest {
 
         controller.start();
 
-        MetroLine expected = new MetroLine();
+        MetroLine expected = new MetroLine("");
         expected.append("Berlin Town")
                 .append("Beirut Sea");
 
@@ -193,12 +193,13 @@ class MetrosControllerTest {
         metroService.appendStation("Lebanon", "Beirut");
         controller.start();
 
-        MetroLine expected = new MetroLine();
-        expected.append("Berlin");
-        Station station = expected.getHead()
-                                  .getNextStation()
-                                  .orElseThrow();
-        station.addLineConnection("Lebanon", "Beirut");
+        MetroLine expected = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        expected.append(berlin);
+
+        MetroLine lebanon = new MetroLine("Lebanon");
+        Station beirut = new Station("Beirut");
+        berlin.addLineConnection(lebanon, beirut);
 
         assertTrue(metroService.getValues()
                                .contains(expected));
@@ -215,14 +216,15 @@ class MetrosControllerTest {
         metroService.appendStation("Metro-Railway", "Edgver road");
         controller.start();
 
-        MetroLine expected = new MetroLine();
-        expected.append("Hammersmith");
-        Station station = expected.getHead()
-                                  .getNextStation()
-                                  .orElseThrow();
-        station.addLineConnection("Metro-Railway", "Edgver road");
+        MetroLine expectedStation = new MetroLine("Hammersmith-and-City");
+        Station hammersmith = new Station("Hammersmith");
+        expectedStation.append(hammersmith);
+
+        MetroLine metroRailway = new MetroLine("Metro-Railway");
+        Station edgverRoad = new Station("Edgver road");
+        hammersmith.addLineConnection(metroRailway, edgverRoad);
 
         assertTrue(metroService.getValues()
-                               .contains(expected));
+                               .contains(expectedStation));
     }
 }

@@ -14,7 +14,7 @@ public class Main {
         Path path = Paths.get(args[0]);
         if (Files.exists(path)) {
             MetroFileReader reader = new MetroMemoryFileReader();
-            new MetrosController(new Scanner(System.in), reader.loadMetroFromFile(path)).start();
+            new MetrosController(new Scanner(System.in), reader.loadMetroServiceFromFile(path)).start();
         } else {
             System.out.println("Error! Such a file doesn't exist!");
         }

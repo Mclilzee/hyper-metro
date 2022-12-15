@@ -136,6 +136,26 @@ class MetroLineTest {
     }
 
     @Test
+    @DisplayName("Find the correct station by name")
+    void getCorrectStation() {
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        metroLine.append(berlin).append(bremen);
+
+        assertEquals(berlin, metroLine.findStationByName("Berlin").orElseThrow());
+    }
+
+    @Test
+    @DisplayName("Return empty if station was not found")
+    void returnEmptyIfStationNotFound() {
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        metroLine.append(berlin).append(bremen);
+
+        assertTrue(metroLine.findStationByName("Frankfurt").isEmpty());
+    }
+
+    @Test
     @DisplayName("Add station head set next correctly")
     void stationAddHeadNext() {
         metroLine.addHead("Berlin").addHead("Bremen");

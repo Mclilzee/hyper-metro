@@ -31,19 +31,19 @@ class MetroMemoryFileReaderTest {
 
     @Test
     void handleIncorrectJson() {
-        MetroService service = reader.loadMetroFromFile(incorrectJsonPath);
+        MetroService service = reader.loadMetroServiceFromFile(incorrectJsonPath);
         assertTrue(service.getKeys().isEmpty());
     }
 
     @Test
     void getEmptyMapIfFileIsEmpty() {
-      MetroService service = reader.loadMetroFromFile(emptyFilePath);
+      MetroService service = reader.loadMetroServiceFromFile(emptyFilePath);
       assertTrue(service.getKeys().isEmpty());
     }
 
     @Test
     void emptyFilePrintsCorrectMessage() {
-        reader.loadMetroFromFile(emptyFilePath);
+        reader.loadMetroServiceFromFile(emptyFilePath);
         String expected = "Incorrect file" + System.lineSeparator();
 
         assertEquals(expected, outputStream.toString());
@@ -51,12 +51,12 @@ class MetroMemoryFileReaderTest {
 
     @Test
     void containsCorrectValues() {
-        MetroService service = reader.loadMetroFromFile(metroPath);
+        MetroService service = reader.loadMetroServiceFromFile(metroPath);
 
-        MetroLine m1 = new MetroLine();
+        MetroLine m1 = new MetroLine("m1");
         m1.append("Bishops-road").append("Edgver road").append("Baker Street");
 
-        MetroLine m2 = new MetroLine();
+        MetroLine m2 = new MetroLine("m2");
         m2.append("Hammersmith").append("Westbourne-park");
 
         MetroService mockService = new MetroMemoryService();
@@ -81,12 +81,12 @@ class MetroMemoryFileReaderTest {
 
     @Test
     void containsCorrectKeys() {
-        MetroService service = reader.loadMetroFromFile(metroPath);
+        MetroService service = reader.loadMetroServiceFromFile(metroPath);
 
-        MetroLine m1 = new MetroLine();
+        MetroLine m1 = new MetroLine("m1");
         m1.append("Bishops-road").append("Edgver road").append("Baker Street");
 
-        MetroLine m2 = new MetroLine();
+        MetroLine m2 = new MetroLine("m2");
         m2.append("Hammersmith").append("Westbourne-park");
 
         MetroService expected = new MetroMemoryService();

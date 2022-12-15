@@ -9,7 +9,7 @@ import java.nio.file.Path;
 public class MetroMemoryFileReader implements MetroFileReader {
 
     @Override
-    public MetroService loadMetroFromFile(Path path) {
+    public MetroService loadMetroServiceFromFile(Path path) {
         if (path.toString()
                 .endsWith(".json")) {
             return getJsonMetroService(path);
@@ -19,16 +19,15 @@ public class MetroMemoryFileReader implements MetroFileReader {
     }
 
     private MetroService getJsonMetroService(Path path) {
-        var map = MetroJsonReader.parseMetroJson(path);
+        var jsonMap = MetroJsonReader.parseMetroJson(path);
         MetroMemoryService service = new MetroMemoryService();
-        if (map.isEmpty()) {
+        if (jsonMap.isEmpty()) {
             System.out.println("Incorrect file");
             return service;
         }
 
-        for (var entrySet : map.get().entrySet()) {
-            service.putMetroLine(entrySet.getKey(), MetroLineFactory.createMetroLine(entrySet.getValue()));
-        }
+        jsonMap.get()
+           .forEach((key, value) -> service.putMetroLine(key, MetroLineFactory.createMetroLine(key, value)));
 
         return service;
     }
