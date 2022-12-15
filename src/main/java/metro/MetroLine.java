@@ -46,6 +46,17 @@ public class MetroLine {
         return this;
     }
 
+
+    public MetroLine addHead(Station station) {
+        Optional<Station> firstStation = head.getNextStation();
+        station.setNextStation(firstStation.orElse(null));
+        station.setPreviousStation(head);
+        head.setNextStation(station);
+
+        firstStation.ifPresent(foundStation -> foundStation.setPreviousStation(station));
+
+        return this;
+    }
     public Station getHead() {
         return head;
     }

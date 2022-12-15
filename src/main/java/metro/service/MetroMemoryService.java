@@ -16,12 +16,12 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
-    public void putMetroLine(String metroLineName, MetroLine metroLine) {
+    public void addMetroLine(MetroLine metroLine) {
         if (metroLine == null) {
             return;
         }
 
-        map.putIfAbsent(metroLineName, metroLine);
+        map.putIfAbsent(metroLine.getName(), metroLine);
     }
 
     @Override

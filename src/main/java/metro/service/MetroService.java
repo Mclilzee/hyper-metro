@@ -18,7 +18,7 @@ public interface MetroService {
 
     void removeStation(String metroLineName, String stationName);
 
-    void putMetroLine(String metroLineName, MetroLine metroLine);
+    void addMetroLine(MetroLine metroLine);
 
     void connectMetroLine(String metroLineName, String stationName, String toMetroLine, String toStation);
 

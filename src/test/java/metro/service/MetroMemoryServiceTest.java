@@ -39,7 +39,10 @@ class MetroMemoryServiceTest {
     void addMetroStationDoesNotOverwrite() {
         metroMemoryService.addMetroLine("Germany");
         MetroLine metroStations = metroMemoryService.getMetroLine("Germany").orElseThrow();
-        metroStations.append("Berlin");
+
+        // Adding new station to test that it's same reference
+        Station berlin = new Station("Berlin");
+        metroStations.append(berlin);
 
         metroMemoryService.addMetroLine("Germany");
 
@@ -51,8 +54,9 @@ class MetroMemoryServiceTest {
         metroMemoryService.addMetroLine("Germany");
         metroMemoryService.appendStation("Germany", "Berlin");
 
-        MetroLine expected = new MetroLine();
-        expected.append("Berlin");
+        MetroLine expected = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        expected.append(berlin);
 
         assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
     }
@@ -62,8 +66,9 @@ class MetroMemoryServiceTest {
         metroMemoryService.addMetroLine("Germany");
         metroMemoryService.addHead("Germany", "Berlin");
 
-        MetroLine expected = new MetroLine();
-        expected.addHead("Berlin");
+        MetroLine expected = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        expected.addHead(berlin);
 
         assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
     }
@@ -77,21 +82,23 @@ class MetroMemoryServiceTest {
 
         metroMemoryService.removeStation("Germany", "Bremen");
 
-        MetroLine expected = new MetroLine();
-        expected.append("Berlin")
-                .append("Beirut");
+        MetroLine expected = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        Station beirut = new Station("Beirut");
+        expected.append(berlin)
+                .append(beirut);
 
         assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
     }
 
     @Test
-    void putMetroStations() {
-        MetroLine metroStations = new MetroLine();
+    void addMetroLine() {
+        MetroLine metroStations = new MetroLine("Germany");
         metroStations.append("Berlin")
                      .append("Bremen")
                      .append("Beirut");
 
-        metroMemoryService.putMetroLine("Germany", metroStations);
+        metroMemoryService.addMetroLine(metroStations);
 
         assertTrue(metroMemoryService.getKeys()
                                      .contains("Germany"));
@@ -99,21 +106,32 @@ class MetroMemoryServiceTest {
     }
 
     @Test
-    void putMetroStationDoesNotOverwrite() {
-        MetroLine metroStations = new MetroLine();
-        metroStations.append("Berlin")
-                     .append("Bremen")
-                     .append("Beirut");
+    void addMetroLineDoesNotOverwrite() {
+        MetroLine germany = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        Station beirut = new Station("Beirut");
+        germany.append(berlin)
+                .append(bremen)
+                .append(beirut);
 
-        metroMemoryService.addMetroLine("Germany");
-        metroMemoryService.putMetroLine("Germany", metroStations);
+        MetroLine otherLine = new MetroLine("Germany");
+        Station secondBerlin = new Station("Berlin");
+        Station secondBremen = new Station("Bremen");
+        Station secondBeirut = new Station("Beirut");
+        otherLine.append(secondBerlin)
+                     .append(secondBremen)
+                     .append(secondBeirut);
 
-        assertNotEquals(metroMemoryService.getMetroLine("Germany"), metroStations);
+        metroMemoryService.addMetroLine(germany);
+        metroMemoryService.addMetroLine(otherLine);
+
+        assertNotEquals(metroMemoryService.getMetroLine("Germany").orElseThrow(), germany);
     }
 
     @Test
     void putMetroStationsDoesNotPutNull() {
-        metroMemoryService.putMetroLine("Germany", null);
+        metroMemoryService.addMetroLine((MetroLine) null);
 
         Set<String> expected = Set.of();
         assertEquals(expected, metroMemoryService.getKeys());

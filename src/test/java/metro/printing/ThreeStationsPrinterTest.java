@@ -1,6 +1,7 @@
 package metro.printing;
 
 import metro.MetroLine;
+import metro.Station;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,11 +13,15 @@ class ThreeStationsPrinterTest {
     @Test
     @DisplayName("print stations list of three connected stations")
     void getConnectedThreeStationsList() {
-        MetroLine metroLine = new MetroLine();
-        metroLine.append("Berlin")
-                 .append("Bremen")
-                 .append("Hamburg")
-                 .append("Beirut");
+        MetroLine metroLine = new MetroLine("");
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        Station hamburg = new Station("Hamburg");
+        Station beirut = new Station("Beirut");
+        metroLine.append(berlin)
+                 .append(bremen)
+                 .append(hamburg)
+                 .append(beirut);
 
         String actual = printer.getMetroLinePrintString(metroLine);
         String expected = """
@@ -31,7 +36,7 @@ class ThreeStationsPrinterTest {
     @Test
     @DisplayName("print nothing if stations unavailable")
     void getConnectedEmptyStations() {
-        MetroLine metroLine = new MetroLine();
+        MetroLine metroLine = new MetroLine("");
         ThreeStationsPrinter printer = new ThreeStationsPrinter();
 
         String actual = printer.getMetroLinePrintString(metroLine);
