@@ -7,7 +7,7 @@ public class Station {
     private final String name;
     private Station nextStation;
     private Station previousStation;
-    private final List<LineConnection> lineConnections = new ArrayList<>();
+    private final Set<LineConnection> lineConnections = new HashSet<>();
 
     public Station(String name) {
         this.name = name;
@@ -33,12 +33,12 @@ public class Station {
         this.previousStation = previousStation;
     }
 
-    public void addLineConnection(String metroLineName, String stationName) {
-        lineConnections.add(new LineConnection(metroLineName, stationName));
+    public void addLineConnection(MetroLine metroLine, Station station) {
+        lineConnections.add(new LineConnection(metroLine, station));
     }
 
-    public List<LineConnection> getLineConnections() {
-        return Collections.unmodifiableList(lineConnections);
+    public Set<LineConnection> getLineConnections() {
+        return Collections.unmodifiableSet(lineConnections);
     }
 
     @Override

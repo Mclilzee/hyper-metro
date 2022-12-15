@@ -12,7 +12,7 @@ public class MetroMemoryService implements MetroService {
 
     @Override
     public void addMetroLine(String metroLineName) {
-        map.putIfAbsent(metroLineName, new MetroLine());
+        map.putIfAbsent(metroLineName, new MetroLine(metroLineName));
     }
 
     @Override
@@ -67,9 +67,12 @@ public class MetroMemoryService implements MetroService {
             return;
         }
 
-        if (firstMetroLine.containsStation(firstStationName) && secondMetroLine.containsStation(secondStationName)) {
-            firstMetroLine.addLineConnection(firstStationName, secondMetroLineName, secondStationName);
-            secondMetroLine.addLineConnection(secondStationName, firstMetroLineName, firstStationName);
+        Optional<Station> firstStation = firstMetroLine.findStationByName(firstStationName);
+        Optional<Station> secondStation = secondMetroLine.findStationByName(secondStationName);
+
+        if (firstStation.isPresent() && secondStation.isPresent()) {
+            firstMetroLine.addLineConnection(firstStation.get(), secondMetroLine, secondStation.get());
+            secondMetroLine.addLineConnection(secondStation.get(), firstMetroLine, firstStation.get());
         }
     }
 

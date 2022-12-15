@@ -5,6 +5,7 @@ import metro.MetroLine;
 import metro.Station;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LineConnectionsPrinter implements MetroPrinter{
@@ -24,7 +25,7 @@ public class LineConnectionsPrinter implements MetroPrinter{
 
     private List<String> getStationFullStrings(Station station) {
         String stationName = station.getName();
-        List<LineConnection> connections = station.getLineConnections();
+        Set<LineConnection> connections = station.getLineConnections();
 
         if (connections.isEmpty()) {
             return List.of(stationName);

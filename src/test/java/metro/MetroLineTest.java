@@ -4,12 +4,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MetroLineTest {
 
-    MetroLine metroLine = new MetroLine();
+    MetroLine metroLine = new MetroLine("Test Line");
 
     @Test
     @DisplayName("Metro start with depot main station")
@@ -19,6 +20,13 @@ class MetroLineTest {
         String expectedHeadName = "depot";
 
         assertEquals(expectedHeadName, head.getName());
+    }
+
+    @Test
+    void hasCorrectName() {
+        String expected = "Test Line";
+
+        assertEquals(expected, metroLine.getName());
     }
 
     @Test
@@ -85,8 +93,8 @@ class MetroLineTest {
     void metroLineContainsStation() {
         metroLine.append("Berlin").append("Bremen");
 
-        assertTrue(metroLine.containsStation("Bremen"));
-        assertFalse(metroLine.containsStation("Lebanon"));
+        assertTrue(metroLine.findStationByName("Bremen").isPresent());
+        assertFalse(metroLine.findStationByName("Lebanon").isPresent());
     }
 
 
@@ -219,12 +227,16 @@ class MetroLineTest {
 
     @Test
     void addConnectionLine() {
-        metroLine.append("Berlin");
-        metroLine.addLineConnection("Berlin", "Lebanon", "Beirut");
+        Station beirut = new Station("Berlin");
+        MetroLine lebanon = new MetroLine("Lebanon");
+
+        Station berlin = new Station("Berlin");
+        metroLine.append(berlin);
+        metroLine.addLineConnection(beirut, lebanon, beirut);
 
         Station station = metroLine.getHead().getNextStation().orElseThrow();
 
-        List<LineConnection> expected = List.of(new LineConnection("Lebanon", "Beirut"));
+        Set<LineConnection> expected = Set.of(new LineConnection(lebanon, beirut));
 
         assertEquals(expected, station.getLineConnections());
     }
@@ -233,7 +245,7 @@ class MetroLineTest {
     void equalStations() {
         metroLine.append("Berlin").append("Bremen").append("Beirut");
 
-        MetroLine newStation = new MetroLine();
+        MetroLine newStation = new MetroLine("Test Line");
         newStation.append("Berlin").append("Bremen").append("Beirut");
 
         assertEquals(metroLine, newStation);
@@ -243,19 +255,41 @@ class MetroLineTest {
     void hasSameHashCode() {
         metroLine.append("Berlin").append("Bremen").append("Beirut");
 
-        MetroLine newStation = new MetroLine();
+        MetroLine newStation = new MetroLine("Test Line");
         newStation.append("Berlin").append("Bremen").append("Beirut");
 
         assertEquals(metroLine.hashCode(), newStation.hashCode());
     }
 
     @Test
+    void hasDifferentHashIfDifferentName() {
+        metroLine.append("Berlin").append("Bremen").append("Beirut");
+
+        MetroLine newStation = new MetroLine("Different name");
+        newStation.append("Berlin").append("Bremen").append("Beirut");
+
+        assertNotEquals(metroLine.hashCode(), newStation.hashCode());
+    }
+
+
+    @Test
     void notEqual() {
         metroLine.append("Berlin").append("Bremen").append("Frankfurt");
 
-        MetroLine newStation = new MetroLine();
+        MetroLine newStation = new MetroLine("Test Line");
         newStation.append("Berlin").append("Bremen").append("Beirut");
 
+        assertNotEquals(metroLine, newStation);
+    }
+
+    @Test
+    void notEqualDifferentName() {
+        metroLine.append("Berlin").append("Bremen").append("Beirut");
+
+        MetroLine newStation = new MetroLine("Different Name");
+        newStation.append("Berlin").append("Bremen").append("Beirut");
+
+        assertEquals(metroLine, newStation);
         assertNotEquals(metroLine, newStation);
     }
 

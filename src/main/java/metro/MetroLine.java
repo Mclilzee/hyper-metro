@@ -6,7 +6,16 @@ import java.util.stream.Stream;
 
 public class MetroLine {
 
+    private final String name;
     private final Station head = new Station("depot");
+
+    public MetroLine(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public MetroLine append(String stationName) {
         Station station = new Station(stationName);
@@ -65,27 +74,23 @@ public class MetroLine {
         next.setPreviousStation(previous);
     }
 
-    public void addLineConnection(String stationName, String connectedMetrosStationName, String connectedStationName) {
-        Optional<Station> station = findStationByName(stationName);
-        if (station.isEmpty()) {
+    public void addLineConnection(Station station, MetroLine connectedMetrosStation, Station connectedStation) {
+        Optional<Station> foundStation = findStationByName(station.getName());
+        if (foundStation.isEmpty()) {
             return;
         }
 
-        station.get().addLineConnection(connectedMetrosStationName, connectedStationName);
+        foundStation.get().addLineConnection(connectedMetrosStation, connectedStation);
     }
 
-    public boolean containsStation(String stationName) {
-        return findStationByName(stationName).isPresent();
-    }
-
-    private Optional<Station> findStationByName(String stationName) {
+    public Optional<Station> findStationByName(String stationName) {
         return stream().filter(station -> station.getName().equals(stationName))
                 .findFirst();
     }
 
     public Stream<Station> stream() {
         Optional<Station> firstStation = Optional.of(head);
-        return Stream.iterate(firstStation, Optional::isPresent, station -> station.get().getNextStation())
+        return Stream.iterate(firstStation, Optional::isPresent, station -> station.flatMap(Station::getNextStation))
                      .map(Optional::orElseThrow);
     }
 

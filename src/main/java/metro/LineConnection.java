@@ -1,8 +1,8 @@
 package metro;
 
-public record LineConnection(String metroLineName, String stationName) {
+public record LineConnection(MetroLine metroLine, Station station) {
 
     public String getFullName() {
-        return String.format("%s (%s)", stationName, metroLineName);
+        return String.format("%s (%s)", station.getName(), metroLine.getName());
     }
 }

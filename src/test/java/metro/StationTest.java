@@ -74,6 +74,22 @@ class StationTest {
     }
 
     @Test
+    void lineConnectionNotAddedIfExists() {
+
+        station.addLineConnection("Germany", "Berlin");
+        station.addLineConnection("Lebanon", "Beirut");
+        station.addLineConnection("Lebanon", "Beirut");
+
+        List<LineConnection> expected = List.of(
+                new LineConnection("Germany", "Berlin"),
+                new LineConnection("Lebanon", "Beirut")
+                                               );
+
+
+        assertEquals(expected, station.getLineConnections());
+    }
+
+    @Test
     void lineConnectionsListIsUnmodifiable() {
         station.addLineConnection("Germany", "Berlin");
         station.addLineConnection("Lebanon", "Beirut");
