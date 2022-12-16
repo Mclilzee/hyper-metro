@@ -2,10 +2,7 @@ package metro.search;
 
 import metro.Station;
 
-import java.util.ArrayDeque;
-import java.util.HashSet;
-import java.util.Queue;
-import java.util.Set;
+import java.util.*;
 
 public class PathFinder {
     private final Node start;
@@ -28,11 +25,24 @@ public class PathFinder {
             if (current == end) {
                 return getPathString(current);
             }
+
+            addNodeNeighbors(current);
         }
 
         return null;
     }
 
+    private void addNodeNeighbors(Node node) {
+        Station station = node.getStation();
+
+        Optional<Station> prevStation = station.getPreviousStation();
+        if (prevStation.isPresent() && !visited.contains(prevStation.get())) {
+            Node prevNode = new Node(prevStation.get());
+            prevNode.setPrev(node);
+            visited.add(prevNode.getStation());
+
+        }
+    }
     private String getPathString(Node node) {
 
         return "";
