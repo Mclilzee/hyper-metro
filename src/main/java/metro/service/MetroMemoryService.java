@@ -26,21 +26,21 @@ public class MetroMemoryService implements MetroService {
     @Override
     public void appendStation(String metroLineName, String stationName) {
         MetroLine metroLine = map.get(metroLineName);
-        if (metroLine == null) {
+        if (metroLine == null || metroLine.findStationByName(stationName).isPresent()) {
             return;
         }
 
-        metroLine.append(stationName);
+        metroLine.append(new Station(stationName));
     }
 
     @Override
     public void addHead(String metroLineName, String stationName) {
         MetroLine metroLine = map.get(metroLineName);
-        if (metroLine == null) {
+        if (metroLine == null || metroLine.findStationByName(stationName).isPresent()) {
             return;
         }
 
-        metroLine.addHead(stationName);
+        metroLine.addHead(new Station(stationName));
     }
 
     @Override

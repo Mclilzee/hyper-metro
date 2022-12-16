@@ -17,35 +17,12 @@ public class MetroLine {
         return name;
     }
 
-    public MetroLine append(String stationName) {
-        Station station = new Station(stationName);
-
-        Station lastStation = getLastStation();
-        lastStation.setNextStation(station);
-        station.setPreviousStation(lastStation);
-        return this;
-    }
-
     public MetroLine append(Station station) {
         Station lastStation = getLastStation();
         lastStation.setNextStation(station);
         station.setPreviousStation(lastStation);
         return this;
     }
-
-    public MetroLine addHead(String stationName) {
-        Station station = new Station(stationName);
-
-        Optional<Station> firstStation = head.getNextStation();
-        station.setNextStation(firstStation.orElse(null));
-        station.setPreviousStation(head);
-        head.setNextStation(station);
-
-        firstStation.ifPresent(foundStation -> foundStation.setPreviousStation(station));
-
-        return this;
-    }
-
 
     public MetroLine addHead(Station station) {
         Optional<Station> firstStation = head.getNextStation();
