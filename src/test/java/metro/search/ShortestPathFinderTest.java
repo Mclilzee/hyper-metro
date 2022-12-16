@@ -73,4 +73,43 @@ class ShortestPathFinderTest {
                           Paris""";
         assertEquals(expected, actual);
     }
+
+    @Test
+    void testMultipleDirectionsAcrossLines() {
+        MetroLine germany = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        Station frankfurt = new Station("Frankfurt");
+        germany.append(berlin).append(bremen).append(frankfurt);
+
+        MetroLine france = new MetroLine("France");
+        Station nice = new Station("Nice");
+        Station paris = new Station("Paris");
+        france.append(nice).append(paris);
+
+        MetroLine lebanon = new MetroLine("Lebanon");
+        Station beirut = new Station("Beirut");
+        Station aramount = new Station("Aramoun");
+        Station matar = new Station("Matar");
+        lebanon.append(beirut).append(aramount).append(matar);
+
+        germany.addLineConnection(bremen, france, nice);
+        france.addLineConnection(paris, lebanon, aramount);
+
+        ShortestPathFinder finder = new ShortestPathFinder();
+        String actual = finder.findPathString(berlin, beirut);
+
+        String expected = """
+                          Berlin
+                          Bremen
+                          Transition to line France
+                          Nice
+                          Paris
+                          Transition to line Lebanon
+                          Aramoun
+                          Beirut""";
+        assertEquals(expected, actual);
+
+    }
+
 }
