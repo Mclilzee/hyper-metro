@@ -53,13 +53,12 @@ public class Station {
         return Objects.equals(name, station.name) &&
                 otherStationsEqual(nextStation, station.nextStation) &&
                 otherStationsEqual(previousStation, station.previousStation) &&
-                Objects.equals(lineConnections, station.lineConnections);
+                Objects.equals(lineConnections.toString(), station.lineConnections.toString());
     }
 
     private boolean otherStationsEqual(Station station, Station other) {
         String stationName = station != null ? station.name : "none";
         String otherName = other != null ? other.name : "none";
-
         return Objects.equals(stationName, otherName);
     }
 
