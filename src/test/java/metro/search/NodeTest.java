@@ -1,12 +1,8 @@
 package metro.search;
 
-import metro.LineConnection;
-import metro.MetroLine;
 import metro.Station;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,20 +13,19 @@ class NodeTest {
     @Test
     void nodeHasCorrectStation() {
         String expected = "Berlin";
-        assertEquals(expected, node.getStation().getName());
+        assertEquals(expected, node.getName());
     }
 
     @Test
-    void initTransferStation() {
-        boolean expected = false;
-        assertEquals(expected, node.isTransferStation());
+    void initTransferLine() {
+        assertTrue(node.getTransferLine().isEmpty());
     }
 
     @Test
-    void transferStationSetCorrectly() {
-        boolean expected = true;
-        node.setTransferStation(true);
-        assertEquals(expected, node.isTransferStation());
+    void transferLineSetCorrectly() {
+        node = new Node(new Station(""), "Transfer test");
+        String expected = "Transfer test";
+        assertEquals(expected, node.getTransferLine().orElseThrow());
     }
 
     @Test

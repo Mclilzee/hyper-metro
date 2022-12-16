@@ -1,35 +1,35 @@
 package metro.search;
 
-import metro.LineConnection;
 import metro.Station;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Node {
     private final Station station;
-    private boolean transferStation;
+    private final String transferLine;
     private Node prev;
 
     public Node(Station station) {
+        this(station, "");
+    }
+
+    public Node(Station station, String transferLine) {
         this.station = station;
         this.prev = null;
-        this.transferStation = false;
+        this.transferLine = transferLine;
     }
 
     public Station getStation() {
         return this.station;
     }
 
-    public boolean isTransferStation() {
-        return transferStation;
+    public String getName() {
+       return station.getName();
     }
 
-    public void setTransferStation(boolean transferStation) {
-        this.transferStation = transferStation;
+    public Optional<String> getTransferLine() {
+        return transferLine.isEmpty() ? Optional.empty() : Optional.of(transferLine);
     }
 
     public void setPrev(Node node) {
