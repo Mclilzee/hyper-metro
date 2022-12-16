@@ -157,7 +157,7 @@ class MetroMemoryServiceTest {
 
         MetroLine secondExpected = new MetroLine("Lebanon");
         secondExpected.append(new Station("Beirut"))
-                      .append(new Station("Aramount"));
+                      .append(new Station("Aramoun"));
 
         List<MetroLine> expected = List.of(firstExpected, secondExpected);
 

@@ -1,7 +1,6 @@
-package metro.util;
+package metro.fileReader;
 
 import metro.MetroLine;
-import metro.fileReader.StationDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +26,6 @@ class MetroLineFactoryTest {
         MetroLine expected = new MetroLine("Germany");
         expected.append("Berlin").append("Bremen").append("Frankfurt");
 
-        assertEquals(expected, MetroLineFactory.createMetroLine("Germany", stationsMap));
+        assertEquals(expected, MetroLineFactory.createUnconnectedMetroLine("Germany", stationsMap));
     }
 }

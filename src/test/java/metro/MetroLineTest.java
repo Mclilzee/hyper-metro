@@ -309,7 +309,6 @@ class MetroLineTest {
         MetroLine newStation = new MetroLine("Different Name");
         newStation.append("Berlin").append("Bremen").append("Beirut");
 
-        assertEquals(metroLine, newStation);
         assertNotEquals(metroLine, newStation);
     }
 

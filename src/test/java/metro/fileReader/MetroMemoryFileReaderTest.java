@@ -53,12 +53,6 @@ class MetroMemoryFileReaderTest {
     void containsCorrectValues() {
         MetroService service = reader.loadMetroServiceFromFile(metroPath);
 
-        MetroLine m1 = new MetroLine("m1");
-        m1.append("Bishops-road").append("Edgver road").append("Baker Street");
-
-        MetroLine m2 = new MetroLine("m2");
-        m2.append("Hammersmith").append("Westbourne-park");
-
         MetroService mockService = new MetroMemoryService();
         mockService.addMetroLine(new MetroLine("Metro-Railway"));
         mockService.appendStation("Metro-Railway", "Bishops-road");
@@ -68,12 +62,12 @@ class MetroMemoryFileReaderTest {
         mockService.addMetroLine(new MetroLine("Hammersmith-and-City"));
         mockService.appendStation("Hammersmith-and-City", "Hammersmith");
         mockService.appendStation("Hammersmith-and-City", "Westbourne-park");
+        mockService.appendStation("Hammersmith-and-City", "Baker Street");
 
         mockService.connectMetroLine("Metro-Railway", "Baker Street", "Hammersmith-and-City", "Baker Street");
-        mockService.connectMetroLine("Hammersmith-and-City", "Baker Street", "Metro-Railway", "Baker Street");
 
         List<MetroLine> actual = service.getValues();
-        List<MetroLine> expected = service.getValues();
+        List<MetroLine> expected = mockService.getValues();
 
 
         assertEquals(expected, actual);

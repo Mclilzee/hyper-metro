@@ -115,11 +115,11 @@ public class MetroLine {
         }
         MetroLine that = (MetroLine) o;
 
-        return stream().toList().equals(that.stream().toList());
+        return stream().toList().equals(that.stream().toList()) && name.equals(that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(stream().toList().toString());
+        return Objects.hash(name + stream().toList());
     }
 }

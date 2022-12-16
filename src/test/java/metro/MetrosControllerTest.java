@@ -109,7 +109,7 @@ class MetrosControllerTest {
     void appendStationWithSpaces() {
         MetrosController controller = new MetrosController(new Scanner("/append \"Hammer City\" \"Beirut Tower\"\n/exit"), metroService);
         MetroLine hammerCity = new MetroLine("Hammer City");
-        metroService.addMetroLine(new MetroLine("Hammer City"));
+        metroService.addMetroLine(hammerCity);
         controller.start();
 
         assertTrue(hammerCity.findStationByName("Beirut Tower").isPresent());

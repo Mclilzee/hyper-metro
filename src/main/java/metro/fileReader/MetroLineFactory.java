@@ -1,15 +1,14 @@
-package metro.util;
+package metro.fileReader;
 
 import metro.MetroLine;
 import metro.Station;
-import metro.fileReader.StationDTO;
 
 import java.util.Map;
 
 import static java.util.Comparator.comparingInt;
 
 public class MetroLineFactory {
-    public static MetroLine createMetroLine(String metroLineName, Map<String, StationDTO> stationsMap) {
+    public static MetroLine createUnconnectedMetroLine(String metroLineName, Map<String, StationDTO> stationsMap) {
         MetroLine metroLine = new MetroLine(metroLineName);
         stationsMap.entrySet().stream()
                    .sorted(comparingInt(entrySet -> Integer.parseInt(entrySet.getKey())))

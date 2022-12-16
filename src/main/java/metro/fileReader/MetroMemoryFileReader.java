@@ -1,9 +1,7 @@
 package metro.fileReader;
 
-import metro.MetroLine;
 import metro.service.MetroMemoryService;
 import metro.service.MetroService;
-import metro.util.MetroLineFactory;
 
 import java.nio.file.Path;
 
@@ -28,8 +26,8 @@ public class MetroMemoryFileReader implements MetroFileReader {
         }
 
         jsonMap.get().entrySet().stream()
-                .map((entry) -> MetroLineFactory.createMetroLine(entry.getKey(), entry.getValue()))
-                .forEach(metroLine -> service.addMetroLine(metroLine));
+                .map((entry) -> MetroLineFactory.createUnconnectedMetroLine(entry.getKey(), entry.getValue()))
+                .forEach(service::addMetroLine);
 
         return service;
     }

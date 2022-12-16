@@ -4,7 +4,10 @@ import metro.MetroLine;
 import metro.Station;
 import org.junit.jupiter.api.Test;
 
+import java.util.regex.Pattern;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LineConnectionsPrinterTest {
 
@@ -74,15 +77,14 @@ class LineConnectionsPrinterTest {
         metroLine.addLineConnection(beirut, france, paris);
 
         String actual = printer.getMetroLinePrintString(metroLine);
-        String expected = """
+        Pattern expectedPattern = Pattern.compile("""
                           depot
                           Berlin
-                          Bremen - Frankfurt (Germany)
-                          Bremen - Aramoun (Lebanon)
-                          Beirut - Paris (France)
-                          depot""";
+                          (Bremen - (Frankfurt \\(Germany\\)|Aramount \\(Lebanon\\))\\n?){2}
+                          Beirut - Paris \\(France\\)
+                          depot""");
 
-        assertEquals(expected, actual);
+        assertTrue(expectedPattern.matcher(actual).matches());
     }
 
     @Test
