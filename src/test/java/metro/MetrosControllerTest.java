@@ -215,4 +215,40 @@ class MetrosControllerTest {
         assertEquals(expectedHammersmithConnection, hammersmith.getLineConnections());
         assertEquals(expectedEdgverRoadConnection, edgverRoad.getLineConnections());
     }
+
+    @Test
+    void findShortestPathInput() {
+        MetroService metroMemoryService = new MetroMemoryService();
+        MetrosController controller = new MetrosController(new Scanner("/route Germany Berlin Lebanon Aramoun\n/exit"), metroMemoryService);
+
+        MetroLine germany = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        Station frankfurt = new Station("Frankfurt");
+        germany.append(berlin).append(bremen).append(frankfurt);
+
+
+        MetroLine lebanon = new MetroLine("Lebanon");
+        Station beirut = new Station("Beirut");
+        Station aramoun = new Station("Aramoun");
+        lebanon.append(beirut).append(aramoun);
+
+        germany.addLineConnection(frankfurt, lebanon, beirut);
+
+        metroMemoryService.addMetroLine(germany);
+        metroMemoryService.addMetroLine(lebanon);
+
+        controller.start();
+
+        String expected = """
+                          Berlin
+                          Bremen
+                          Frankfurt
+                          Transition to line Lebanon
+                          Beirut
+                          Aramoun""" + System.lineSeparator();
+
+
+        assertEquals(expected, outputStream.toString());
+    }
 }
