@@ -13,6 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -146,81 +147,72 @@ class MetrosControllerTest {
     @ValueSource(strings = {"/remove Germany Bremen", "/remove \"Germany\" Bremen", "/remove Germany \"Bremen\"", "/remove \"Germany\" \"Bremen\""})
     void removeStation(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
-        metroService.addMetroLine("Germany");
+        MetroLine germany = new MetroLine("Germany");
+        metroService.addMetroLine(germany);
         metroService.appendStation("Germany", "Berlin");
         metroService.appendStation("Germany", "Bremen");
         metroService.appendStation("Germany", "Beirut");
 
         controller.start();
 
-        MetroLine expected = new MetroLine("");
-        expected.append("Berlin")
-                .append("Beirut");
-
-        assertTrue(metroService.getValues()
-                               .contains(expected));
+        assertTrue(germany.findStationByName("Bremen").isEmpty());
     }
 
     @Test
     void removeStationWithSpaces() {
         MetrosController controller = new MetrosController(new Scanner("/remove \"German Village\" \"Bremen Circus\"\n/exit"), metroService);
-        metroService.addMetroLine("German Village");
+        MetroLine germanVillage = new MetroLine("German Village");
+        metroService.addMetroLine(germanVillage);
         metroService.appendStation("German Village", "Berlin Town");
         metroService.appendStation("German Village", "Bremen Circus");
         metroService.appendStation("German Village", "Beirut Sea");
 
         controller.start();
 
-        MetroLine expected = new MetroLine("");
-        expected.append("Berlin Town")
-                .append("Beirut Sea");
-
-        assertTrue(metroService.getValues()
-                               .contains(expected));
+        assertTrue(germanVillage.findStationByName("Bremen Circus").isEmpty());
     }
 
     @Test
     void connectStationsCorrectly() {
         MetrosController controller = new MetrosController(new Scanner("/connect Germany Berlin Lebanon Beirut\n/exit"), metroService);
-        metroService.addMetroLine("Germany");
-        metroService.appendStation("Germany", "Berlin");
-
-        metroService.addMetroLine("Lebanon");
-        metroService.appendStation("Lebanon", "Beirut");
-        controller.start();
-
-        MetroLine expected = new MetroLine("Germany");
+        MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin");
-        expected.append(berlin);
+        germany.append(berlin);
+        metroService.addMetroLine(germany);
 
         MetroLine lebanon = new MetroLine("Lebanon");
         Station beirut = new Station("Beirut");
-        berlin.addLineConnection(lebanon, beirut);
+        lebanon.append(beirut);
+        metroService.addMetroLine(lebanon);
 
-        assertTrue(metroService.getValues()
-                               .contains(expected));
+        controller.start();
+
+        Set<LineConnection> expectedBerlinConnection = Set.of(new LineConnection(lebanon, beirut));
+        Set<LineConnection> expectedBeirutConnection = Set.of(new LineConnection(germany, berlin));
+
+        assertEquals(expectedBerlinConnection, berlin.getLineConnections());
+        assertEquals(expectedBeirutConnection, beirut.getLineConnections());
     }
 
 
     @Test
     void connectStationsCorrectlyWithSpaces() {
         MetrosController controller = new MetrosController(new Scanner("/connect Hammersmith-and-City Hammersmith Metro-Railway \"Edgver road\"\n/exit"), metroService);
-        metroService.addMetroLine("Hammersmith-and-City");
-        metroService.appendStation("Hammersmith-and-City", "Hammersmith");
-
-        metroService.addMetroLine("Metro-Railway");
-        metroService.appendStation("Metro-Railway", "Edgver road");
-        controller.start();
-
-        MetroLine expectedStation = new MetroLine("Hammersmith-and-City");
+        MetroLine hammersmithAndCity = new MetroLine("Hammersmith-and-City");
         Station hammersmith = new Station("Hammersmith");
-        expectedStation.append(hammersmith);
+        hammersmithAndCity.append(hammersmith);
+        metroService.addMetroLine(hammersmithAndCity);
 
         MetroLine metroRailway = new MetroLine("Metro-Railway");
         Station edgverRoad = new Station("Edgver road");
-        hammersmith.addLineConnection(metroRailway, edgverRoad);
+        metroRailway.append(edgverRoad);
+        metroService.addMetroLine(metroRailway);
+        controller.start();
 
-        assertTrue(metroService.getValues()
-                               .contains(expectedStation));
+        Set<LineConnection> expectedHammersmithConnection = Set.of(new LineConnection(metroRailway, edgverRoad));
+        Set<LineConnection> expectedEdgverRoadConnection = Set.of(new LineConnection(hammersmithAndCity, hammersmith));
+
+        assertEquals(expectedHammersmithConnection, hammersmith.getLineConnections());
+        assertEquals(expectedEdgverRoadConnection, edgverRoad.getLineConnections());
     }
 }
