@@ -16,7 +16,7 @@ class LineConnectionsPrinterTest {
     @Test
     void printStationsWithNoLineConnections() {
         MetroLine metroLine = new MetroLine("");
-        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
 
         String actual =printer.getMetroLinePrintString(metroLine);
         String expected = """

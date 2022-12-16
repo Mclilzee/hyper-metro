@@ -32,7 +32,7 @@ class MetroLineTest {
     @Test
     @DisplayName("Returns complete stream of connected stations")
     void getConnectedStations() {
-        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
 
         List<Station> actual = metroLine.stream().toList();
 
@@ -58,7 +58,7 @@ class MetroLineTest {
     @Test
     @DisplayName("Append multiple stations using name connect correctly with next")
     void stationNameAppendNext() {
-        metroLine.append("Berlin").append("Bremen");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen"));
 
         Station actualFirstStation = metroLine.getHead().getNextStation().orElseThrow();
         Station actualNextStation = actualFirstStation.getNextStation().orElseThrow();
@@ -74,7 +74,7 @@ class MetroLineTest {
     @Test
     @DisplayName("Append multiple stations using name connect correctly with previous")
     void stationNameAppendPrevious() {
-        metroLine.append("Berlin").append("Bremen");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen"));
 
         Station actualLastStation = metroLine.getHead().getNextStation().orElseThrow()
                                              .getNextStation().orElseThrow();
@@ -91,7 +91,7 @@ class MetroLineTest {
     @Test
     @DisplayName("Metro line return correct boolean if it contains station")
     void metroLineContainsStation() {
-        metroLine.append("Berlin").append("Bremen");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen"));
 
         assertTrue(metroLine.findStationByName("Bremen").isPresent());
         assertFalse(metroLine.findStationByName("Lebanon").isPresent());
@@ -158,7 +158,7 @@ class MetroLineTest {
     @Test
     @DisplayName("Add station head set next correctly")
     void stationAddHeadNext() {
-        metroLine.addHead("Berlin").addHead("Bremen");
+        metroLine.addHead(new Station("Berlin")).addHead(new Station("Bremen"));
 
         Station actualFirstStation = metroLine.getHead().getNextStation().orElseThrow();
         Station actualNextStation = actualFirstStation.getNextStation().orElseThrow();
@@ -174,7 +174,7 @@ class MetroLineTest {
     @Test
     @DisplayName("Add station head set previous correctly")
     void stationAddHeadPrevious() {
-        metroLine.addHead("Berlin").addHead("Bremen");
+        metroLine.addHead(new Station("Berlin")).addHead(new Station("Bremen"));
 
         Station actualLastStation = metroLine.getHead().getNextStation().orElseThrow()
                                              .getNextStation().orElseThrow();
@@ -191,7 +191,7 @@ class MetroLineTest {
     @Test
     @DisplayName("Removing station set next correctly")
     void removeStationNext() {
-        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
         metroLine.removeStation("Bremen");
 
         Station actualFirstStation = metroLine.getHead().getNextStation().orElseThrow();
@@ -208,8 +208,7 @@ class MetroLineTest {
     @Test
     @DisplayName("Does nothing if station not found")
     void removeStationNotFound() {
-
-        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
         metroLine.removeStation("Dongos");
 
         Station actualFirstStation = metroLine.getHead().getNextStation().orElseThrow();
@@ -229,7 +228,7 @@ class MetroLineTest {
     @Test
     @DisplayName("Removing station set previous correctly")
     void removeStationPrevious() {
-        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
         metroLine.removeStation("Bremen");
 
         Station actualLastStation = metroLine.getHead().getNextStation().orElseThrow()
@@ -263,30 +262,30 @@ class MetroLineTest {
 
     @Test
     void equalStations() {
-        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
 
         MetroLine newStation = new MetroLine("Test Line");
-        newStation.append("Berlin").append("Bremen").append("Beirut");
+        newStation.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
 
         assertEquals(metroLine, newStation);
     }
 
     @Test
     void hasSameHashCode() {
-        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
 
         MetroLine newStation = new MetroLine("Test Line");
-        newStation.append("Berlin").append("Bremen").append("Beirut");
+        newStation.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
 
         assertEquals(metroLine.hashCode(), newStation.hashCode());
     }
 
     @Test
     void hasDifferentHashIfDifferentName() {
-        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
 
         MetroLine newStation = new MetroLine("Different name");
-        newStation.append("Berlin").append("Bremen").append("Beirut");
+        newStation.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
 
         assertNotEquals(metroLine.hashCode(), newStation.hashCode());
     }
@@ -294,20 +293,20 @@ class MetroLineTest {
 
     @Test
     void notEqual() {
-        metroLine.append("Berlin").append("Bremen").append("Frankfurt");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Frankfurt"));
 
         MetroLine newStation = new MetroLine("Test Line");
-        newStation.append("Berlin").append("Bremen").append("Beirut");
+        newStation.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
 
         assertNotEquals(metroLine, newStation);
     }
 
     @Test
     void notEqualDifferentName() {
-        metroLine.append("Berlin").append("Bremen").append("Beirut");
+        metroLine.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
 
         MetroLine newStation = new MetroLine("Different Name");
-        newStation.append("Berlin").append("Bremen").append("Beirut");
+        newStation.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
 
         assertNotEquals(metroLine, newStation);
     }

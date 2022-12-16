@@ -1,6 +1,7 @@
 package metro.fileReader;
 
 import metro.MetroLine;
+import metro.Station;
 import metro.service.MetroMemoryService;
 import metro.service.MetroService;
 import org.junit.jupiter.api.BeforeAll;
@@ -78,10 +79,10 @@ class MetroMemoryFileReaderTest {
         MetroService service = reader.loadMetroServiceFromFile(metroPath);
 
         MetroLine m1 = new MetroLine("m1");
-        m1.append("Bishops-road").append("Edgver road").append("Baker Street");
+        m1.append(new Station("Bishops-road")).append(new Station("Edgver road")).append(new Station("Baker Street"));
 
         MetroLine m2 = new MetroLine("m2");
-        m2.append("Hammersmith").append("Westbourne-park");
+        m2.append(new Station("Hammersmith")).append(new Station("Westbourne-park"));
 
         MetroService expected = new MetroMemoryService();
         expected.addMetroLine(new MetroLine("Metro-Railway"));
