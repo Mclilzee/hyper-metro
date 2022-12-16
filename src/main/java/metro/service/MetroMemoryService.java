@@ -9,12 +9,6 @@ public class MetroMemoryService implements MetroService {
 
     private final Map<String, MetroLine> map = new HashMap<>();
 
-
-    @Override
-    public void addMetroLine(String metroLineName) {
-        map.putIfAbsent(metroLineName, new MetroLine(metroLineName));
-    }
-
     @Override
     public void addMetroLine(MetroLine metroLine) {
         if (metroLine == null) {

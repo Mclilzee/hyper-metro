@@ -8,7 +8,7 @@ import java.util.Set;
 
 public interface MetroService {
 
-    void addMetroLine(String metroLineName);
+    void addMetroLine(MetroLine metroLine);
 
     Optional<MetroLine> getMetroLine(String metroLineName);
 
@@ -17,8 +17,6 @@ public interface MetroService {
     void addHead(String metroLineName, String stationName);
 
     void removeStation(String metroLineName, String stationName);
-
-    void addMetroLine(MetroLine metroLine);
 
     void connectMetroLine(String metroLineName, String stationName, String toMetroLine, String toStation);
 
