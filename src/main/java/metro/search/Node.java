@@ -13,68 +13,15 @@ public class Node {
     private final Station station;
     private boolean transferStation;
     private Node prev;
-    private boolean visited;
-    private final Set<Node> neighbors;
 
     public Node(Station station) {
         this.station = station;
         this.prev = null;
         this.transferStation = false;
-        this.visited = false;
-        neighbors = setNeighbors(station);
     }
-
-    private Set<Node> setNeighbors(Station station) {
-        Set<Node> set = new HashSet<>();
-        getPreviousNode(station).ifPresent(set::add);
-        getNextNode(station).ifPresent(set::add);
-
-
-        set.addAll(getLineConnectionNeighbors(station));
-
-        return set;
-    }
-
-    private Optional<Node> getPreviousNode(Station station) {
-        if (station.getPreviousStation().isPresent()) {
-            Node prevNode = new Node(station.getPreviousStation().get());
-            return Optional.of(prevNode);
-        }
-
-        return Optional.empty();
-    }
-
-    private Optional<Node> getNextNode(Station station) {
-        if (station.getNextStation().isPresent()) {
-            Node nextNode = new Node(station.getNextStation().get());
-            return Optional.of(nextNode);
-        }
-
-        return Optional.empty();
-    }
-
-    private Set<Node> getLineConnectionNeighbors(Station station) {
-        Set<Node> nodes =  station.getLineConnections().stream()
-                .map(LineConnection::station)
-                .map(Node::new)
-                .collect(Collectors.toSet());
-
-        nodes.forEach(node -> node.setTransferStation(true));
-        return nodes;
-    }
-
-
 
     public Station getStation() {
         return this.station;
-    }
-
-    public boolean isVisited() {
-        return this.visited;
-    }
-
-    public void setVisited(boolean visited) {
-        this.visited = visited;
     }
 
     public boolean isTransferStation() {
@@ -91,10 +38,6 @@ public class Node {
 
     public Optional<Node> getPrev() {
         return Optional.ofNullable(prev);
-    }
-
-    public Set<Node> getNeighbors() {
-        return neighbors;
     }
 
     @Override

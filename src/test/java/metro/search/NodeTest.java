@@ -21,19 +21,6 @@ class NodeTest {
     }
 
     @Test
-    void startWithFalseVisited() {
-        boolean expected = false;
-        assertEquals(expected, node.isVisited());
-    }
-
-    @Test
-    void setVisited() {
-        boolean expected = true;
-        node.setVisited(true);
-        assertEquals(expected, node.isVisited());
-    }
-
-    @Test
     void initTransferStation() {
         boolean expected = false;
         assertEquals(expected, node.isTransferStation());
@@ -59,64 +46,6 @@ class NodeTest {
         node.setPrev(bremen);
 
         assertEquals(bremen, node.getPrev().orElseThrow());
-    }
-
-    @Test
-    void initWithNeighbors() {
-        Set<Node> expected = Set.of();
-
-        assertEquals(expected, node.getNeighbors());
-    }
-
-    @Test
-    void setNeighborsCorrectly() {
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
-        Station beirut = new Station("Beirut");
-
-        berlin.setNextStation(bremen);
-        berlin.setPreviousStation(frankfurt);
-        berlin.addLineConnection(new MetroLine(""), beirut);
-
-        Node actual = new Node(berlin);
-
-        Set<Node> expected = Set.of(new Node(bremen), new Node(frankfurt), new Node(beirut));
-        assertEquals(expected, actual.getNeighbors());
-    }
-
-    @Test
-    @DisplayName("Line connection neighbours are set as transfer stations")
-    void lineConnectionNeighbors() {
-        Station berlin = new Station("Berlin");
-        Station frankfurt = new Station("Frankfurt");
-        Station bremen = new Station("Beirut");
-
-        berlin.addLineConnection(new MetroLine(""), bremen);
-        berlin.addLineConnection(new MetroLine(""), frankfurt);
-
-        Node actual = new Node(berlin);
-
-        for (Node node : actual.getNeighbors()) {
-            assertTrue(node.isTransferStation());
-        }
-    }
-
-    @Test
-    @DisplayName("None line connection neighbors transfer is boolean is false")
-    void neighborsOnSameLine() {
-        Station berlin = new Station("Berlin");
-
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
-        berlin.setNextStation(bremen);
-        berlin.setPreviousStation(frankfurt);
-
-        Node actual = new Node(berlin);
-
-        for (Node node : actual.getNeighbors()) {
-            assertFalse(node.isTransferStation());
-        }
     }
 
     @Test
