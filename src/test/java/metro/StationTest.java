@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,7 +36,7 @@ class StationTest {
        station.setPreviousStation(frankfurt);
 
        String expected = "Frankfurt";
-       String previousStationName = station.getPreviousStation().get().getName();
+       String previousStationName = station.getPreviousStation().orElseThrow().getName();
        assertEquals(expected, previousStationName);
     }
 
@@ -46,7 +47,7 @@ class StationTest {
         station.setNextStation(nextStation);
 
         String expected = "Bremen";
-        String nextStationName = station.getNextStation().get().getName();
+        String nextStationName = station.getNextStation().orElseThrow().getName();
         assertEquals(expected, nextStationName);
     }
 
@@ -54,19 +55,24 @@ class StationTest {
 
     @Test
     void initEmptyConnectionsList() {
-        List<LineConnection> expected = List.of();
+        Set<LineConnection> expected = Set.of();
 
         assertEquals(expected, station.getLineConnections());
     }
 
     @Test
     void addLineConnections() {
-        station.addLineConnection("Germany", "Berlin");
-        station.addLineConnection("Lebanon", "Beirut");
+        MetroLine germany = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        station.addLineConnection(germany, berlin);
 
-        List<LineConnection> expected = List.of(
-                new LineConnection("Germany", "Berlin"),
-                new LineConnection("Lebanon", "Beirut")
+        MetroLine lebanon = new MetroLine("Lebanon");
+        Station beirut = new Station("Beirut");
+        station.addLineConnection(lebanon, beirut);
+
+        Set<LineConnection> expected = Set.of(
+                new LineConnection(germany, berlin),
+                new LineConnection(lebanon, beirut)
                                                );
 
 
@@ -75,25 +81,17 @@ class StationTest {
 
     @Test
     void lineConnectionNotAddedIfExists() {
+        station.addLineConnection(new MetroLine("Germany"), new Station("Berlin"));
+        station.addLineConnection(new MetroLine("Germany"), new Station("Berlin"));
+        station.addLineConnection(new MetroLine("Germany"), new Station("Berlin"));
+        station.addLineConnection(new MetroLine("Lebanon"), new Station( "Beirut"));
+        station.addLineConnection(new MetroLine("Lebanon"), new Station( "Beirut"));
 
-        station.addLineConnection("Germany", "Berlin");
-        station.addLineConnection("Lebanon", "Beirut");
-        station.addLineConnection("Lebanon", "Beirut");
-
-        List<LineConnection> expected = List.of(
-                new LineConnection("Germany", "Berlin"),
-                new LineConnection("Lebanon", "Beirut")
-                                               );
-
-
-        assertEquals(expected, station.getLineConnections());
+        assertEquals(2, station.getLineConnections().size());
     }
 
     @Test
-    void lineConnectionsListIsUnmodifiable() {
-        station.addLineConnection("Germany", "Berlin");
-        station.addLineConnection("Lebanon", "Beirut");
-
+    void lineConnectionsSetIsUnmodifiable() {
         assertThrows(UnsupportedOperationException.class, () -> station.getLineConnections().add(null));
     }
 
@@ -115,7 +113,7 @@ class StationTest {
     @DisplayName("Not equal if connected stations are not the same")
     void notEqualConnectedStations() {
         Station secondStation = new Station("Berlin");
-        secondStation.addLineConnection("Metro", "Frankfurt");
+        secondStation.addLineConnection(new MetroLine("Metro"), new Station("Frankfurt"));
 
         assertNotEquals(secondStation, station);
 
