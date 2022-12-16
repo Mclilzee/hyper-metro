@@ -79,7 +79,6 @@ class MetrosControllerTest {
         metroService.appendStation("Hammer City", "Beirut");
         controller.start();
 
-
         // Use specific printer and add lineSeparator for printing
         MetroPrinter printer = new LineConnectionsPrinter();
         String expected = printer.getMetroLinePrintString(hammerCity) + System.lineSeparator();
@@ -194,7 +193,6 @@ class MetrosControllerTest {
         assertEquals(expectedBeirutConnection, beirut.getLineConnections());
     }
 
-
     @Test
     void connectStationsCorrectlyWithSpaces() {
         MetrosController controller = new MetrosController(new Scanner("/connect Hammersmith-and-City Hammersmith Metro-Railway \"Edgver road\"\n/exit"), metroService);
@@ -227,7 +225,6 @@ class MetrosControllerTest {
         Station frankfurt = new Station("Frankfurt");
         germany.append(berlin).append(bremen).append(frankfurt);
 
-
         MetroLine lebanon = new MetroLine("Lebanon");
         Station beirut = new Station("Beirut");
         Station aramoun = new Station("Aramoun");
@@ -248,6 +245,39 @@ class MetrosControllerTest {
                           Beirut
                           Aramoun""" + System.lineSeparator();
 
+        assertEquals(expected, outputStream.toString());
+    }
+
+    @Test
+    void findShortestPathSpaces() {
+        MetroService metroMemoryService = new MetroMemoryService();
+        MetrosController controller = new MetrosController(new Scanner("/route \"German Town\" \"Berlin Tower\" \"Lebanon Main\" \"Aramoun Hill\"\n/exit"), metroMemoryService);
+
+        MetroLine germany = new MetroLine("German Town");
+        Station berlin = new Station("Berlin Tower");
+        Station bremen = new Station("Bremen");
+        Station frankfurt = new Station("Frankfurt");
+        germany.append(berlin).append(bremen).append(frankfurt);
+
+        MetroLine lebanon = new MetroLine("Lebanon Main");
+        Station beirut = new Station("Beirut");
+        Station aramoun = new Station("Aramoun Hill");
+        lebanon.append(beirut).append(aramoun);
+
+        germany.addLineConnection(frankfurt, lebanon, beirut);
+
+        metroMemoryService.addMetroLine(germany);
+        metroMemoryService.addMetroLine(lebanon);
+
+        controller.start();
+
+        String expected = """
+                          Berlin Tower
+                          Bremen
+                          Frankfurt
+                          Transition to line Lebanon Main
+                          Beirut
+                          Aramoun Hill""" + System.lineSeparator();
 
         assertEquals(expected, outputStream.toString());
     }
