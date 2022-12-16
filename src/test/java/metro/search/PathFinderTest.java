@@ -1,14 +1,12 @@
-package metro.printing;
+package metro.search;
 
 import metro.MetroLine;
 import metro.Station;
-import metro.search.FindShortestPath;
-import metro.search.PathFinder;
 import org.junit.jupiter.api.Test;
 
-class FindShortestPathTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    PathFinder finder = new FindShortestPath();
+class PathFinderTest {
 
     @Test
     void printCorrectPath() {
@@ -18,12 +16,14 @@ class FindShortestPathTest {
         Station frankfurt = new Station("Frankfurt");
         germany.append(berlin).append(bremen).append(frankfurt);
 
-        finder.getShortestPathString(berlin, frankfurt);
+        PathFinder finder = new PathFinder(berlin, frankfurt);
+        String actual = finder.getShortestPath();
 
         String expected = "Berlin" + System.lineSeparator() +
                           "Bremen" + System.lineSeparator() +
                           "Frankfurt" + System.lineSeparator();
 
+        assertEquals(expected, actual);
     }
 
 }
