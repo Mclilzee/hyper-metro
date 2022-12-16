@@ -60,12 +60,12 @@ class MetroMemoryFileReaderTest {
         m2.append("Hammersmith").append("Westbourne-park");
 
         MetroService mockService = new MetroMemoryService();
-        mockService.addMetroLine("Metro-Railway");
+        mockService.addMetroLine(new MetroLine("Metro-Railway"));
         mockService.appendStation("Metro-Railway", "Bishops-road");
         mockService.appendStation("Metro-Railway", "Edgver road");
         mockService.appendStation("Metro-Railway", "Baker Street");
 
-        mockService.addMetroLine("Hammersmith-and-City");
+        mockService.addMetroLine(new MetroLine("Hammersmith-and-City"));
         mockService.appendStation("Hammersmith-and-City", "Hammersmith");
         mockService.appendStation("Hammersmith-and-City", "Westbourne-park");
 
@@ -90,12 +90,12 @@ class MetroMemoryFileReaderTest {
         m2.append("Hammersmith").append("Westbourne-park");
 
         MetroService expected = new MetroMemoryService();
-        expected.addMetroLine("Metro-Railway");
+        expected.addMetroLine(new MetroLine("Metro-Railway"));
         expected.appendStation("Metro-Railway", "Bishops-road");
         expected.appendStation("Metro-Railway", "Edgver road");
         expected.appendStation("Metro-Railway", "Baker Street");
 
-        expected.addMetroLine("Hammersmith-and-City");
+        expected.addMetroLine(new MetroLine("Hammersmith-and-City"));
         expected.appendStation("Hammersmith-and-City", "Hammersmith");
         expected.appendStation("Hammersmith-and-City", "Westbourne-park");
 
