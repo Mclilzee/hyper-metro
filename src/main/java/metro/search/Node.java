@@ -14,7 +14,7 @@ public class Node {
     private boolean transferStation;
     private Node prev;
     private boolean visited;
-    private Set<Node> neighbors;
+    private final Set<Node> neighbors;
 
     public Node(Station station) {
         this.station = station;
@@ -26,19 +26,31 @@ public class Node {
 
     private Set<Node> setNeighbors(Station station) {
         Set<Node> set = new HashSet<>();
-        if (station.getPreviousStation().isPresent()) {
-            Node prevNode = new Node(station.getPreviousStation().get());
-            set.add(prevNode);
-        }
+        getPreviousNode(station).ifPresent(set::add);
+        getNextNode(station).ifPresent(set::add);
 
-        if (station.getNextStation().isPresent()) {
-            Node nextNode = new Node(station.getNextStation().get());
-            set.add(nextNode);
-        }
 
         set.addAll(getLineConnectionNeighbors(station));
 
         return set;
+    }
+
+    private Optional<Node> getPreviousNode(Station station) {
+        if (station.getPreviousStation().isPresent()) {
+            Node prevNode = new Node(station.getPreviousStation().get());
+            return Optional.of(prevNode);
+        }
+
+        return Optional.empty();
+    }
+
+    private Optional<Node> getNextNode(Station station) {
+        if (station.getNextStation().isPresent()) {
+            Node nextNode = new Node(station.getNextStation().get());
+            return Optional.of(nextNode);
+        }
+
+        return Optional.empty();
     }
 
     private Set<Node> getLineConnectionNeighbors(Station station) {
