@@ -1,6 +1,5 @@
 package metro.search;
 
-import metro.LineConnection;
 import metro.Station;
 
 import java.util.*;
@@ -12,28 +11,31 @@ public class ShortestPathFinder implements StationPathFinder{
     Set<Node> visited = new HashSet<>();
 
     @Override
-    public String findPathString(Station start, Station end) {
+    public Optional<String> findPathString(Station start, Station end) {
         Node startNode = new Node(start);
         Node endNode = new Node(end);
 
         queue.add(startNode);
         visited.add(startNode);
 
-        return getShortestPathString(endNode);
+        Optional<String> foundString = getShortestPathString(endNode);
+        queue.clear();
+        visited.clear();
+        return foundString;
     }
 
-    private String getShortestPathString(Node end) {
+    private Optional<String> getShortestPathString(Node end) {
        while (!queue.isEmpty()) {
            Node current = queue.poll();
 
            if (current.equals(end)) {
-               return parsePathString(current);
+               return Optional.of(parsePathString(current));
            }
 
            addNeighbors(current);
        }
 
-       return "";
+       return Optional.empty();
     }
 
     private void addNeighbors(Node current) {

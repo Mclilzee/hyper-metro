@@ -18,13 +18,29 @@ class ShortestPathFinderTest {
         germany.append(berlin).append(bremen).append(frankfurt);
 
         ShortestPathFinder finder = new ShortestPathFinder();
-        String actual = finder.findPathString(berlin, frankfurt);
+        String actual = finder.findPathString(berlin, frankfurt).orElseThrow();
 
         String expected = """
                           Berlin
                           Bremen
                           Frankfurt""";
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void returnEmptyIfConnectionNotFound() {
+
+        MetroLine germany = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        Station frankfurt = new Station("Frankfurt");
+        germany.append(berlin).append(bremen).append(frankfurt);
+
+
+        ShortestPathFinder finder = new ShortestPathFinder();
+
+        Station beirut = new Station("Beirut");
+        assertTrue(finder.findPathString(berlin, beirut).isEmpty());
     }
 
     @Test
@@ -37,7 +53,7 @@ class ShortestPathFinderTest {
         germany.append(berlin).append(bremen).append(frankfurt).append(beirut);
 
         ShortestPathFinder finder = new ShortestPathFinder();
-        String actual = finder.findPathString(frankfurt, berlin);
+        String actual = finder.findPathString(frankfurt, berlin).orElseThrow();
 
         String expected = """
                           Frankfurt
@@ -63,7 +79,7 @@ class ShortestPathFinderTest {
         germany.addLineConnection(bremen, france, beirut);
 
         ShortestPathFinder finder = new ShortestPathFinder();
-        String actual = finder.findPathString(berlin, paris);
+        String actual = finder.findPathString(berlin, paris).orElseThrow();
 
         String expected = """
                           Berlin
@@ -97,7 +113,7 @@ class ShortestPathFinderTest {
         france.addLineConnection(paris, lebanon, aramount);
 
         ShortestPathFinder finder = new ShortestPathFinder();
-        String actual = finder.findPathString(berlin, beirut);
+        String actual = finder.findPathString(berlin, beirut).orElseThrow();
 
         String expected = """
                           Berlin
@@ -110,6 +126,25 @@ class ShortestPathFinderTest {
                           Beirut""";
         assertEquals(expected, actual);
 
+    }
+
+    @Test
+    void canSearchMultipleTimes() {
+        MetroLine germany = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        Station frankfurt = new Station("Frankfurt");
+        germany.append(berlin).append(bremen).append(frankfurt);
+
+        ShortestPathFinder finder = new ShortestPathFinder();
+        finder.findPathString(berlin, frankfurt);
+        String actual = finder.findPathString(berlin, frankfurt).orElseThrow();
+
+        String expected = """
+                          Berlin
+                          Bremen
+                          Frankfurt""";
+        assertEquals(expected, actual);
     }
 
 }
