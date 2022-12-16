@@ -44,15 +44,14 @@ class ShortestPathFinderTest {
         germany.addLineConnection(bremen, france, beirut);
 
         ShortestPathFinder finder = new ShortestPathFinder();
-        String actual = finder.findPathString(bremen, paris);
+        String actual = finder.findPathString(berlin, paris);
 
         String expected = """
                           Berlin
                           Bremen
                           Transition to line France
                           Beirut
-                          Paris
-                          """;
+                          Paris""";
         assertEquals(expected, actual);
     }
 }

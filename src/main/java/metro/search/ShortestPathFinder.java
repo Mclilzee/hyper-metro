@@ -53,8 +53,7 @@ public class ShortestPathFinder implements StationPathFinder{
 
     private void addLineConnectedNodes(Node current) {
         List<Node> nodes = current.getStation().getLineConnections().stream()
-                .map(LineConnection::station)
-                .map(Node::new)
+                .map(connection -> new Node(connection.station(), connection.metroLine().getName()))
                 .filter(eachNode -> !visited.contains(eachNode))
                 .toList();
 
@@ -77,6 +76,10 @@ public class ShortestPathFinder implements StationPathFinder{
     }
 
     private String getNodeString(Node node) {
+        if (node.getTransferLine().isPresent()) {
+            return String.format("Transition to line %s\n%s", node.getTransferLine().get(), node.getName());
+        }
+
         return node.getStation().getName();
     }
 }
