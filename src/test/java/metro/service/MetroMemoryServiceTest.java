@@ -166,74 +166,72 @@ class MetroMemoryServiceTest {
 
     @Test
     void connectMetrosCorrectly() {
-        metroMemoryService.addMetroLine("Germany");
+        MetroLine germany = new MetroLine("Germany");
+        metroMemoryService.addMetroLine(germany);
         metroMemoryService.appendStation("Germany", "Berlin");
 
-        metroMemoryService.addMetroLine("Lebanon");
+        MetroLine lebanon = new MetroLine("Lebanon");
+        metroMemoryService.addMetroLine(lebanon);
         metroMemoryService.appendStation("Lebanon", "Beirut");
 
         metroMemoryService.connectMetroLine("Germany", "Berlin", "Lebanon", "Beirut");
 
-        Station station = metroMemoryService.getMetroLine("Germany").orElseThrow().getHead().getNextStation()
-                                             .orElseThrow();
+        Station berlin = germany.findStationByName("Berlin").orElseThrow();
+        Station beirut = lebanon.findStationByName("Beirut").orElseThrow();
 
-        List<LineConnection> expected = List.of(new LineConnection("Lebanon", "Beirut"));
-        assertEquals(expected, station.getLineConnections());
+        Set<LineConnection> expected = Set.of(new LineConnection(lebanon, beirut));
+        assertEquals(expected, berlin.getLineConnections());
     }
 
     @Test
     void connectBothWaysCorrectly() {
-        metroMemoryService.addMetroLine("Germany");
+        MetroLine germany = new MetroLine("Germany");
+        metroMemoryService.addMetroLine(germany);
         metroMemoryService.appendStation("Germany", "Berlin");
 
-        metroMemoryService.addMetroLine("Lebanon");
+        MetroLine lebanon = new MetroLine("Lebanon");
+        metroMemoryService.addMetroLine(lebanon);
         metroMemoryService.appendStation("Lebanon", "Beirut");
 
         metroMemoryService.connectMetroLine("Germany", "Berlin", "Lebanon", "Beirut");
 
-        Station station = metroMemoryService.getMetroLine("Lebanon").orElseThrow().getHead().getNextStation()
-                                            .orElseThrow();
+        Station berlin = germany.findStationByName("Berlin").orElseThrow();
+        Station beirut = lebanon.findStationByName("Beirut").orElseThrow();
 
-        Set<LineConnection> expected = Set.of(new LineConnection("Germany", "Berlin"));
-        assertEquals(expected, station.getLineConnections());
-    }
 
-    @Test
-    void handleNotFoundMainStation() {
-        metroMemoryService.addMetroLine("Lebanon");
-        metroMemoryService.appendStation("Lebanon", "Beirut");
-
-        // does not throw error
-        metroMemoryService.connectMetroLine("Germany", "Berlin", "Lebanon", "Beirut");
+        Set<LineConnection> expected = Set.of(new LineConnection(germany,berlin));
+        assertEquals(expected, beirut.getLineConnections());
     }
 
     @Test
     void doesNotConnectIfMetroLineDoesntExist() {
-        metroMemoryService.addMetroLine("Germany");
+        MetroLine germany = new MetroLine("Germany");
+        metroMemoryService.addMetroLine(germany);
         metroMemoryService.appendStation("Germany", "Berlin");
 
         metroMemoryService.connectMetroLine("Germany", "Berlin", "Lebanon", "Beirut");
 
-        Station station = metroMemoryService.getMetroLine("Germany").orElseThrow().getHead().getNextStation()
-                                            .orElseThrow();
+        Station berlin = germany.findStationByName("Berlin").orElseThrow();
+
 
         Set<LineConnection> expected = Set.of();
-        assertEquals(expected, station.getLineConnections());
+        assertEquals(expected, berlin.getLineConnections());
     }
 
     @Test
     void handleNoStationCorrectly() {
-        metroMemoryService.addMetroLine("Germany");
+        MetroLine germany = new MetroLine("Germany");
+        metroMemoryService.addMetroLine(germany);
         metroMemoryService.appendStation("Germany", "Berlin");
 
-        metroMemoryService.addMetroLine("Lebanon");
+        MetroLine lebanon = new MetroLine("Lebanon");
+        metroMemoryService.addMetroLine(lebanon);
         metroMemoryService.connectMetroLine("Germany", "Berlin", "Lebanon", "Beirut");
 
-        MetroLine metroLine = metroMemoryService.getMetroLine("Germany").orElseThrow();
-        Station station = metroLine.getHead().getNextStation().orElseThrow();
+        Station berlin = germany.findStationByName("Berlin").orElseThrow();
 
         Set<LineConnection> expected = Set.of();
-        assertEquals(expected, station.getLineConnections());
+        assertEquals(expected, berlin.getLineConnections());
     }
 
     @Test
