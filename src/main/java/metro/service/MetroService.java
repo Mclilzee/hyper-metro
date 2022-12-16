@@ -20,6 +20,8 @@ public interface MetroService {
 
     void connectMetroLine(String metroLineName, String stationName, String toMetroLine, String toStation);
 
+    String findShortestPath(String metroLineName, String stationName, String toMetroLine, String toStation);
+
     Set<String> getKeys();
 
     List<MetroLine> getValues();

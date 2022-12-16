@@ -235,6 +235,74 @@ class MetroMemoryServiceTest {
     }
 
     @Test
+    void getShortestPath() {
+        MetroLine germany = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        Station frankfurt = new Station("Frankfurt");
+        germany.append(berlin).append(bremen).append(frankfurt);
+
+
+        MetroLine lebanon = new MetroLine("Lebanon");
+        Station beirut = new Station("Beirut");
+        Station aramoun = new Station("Aramoun");
+        lebanon.append(beirut).append(aramoun);
+
+        germany.addLineConnection(frankfurt, lebanon, beirut);
+
+        metroMemoryService.addMetroLine(germany);
+        metroMemoryService.addMetroLine(lebanon);
+
+
+        String actual = metroMemoryService.findShortestPath("Germany", "Berlin", "Lebanon", "Aramoun");
+
+        String expected = """
+                          Berlin
+                          Bremen
+                          Frankfurt
+                          Transition to line Lebanon
+                          Beirut
+                          Aramoun""";
+
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getShortestPathReturnNotFound() {
+        String actual = metroMemoryService.findShortestPath("Germany", "Berlin", "Lebanon", "Beirut");
+
+        String expected = "No connection found";
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getShortestPathReturnNotFoundStation() {
+        MetroLine germany = new MetroLine("Germany");
+        MetroLine lebanon = new MetroLine("Lebanon");
+
+        String actual =  metroMemoryService.findShortestPath("Germany", "Berlin", "Lebanon", "Beirut");
+
+        String expected = "No connection found";
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getShortestPathNotFoundConnection() {
+        MetroLine germany = new MetroLine("Germany");
+        germany.append(new Station("Berlin"));
+        MetroLine lebanon = new MetroLine("Lebanon");
+        lebanon.append(new Station("Beirut"));
+
+        String actual =  metroMemoryService.findShortestPath("Germany", "Berlin", "Lebanon", "Beirut");
+
+        String expected = "No connection found";
+        assertEquals(expected, actual);
+    }
+
+    @Test
     @DisplayName("Return value list is unmodifiable")
     void unmodifiableValues() {
         assertThrows(UnsupportedOperationException.class, () -> metroMemoryService.getValues().add(new MetroLine("")));

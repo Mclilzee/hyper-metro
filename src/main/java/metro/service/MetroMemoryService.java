@@ -2,12 +2,14 @@ package metro.service;
 
 import metro.MetroLine;
 import metro.Station;
+import metro.search.ShortestPathFinder;
+import metro.search.StationPathFinder;
 
 import java.util.*;
 
 public class MetroMemoryService implements MetroService {
 
-    private final Map<String, MetroLine> map = new HashMap<>();
+    private final Map<String, MetroLine> metroLines = new HashMap<>();
 
     @Override
     public void addMetroLine(MetroLine metroLine) {
@@ -15,17 +17,17 @@ public class MetroMemoryService implements MetroService {
             return;
         }
 
-        map.putIfAbsent(metroLine.getName(), metroLine);
+        metroLines.putIfAbsent(metroLine.getName(), metroLine);
     }
 
     @Override
     public Optional<MetroLine> getMetroLine(String metroLineName) {
-        return Optional.ofNullable(map.get(metroLineName));
+        return Optional.ofNullable(metroLines.get(metroLineName));
     }
 
     @Override
     public void appendStation(String metroLineName, String stationName) {
-        MetroLine metroLine = map.get(metroLineName);
+        MetroLine metroLine = metroLines.get(metroLineName);
         if (metroLine == null || metroLine.findStationByName(stationName).isPresent()) {
             return;
         }
@@ -35,7 +37,7 @@ public class MetroMemoryService implements MetroService {
 
     @Override
     public void addHead(String metroLineName, String stationName) {
-        MetroLine metroLine = map.get(metroLineName);
+        MetroLine metroLine = metroLines.get(metroLineName);
         if (metroLine == null || metroLine.findStationByName(stationName).isPresent()) {
             return;
         }
@@ -45,7 +47,7 @@ public class MetroMemoryService implements MetroService {
 
     @Override
     public void removeStation(String metroLineName, String stationName) {
-        MetroLine metroLine = map.get(metroLineName);
+        MetroLine metroLine = metroLines.get(metroLineName);
         if (metroLine == null) {
             return;
         }
@@ -55,8 +57,8 @@ public class MetroMemoryService implements MetroService {
 
     @Override
     public void connectMetroLine(String firstMetroLineName, String firstStationName, String secondMetroLineName, String secondStationName) {
-        MetroLine firstMetroLine = map.get(firstMetroLineName);
-        MetroLine secondMetroLine = map.get(secondMetroLineName);
+        MetroLine firstMetroLine = metroLines.get(firstMetroLineName);
+        MetroLine secondMetroLine = metroLines.get(secondMetroLineName);
         if (firstMetroLine == null || secondMetroLine == null) {
             return;
         }
@@ -71,12 +73,30 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
+    public String findShortestPath(String metroLineName, String stationName, String toMetroLine, String toStation) {
+        MetroLine firstMetroLine = metroLines.get(metroLineName);
+        MetroLine secondMetroLine = metroLines.get(toMetroLine);
+        if (firstMetroLine == null || secondMetroLine == null) {
+            return "No connection found";
+        }
+
+        Optional<Station> startStation = firstMetroLine.findStationByName(stationName);
+        Optional<Station> endStation = secondMetroLine.findStationByName(toStation);
+        if (startStation.isPresent() && endStation.isPresent()) {
+            StationPathFinder finder = new ShortestPathFinder();
+            return finder.findPathString(startStation.get(), endStation.get()).orElse("No connection found");
+        }
+
+        return "No connection found";
+    }
+
+    @Override
     public Set<String> getKeys() {
-        return map.keySet();
+        return metroLines.keySet();
     }
 
     @Override
     public List<MetroLine> getValues() {
-        return map.values().stream().toList();
+        return metroLines.values().stream().toList();
     }
 }
