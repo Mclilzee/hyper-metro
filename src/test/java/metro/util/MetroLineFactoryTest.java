@@ -23,10 +23,10 @@ class MetroLineFactoryTest {
     }
 
     @Test
-    void hasCorrectMetroStations() {
-        MetroLine expected = new MetroLine();
+    void hasCorrectMetroStationsOrder() {
+        MetroLine expected = new MetroLine("Germany");
         expected.append("Berlin").append("Bremen").append("Frankfurt");
 
-        assertEquals(expected, MetroLineFactory.createMetroLine(stationsMap));
+        assertEquals(expected, MetroLineFactory.createMetroLine("Germany", stationsMap));
     }
 }
