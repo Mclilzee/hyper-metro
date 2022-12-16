@@ -16,21 +16,15 @@ class NodeTest {
     }
 
     @Test
-    void nodeHasCorrectVisitedInitStatus() {
-        boolean expected = false;
-        assertEquals(expected, node.isVisited());
-    }
-
-    @Test
-    void setVisited() {
-        node.setVisited(true);
-        boolean expected = true;
-        assertEquals(expected, node.isVisited());
-    }
-
-    @Test
     void initTransferStation() {
         boolean expected = false;
+        assertEquals(expected, node.isTransferStation());
+    }
+
+    @Test
+    void transferStationSetCorrectly() {
+        boolean expected = true;
+        node.setTransferStation(true);
         assertEquals(expected, node.isTransferStation());
     }
 }
