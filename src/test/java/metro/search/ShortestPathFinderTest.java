@@ -28,6 +28,25 @@ class ShortestPathFinderTest {
     }
 
     @Test
+    void pathTestBothDirections() {
+        MetroLine germany = new MetroLine("Germany");
+        Station berlin = new Station("Berlin");
+        Station bremen = new Station("Bremen");
+        Station frankfurt = new Station("Frankfurt");
+        Station beirut = new Station("Beirut");
+        germany.append(berlin).append(bremen).append(frankfurt).append(beirut);
+
+        ShortestPathFinder finder = new ShortestPathFinder();
+        String actual = finder.findPathString(frankfurt, berlin);
+
+        String expected = """
+                          Frankfurt
+                          Bremen
+                          Berlin""";
+        assertEquals(expected, actual);
+    }
+
+    @Test
     @DisplayName("Ger correct lines if stations has connections")
     void correctStringLineConnections() {
         MetroLine germany = new MetroLine("Germany");
