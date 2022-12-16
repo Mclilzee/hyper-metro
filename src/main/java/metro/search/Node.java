@@ -21,4 +21,19 @@ public class Node {
 
     }
 
+    public Station getStation() {
+        return this.station;
+    }
+
+    public boolean isVisited() {
+        return this.visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+
+    public boolean isTransferStation() {
+        return true;
+    }
 }
