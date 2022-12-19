@@ -19,13 +19,15 @@ class FastestPathPrinterTest {
         Station bremen = new Station("Bremen", 0);
         Station frankfurt = new Station("Frankfurt", 0);
 
-        List<Node> nodes = List.of(new Node(berlin), new Node(bremen), new Node(frankfurt));
+        List<Node> nodes = List.of(new Node(berlin, 1), new Node(bremen, 2), new Node(frankfurt, 3));
+
         String actual = printer.getPathString(nodes);
 
         String expected = """
                           Berlin
                           Bremen
-                          Frankfurt""";
+                          Frankfurt
+                          Total: 6 minutes in the way""";
 
         assertEquals(expected, actual);
     }
@@ -47,7 +49,11 @@ class FastestPathPrinterTest {
         Station beirut = new Station("Beirut", 0);
         Station paris = new Station("Paris", 0);
 
-        List<Node> nodes = List.of(new Node(berlin), new Node(bremen), new Node(beirut, "France"), new Node(paris));
+        List<Node> nodes = List.of(new Node(berlin, 3),
+                new Node(bremen, 2),
+                new Node(beirut, "France"),
+                new Node(paris, 10));
+
         String actual = printer.getPathString(nodes);
 
         String expected = """
@@ -55,7 +61,8 @@ class FastestPathPrinterTest {
                           Bremen
                           Transition to line France
                           Beirut
-                          Paris""";
+                          Paris
+                          Total: 20 minutes in the way""";
 
         assertEquals(expected, actual);
     }

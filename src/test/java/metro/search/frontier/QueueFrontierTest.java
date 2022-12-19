@@ -72,7 +72,7 @@ class QueueFrontierTest {
     @Test
     void getNodeThrowsIfEmpty() {
         Frontier frontier = FrontierFactory.getBreadthFrontier();
-        assertThrows(NoSuchElementException.class, () -> frontier.pollNode());
+        assertThrows(NoSuchElementException.class, frontier::pollNode);
     }
 
     @Test
