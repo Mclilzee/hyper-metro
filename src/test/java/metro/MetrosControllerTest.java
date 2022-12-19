@@ -298,4 +298,75 @@ class MetrosControllerTest {
 
         assertEquals(expected, outputStream.toString());
     }
+
+    @Test
+    void findFastestPathInput() {
+        MetroService metroMemoryService = new MetroMemoryService();
+        MetrosController controller = new MetrosController(new Scanner("/fastest-route Germany Berlin Lebanon Aramoun\n/exit"), metroMemoryService);
+
+        MetroLine germany = new MetroLine("Germany");
+        Station berlin = new Station("Berlin", 1);
+        Station bremen = new Station("Bremen", 3);
+        Station frankfurt = new Station("Frankfurt", 1);
+        germany.append(berlin).append(bremen).append(frankfurt);
+
+        MetroLine lebanon = new MetroLine("Lebanon");
+        Station beirut = new Station("Beirut", 0);
+        Station aramoun = new Station("Aramoun", 2);
+        lebanon.append(beirut).append(aramoun);
+
+        germany.addLineConnection(frankfurt, lebanon, beirut);
+
+        metroMemoryService.addMetroLine(germany);
+        metroMemoryService.addMetroLine(lebanon);
+
+        controller.start();
+
+        String expected = """
+                          Berlin
+                          Bremen
+                          Frankfurt
+                          Transition to line Lebanon
+                          Beirut
+                          Aramoun
+                          Total: 11 minutes in the way""" + System.lineSeparator();
+
+        assertEquals(expected, outputStream.toString());
+;
+    }
+
+    @Test
+    void findFastestPathSpaces() {
+        MetroService metroMemoryService = new MetroMemoryService();
+        MetrosController controller = new MetrosController(new Scanner("/fastest-route \"German Town\" \"Berlin Tower\" \"Lebanon Main\" \"Aramoun Hill\"\n/exit"), metroMemoryService);
+
+        MetroLine germany = new MetroLine("German Town");
+        Station berlin = new Station("Berlin Tower", 1);
+        Station bremen = new Station("Bremen", 3);
+        Station frankfurt = new Station("Frankfurt", 1);
+        germany.append(berlin).append(bremen).append(frankfurt);
+
+        MetroLine lebanon = new MetroLine("Lebanon Main");
+        Station beirut = new Station("Beirut", 0);
+        Station aramoun = new Station("Aramoun Hill", 2);
+        lebanon.append(beirut).append(aramoun);
+
+        germany.addLineConnection(frankfurt, lebanon, beirut);
+
+        metroMemoryService.addMetroLine(germany);
+        metroMemoryService.addMetroLine(lebanon);
+
+        controller.start();
+
+        String expected = """
+                          Berlin Tower
+                          Bremen
+                          Frankfurt
+                          Transition to line Lebanon Main
+                          Beirut
+                          Aramoun Hill
+                          Total: 11 minutes in the way""" + System.lineSeparator();
+
+        assertEquals(expected, outputStream.toString());
+    }
 }
