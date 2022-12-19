@@ -1,13 +1,17 @@
 package metro.search;
 
 import metro.Station;
+import metro.search.frontier.Frontier;
+import metro.search.frontier.FrontierFactory;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ShortestPathFinder implements StationPathFinder{
-    Frontier frontier = new BreadthFrontier();
+    Frontier frontier = FrontierFactory.getBreadthFrontier();
 
     @Override
     public Optional<String> findPathString(Station start, Station end) {

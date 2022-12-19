@@ -1,13 +1,18 @@
-package metro.search;
+package metro.search.frontier;
 
 import metro.Station;
+import metro.search.Node;
 
 import java.util.*;
 
-public class BreadthFrontier implements Frontier {
+public class QueueFrontier implements Frontier {
 
-    Queue<Node> queue = new ArrayDeque<>();
-    Set<Node> visited = new HashSet<>();
+    protected final Queue<Node> queue;
+    private final Set<Node> visited = new HashSet<>();
+
+    protected QueueFrontier(Queue<Node> queue) {
+        this.queue = queue;
+    }
 
     @Override
     public Node pollNode() {
@@ -40,9 +45,9 @@ public class BreadthFrontier implements Frontier {
     }
 
     private void addConnectedNode(Node node, Station station) {
-        Node prevNode = new Node(station);
-        prevNode.setPrev(node);
-        addNode(prevNode);
+        Node neighborNode = new Node(station, node.getWeight() + station.getTime());
+        neighborNode.setPrev(node);
+        addNode(neighborNode);
     }
 
     private void addLineConnectedNodes(Node current) {
@@ -57,7 +62,7 @@ public class BreadthFrontier implements Frontier {
         }
     }
 
-        @Override
+    @Override
     public void clear() {
         queue.clear();
         visited.clear();

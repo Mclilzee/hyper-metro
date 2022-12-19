@@ -1,4 +1,6 @@
-package metro.search;
+package metro.search.frontier;
+
+import metro.search.Node;
 
 public interface Frontier {
 

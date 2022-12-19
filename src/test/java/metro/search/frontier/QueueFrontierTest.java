@@ -1,7 +1,8 @@
-package metro.search;
+package metro.search.frontier;
 
 import metro.MetroLine;
 import metro.Station;
+import metro.search.Node;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,12 +10,11 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GreedyBreadthFrontierTest {
-
-    Frontier frontier = new GreedyBreadthFrontier();
+class QueueFrontierTest {
 
     @Test
     void addNode() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
         Node expected = new Node(new Station("test", 0));
         frontier.addNode(expected);
 
@@ -25,6 +25,7 @@ class GreedyBreadthFrontierTest {
 
     @Test
     void doesNotAddSameNodeMultipleTimes() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
         Node first = new Node(new Station("", 0));
         Node second = new Node(new Station("", 0));
         Node third = new Node(new Station("", 0));
@@ -42,11 +43,13 @@ class GreedyBreadthFrontierTest {
 
     @Test
     void getNodeThrowsIfEmpty() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
         assertThrows(NoSuchElementException.class, () -> frontier.pollNode());
     }
 
     @Test
     void getNodeReturnsCorrectNode() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
         Station berlin = new Station("Berlin", 0);
         Node berlinNode = new Node(berlin);
 
@@ -63,11 +66,13 @@ class GreedyBreadthFrontierTest {
 
     @Test
     void isEmpty() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
         assertTrue(frontier.isEmpty());
     }
 
     @Test
     void IsNotEmpty() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
         Node node = new Node(new Station("Test", 0));
         frontier.addNode(node);
         assertFalse(frontier.isEmpty());
@@ -75,6 +80,7 @@ class GreedyBreadthFrontierTest {
 
     @Test
     void isEmptyAfterPolling() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
         Node node = new Node(new Station("Test", 0));
         frontier.addNode(node);
         frontier.pollNode();
@@ -83,6 +89,7 @@ class GreedyBreadthFrontierTest {
 
     @Test
     void addNeighbors() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
         Station frankfurt = new Station("Frankfurt", 0);
@@ -95,15 +102,16 @@ class GreedyBreadthFrontierTest {
         Node berlinNode = new Node(berlin);
         frontier.addNeighbors(berlinNode);
 
-        assertDoesNotThrow(() -> frontier.pollNode());
-        assertDoesNotThrow(() -> frontier.pollNode());
-        assertDoesNotThrow(() -> frontier.pollNode());
+        assertDoesNotThrow(frontier::pollNode);
+        assertDoesNotThrow(frontier::pollNode);
+        assertDoesNotThrow(frontier::pollNode);
         assertTrue(frontier.isEmpty());
     }
 
     @Test
     @DisplayName("Does not add neighbors if they are already added previously")
     void addNeighborsMultiple() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
         Station frankfurt = new Station("Frankfurt", 0);
@@ -127,6 +135,7 @@ class GreedyBreadthFrontierTest {
 
     @Test
     void addNeighborsSetsPrevCorrectly() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
 
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
@@ -147,6 +156,7 @@ class GreedyBreadthFrontierTest {
 
     @Test
     void clearNodes() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
         Node first = new Node(new Station("First", 0));
         Node second = new Node(new Station("Second", 0));
         Node third = new Node(new Station("Third", 0));
@@ -163,6 +173,7 @@ class GreedyBreadthFrontierTest {
 
     @Test
     void clearVisitedNodes() {
+        Frontier frontier = FrontierFactory.getBreadthFrontier();
         Node berlin = new Node(new Station("Berlin", 0));
         frontier.addNode(berlin);
         frontier.clear();
