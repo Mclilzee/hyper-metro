@@ -2,12 +2,13 @@ package metro.search;
 
 public interface Frontier {
 
-    Node getNode();
+    Node pollNode();
 
     boolean isEmpty();
 
-    Node addNode(Node node);
+    void addNode(Node node);
 
-    Node addNeighbors(Node node);
+    void addNeighbors(Node node);
 
+    void clear();
 }
