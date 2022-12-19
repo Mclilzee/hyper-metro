@@ -42,6 +42,34 @@ class QueueFrontierTest {
     }
 
     @Test
+    void greedyFrontierReturnsCorrectOrder() {
+        Frontier frontier = FrontierFactory.getGreedyBreadthFrontier();
+
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station frankfurt = new Station("Frankfurt", 0);
+        Station beirut = new Station("Beirut", 0);
+
+        // should contain weight of 5
+        Node berlinNode = new Node(berlin, "Transfer Line Included");
+
+        Node bremenNode = new Node(bremen, 2);
+        Node frankfurtNode = new Node(frankfurt, 1);
+        Node beirutNode = new Node(beirut, 10);
+
+        frontier.addNode(berlinNode);
+        frontier.addNode(bremenNode);
+        frontier.addNode(frankfurtNode);
+        frontier.addNode(beirutNode);
+
+
+        assertEquals(frankfurtNode, frontier.pollNode());
+        assertEquals(bremenNode, frontier.pollNode());
+        assertEquals(berlinNode, frontier.pollNode());
+        assertEquals(beirutNode, frontier.pollNode());
+    }
+
+    @Test
     void getNodeThrowsIfEmpty() {
         Frontier frontier = FrontierFactory.getBreadthFrontier();
         assertThrows(NoSuchElementException.class, () -> frontier.pollNode());
