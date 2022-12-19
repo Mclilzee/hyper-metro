@@ -26,13 +26,17 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
-    public void appendStation(String metroLineName, String stationName) {
+    public void appendStation(String metroLineName, String stationName, int time) {
         MetroLine metroLine = metroLines.get(metroLineName);
         if (metroLine == null || metroLine.findStationByName(stationName).isPresent()) {
             return;
         }
 
-        metroLine.append(new Station(stationName));
+        metroLine.append(new Station(stationName, time));
+    }
+
+    public void appendStation(String metroLine, String stationName) {
+        appendStation(metroLine, stationName, 0);
     }
 
     @Override
