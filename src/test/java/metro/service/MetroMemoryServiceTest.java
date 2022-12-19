@@ -280,6 +280,41 @@ class MetroMemoryServiceTest {
     }
 
     @Test
+    void getFastestPath() {
+        MetroLine germany = new MetroLine("Germany");
+        Station berlin = new Station("Berlin", 2);
+        Station bremen = new Station("Bremen", 5);
+        Station frankfurt = new Station("Frankfurt", 5);
+        germany.append(berlin).append(bremen).append(frankfurt);
+
+
+        MetroLine lebanon = new MetroLine("Lebanon");
+        Station beirut = new Station("Beirut", 3);
+        Station aramoun = new Station("Aramoun", 5);
+        lebanon.append(beirut).append(aramoun);
+
+        germany.addLineConnection(frankfurt, lebanon, beirut);
+
+        metroMemoryService.addMetroLine(germany);
+        metroMemoryService.addMetroLine(lebanon);
+
+
+        String actual = metroMemoryService.findFastestPath("Germany", "Berlin", "Lebanon", "Aramoun");
+
+        String expected = """
+                          Berlin
+                          Bremen
+                          Frankfurt
+                          Transition to line Lebanon
+                          Beirut
+                          Aramoun
+                          Total: 20 minutes in the way""";
+
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void getShortestPathReturnNotFound() {
         Exception exception = assertThrows(IllegalArgumentException.class,
                 () -> metroMemoryService.findShortestPath("Germany",
@@ -294,7 +329,7 @@ class MetroMemoryServiceTest {
     }
 
     @Test
-    void getShortestPathReturnFoundStation() {
+    void getShortestPathThrowsNoStation() {
         metroMemoryService.addMetroLine(new MetroLine("Germany"));
         metroMemoryService.addMetroLine(new MetroLine("Lebanon"));
 
@@ -312,6 +347,22 @@ class MetroMemoryServiceTest {
 
     @Test
     void getShortestPathNotFoundConnection() {
+        MetroLine germany = new MetroLine("Germany");
+        germany.append(new Station("Berlin", 0));
+        MetroLine lebanon = new MetroLine("Lebanon");
+        lebanon.append(new Station("Beirut", 0));
+
+        metroMemoryService.addMetroLine(germany);
+        metroMemoryService.addMetroLine(lebanon);
+        String actual =  metroMemoryService.findShortestPath("Germany", "Berlin", "Lebanon", "Beirut");
+
+        String expected = "";
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getFastestPathNotFoundConnection() {
         MetroLine germany = new MetroLine("Germany");
         germany.append(new Station("Berlin", 0));
         MetroLine lebanon = new MetroLine("Lebanon");

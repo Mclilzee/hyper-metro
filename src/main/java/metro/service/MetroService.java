@@ -21,6 +21,8 @@ public interface MetroService {
 
     String findShortestPath(String metroLineName, String stationName, String toMetroLine, String toStation);
 
+    String findFastestPath(String metroLineName, String stationName, String toMetroLine, String toStation);
+
     Set<String> getKeys();
 
     List<MetroLine> getValues();

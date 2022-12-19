@@ -2,10 +2,7 @@ package metro.service;
 
 import metro.MetroLine;
 import metro.Station;
-import metro.printing.LineConnectionsPrinter;
-import metro.printing.MetroPrinter;
-import metro.printing.PathPrinter;
-import metro.printing.ShortestPathPrinter;
+import metro.printing.*;
 import metro.search.Node;
 import metro.search.PathFinder;
 import metro.search.PathFinderFactory;
@@ -88,6 +85,18 @@ public class MetroMemoryService implements MetroService {
         PathFinder finder = PathFinderFactory.getShortestPathFinder();
         List<Node> path = finder.findPath(startStation, endStation);
         PathPrinter printer = new ShortestPathPrinter();
+
+        return printer.getPathString(path);
+    }
+
+    @Override
+    public String findFastestPath(String metroLineName, String stationName, String toMetroLine, String toStation) {
+        Station startStation = getStation(metroLineName, stationName);
+        Station endStation = getStation(toMetroLine, toStation);
+
+        PathFinder finder = PathFinderFactory.getFastestPathFinder();
+        List<Node> path = finder.findPath(startStation, endStation);
+        PathPrinter printer = new FastestPathPrinter();
 
         return printer.getPathString(path);
     }

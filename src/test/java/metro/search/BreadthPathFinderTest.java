@@ -110,10 +110,10 @@ class BreadthPathFinderTest {
         nice.setNextStation(paris);
 
         Station beirut = new Station("Beirut", 0);
-        paris.addLineConnection(new MetroLine(""), beirut);
 
         Station aramoun = new Station("Aramoun", 0);
-        beirut.setNextStation(aramoun);
+        aramoun.setPreviousStation(beirut);
+        paris.addLineConnection(new MetroLine(""), aramoun);
 
         Station matar = new Station("Matar", 0);
         aramoun.setNextStation(matar);

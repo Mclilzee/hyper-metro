@@ -45,7 +45,7 @@ public class QueueFrontier implements Frontier {
     }
 
     private void addConnectedNode(Node node, Station station) {
-        Node neighborNode = new Node(station, node.getWeight() + station.getTime());
+        Node neighborNode = new Node(station, station.getTime());
         neighborNode.setPrev(node);
         addNode(neighborNode);
     }
