@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -66,9 +67,9 @@ class MetrosControllerTest {
 
         MetroLine germany = new MetroLine("Germany");
         metroService.addMetroLine(germany);
-        metroService.appendStation("Germany", "Berlin");
-        metroService.appendStation("Germany", "Bremen");
-        metroService.appendStation("Germany", "Beirut");
+        metroService.appendStation("Germany", "Berlin", 0);
+        metroService.appendStation("Germany", "Bremen", 0);
+        metroService.appendStation("Germany", "Beirut", 0);
         controller.start();
 
         // Use specific printer and add lineSeparator for printing
@@ -84,9 +85,9 @@ class MetrosControllerTest {
 
         MetroLine hammerCity = new MetroLine("Hammer City");
         metroService.addMetroLine(hammerCity);
-        metroService.appendStation("Hammer City", "Berlin");
-        metroService.appendStation("Hammer City", "Bremen");
-        metroService.appendStation("Hammer City", "Beirut");
+        metroService.appendStation("Hammer City", "Berlin", 0);
+        metroService.appendStation("Hammer City", "Bremen", 0);
+        metroService.appendStation("Hammer City", "Beirut", 0);
         controller.start();
 
         // Use specific printer and add lineSeparator for printing
@@ -164,9 +165,9 @@ class MetrosControllerTest {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
         MetroLine germany = new MetroLine("Germany");
         metroService.addMetroLine(germany);
-        metroService.appendStation("Germany", "Berlin");
-        metroService.appendStation("Germany", "Bremen");
-        metroService.appendStation("Germany", "Beirut");
+        metroService.appendStation("Germany", "Berlin", 0);
+        metroService.appendStation("Germany", "Bremen", 0);
+        metroService.appendStation("Germany", "Beirut", 0);
 
         controller.start();
 
@@ -178,9 +179,9 @@ class MetrosControllerTest {
         MetrosController controller = new MetrosController(new Scanner("/remove \"German Village\" \"Bremen Circus\"\n/exit"), metroService);
         MetroLine germanVillage = new MetroLine("German Village");
         metroService.addMetroLine(germanVillage);
-        metroService.appendStation("German Village", "Berlin Town");
-        metroService.appendStation("German Village", "Bremen Circus");
-        metroService.appendStation("German Village", "Beirut Sea");
+        metroService.appendStation("German Village", "Berlin Town", 0);
+        metroService.appendStation("German Village", "Bremen Circus", 0);
+        metroService.appendStation("German Village", "Beirut Sea", 0);
 
         controller.start();
 

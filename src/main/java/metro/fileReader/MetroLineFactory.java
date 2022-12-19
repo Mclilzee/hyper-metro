@@ -19,7 +19,7 @@ public class MetroLineFactory {
     }
 
     private static Station getStation(StationDTO stationDTO) {
-        return new Station(stationDTO.getName());
+        return new Station(stationDTO.getName(), stationDTO.getTime());
     }
 
 }

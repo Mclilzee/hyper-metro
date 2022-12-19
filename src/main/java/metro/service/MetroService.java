@@ -12,11 +12,7 @@ public interface MetroService {
 
     Optional<MetroLine> getMetroLine(String metroLineName);
 
-    void appendStation(String metroLineName, String stationName);
-
     void appendStation(String metroLineName, String stationName, int time);
-
-    void addHead(String metroLineName, String stationName);
 
     void addHead(String metroLineName, String stationName, int time);
 

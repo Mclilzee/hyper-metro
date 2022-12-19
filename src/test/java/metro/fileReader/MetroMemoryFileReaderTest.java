@@ -13,8 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MetroMemoryFileReaderTest {
 
@@ -51,21 +50,21 @@ class MetroMemoryFileReaderTest {
     }
 
     @Test
-    void containsCorrectValues() {
+    void containsCorrectAppendingOrder() {
         MetroService service = reader.loadMetroServiceFromFile(metroPath);
 
         MetroService mockService = new MetroMemoryService();
         mockService.addMetroLine(new MetroLine("Metro-Railway"));
-        mockService.appendStation("Metro-Railway", "Bishops-road");
-        mockService.appendStation("Metro-Railway", "Edgver road");
-        mockService.appendStation("Metro-Railway", "Baker Street");
+        mockService.appendStation("Metro-Railway", "Bishops-road", 2);
+        mockService.appendStation("Metro-Railway", "Edgver road", 3);
+        mockService.appendStation("Metro-Railway", "Baker street", 1);
 
         mockService.addMetroLine(new MetroLine("Hammersmith-and-City"));
-        mockService.appendStation("Hammersmith-and-City", "Hammersmith");
-        mockService.appendStation("Hammersmith-and-City", "Westbourne-park");
-        mockService.appendStation("Hammersmith-and-City", "Baker Street");
+        mockService.appendStation("Hammersmith-and-City", "Hammersmith", 1);
+        mockService.appendStation("Hammersmith-and-City", "Westbourne-park", 3);
+        mockService.appendStation("Hammersmith-and-City", "Baker street", 3);
 
-        mockService.connectMetroLine("Metro-Railway", "Baker Street", "Hammersmith-and-City", "Baker Street");
+        mockService.connectMetroLine("Metro-Railway", "Baker street", "Hammersmith-and-City", "Baker street");
 
         List<MetroLine> actual = service.getValues();
         List<MetroLine> expected = mockService.getValues();
@@ -79,21 +78,24 @@ class MetroMemoryFileReaderTest {
         MetroService service = reader.loadMetroServiceFromFile(metroPath);
 
         MetroLine m1 = new MetroLine("m1");
-        m1.append(new Station("Bishops-road")).append(new Station("Edgver road")).append(new Station("Baker Street"));
+        m1.append(new Station("Bishops-road")).append(new Station("Edgver road")).append(new Station("Baker street"));
 
         MetroLine m2 = new MetroLine("m2");
         m2.append(new Station("Hammersmith")).append(new Station("Westbourne-park"));
 
-        MetroService expected = new MetroMemoryService();
-        expected.addMetroLine(new MetroLine("Metro-Railway"));
-        expected.appendStation("Metro-Railway", "Bishops-road");
-        expected.appendStation("Metro-Railway", "Edgver road");
-        expected.appendStation("Metro-Railway", "Baker Street");
+        MetroService mockService = new MetroMemoryService();
+        mockService.addMetroLine(new MetroLine("Metro-Railway"));
+        mockService.addMetroLine(new MetroLine("Metro-Railway"));
+        mockService.appendStation("Metro-Railway", "Bishops-road", 2);
+        mockService.appendStation("Metro-Railway", "Edgver road", 3);
+        mockService.appendStation("Metro-Railway", "Baker street", 1);
 
-        expected.addMetroLine(new MetroLine("Hammersmith-and-City"));
-        expected.appendStation("Hammersmith-and-City", "Hammersmith");
-        expected.appendStation("Hammersmith-and-City", "Westbourne-park");
+        mockService.addMetroLine(new MetroLine("Hammersmith-and-City"));
+        mockService.appendStation("Hammersmith-and-City", "Hammersmith", 1);
+        mockService.appendStation("Hammersmith-and-City", "Westbourne-park", 3);
+        mockService.appendStation("Hammersmith-and-City", "Baker street", 3);
 
-        assertEquals(expected.getKeys(), service.getKeys());
+
+        assertEquals(mockService.getKeys(), service.getKeys());
     }
 }

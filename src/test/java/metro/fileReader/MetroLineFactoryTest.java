@@ -25,7 +25,7 @@ class MetroLineFactoryTest {
     @Test
     void hasCorrectMetroStationsOrder() {
         MetroLine expected = new MetroLine("Germany");
-        expected.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Frankfurt"));
+        expected.append(new Station("Berlin", 1)).append(new Station("Bremen", 1)).append(new Station("Frankfurt", 1));
 
         assertEquals(expected, MetroLineFactory.createUnconnectedMetroLine("Germany", stationsMap));
     }
