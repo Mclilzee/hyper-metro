@@ -34,8 +34,8 @@ public class MetroMemoryService implements MetroService {
 
     @Override
     public void addHead(String metroLineName, String stationName, int time) {
-        MetroLine metroLine = metroLines.get(metroLineName);
-        if (metroLine == null || metroLine.findStationByName(stationName).isPresent()) {
+        MetroLine metroLine = getMetroLine(metroLineName);
+        if (metroLine.findStationByName(stationName).isPresent()) {
             return;
         }
 
@@ -44,11 +44,7 @@ public class MetroMemoryService implements MetroService {
 
     @Override
     public void removeStation(String metroLineName, String stationName) {
-        MetroLine metroLine = metroLines.get(metroLineName);
-        if (metroLine == null) {
-            return;
-        }
-
+        MetroLine metroLine = getMetroLine(metroLineName);
         metroLine.removeStation(stationName);
     }
 
@@ -62,11 +58,8 @@ public class MetroMemoryService implements MetroService {
 
     @Override
     public void connectMetroLine(String firstMetroLineName, String firstStationName, String secondMetroLineName, String secondStationName) {
-        MetroLine firstMetroLine = metroLines.get(firstMetroLineName);
-        MetroLine secondMetroLine = metroLines.get(secondMetroLineName);
-        if (firstMetroLine == null || secondMetroLine == null) {
-            return;
-        }
+        MetroLine firstMetroLine = getMetroLine(firstMetroLineName);
+        MetroLine secondMetroLine = getMetroLine(secondMetroLineName);
 
         Optional<Station> firstStation = firstMetroLine.findStationByName(firstStationName);
         Optional<Station> secondStation = secondMetroLine.findStationByName(secondStationName);

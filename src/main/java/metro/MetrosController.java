@@ -62,21 +62,45 @@ public class MetrosController {
         int stationTime = Integer.parseInt(matcher.group(5));
 
         switch (matcher.group(2).toLowerCase()) {
-            case "/append" -> metroService.appendStation(metroLineName, stationName, stationTime);
-            case "/add-head" -> metroService.addHead(metroLineName, stationName, stationTime);
+            case "/append" -> appendStation(metroLineName, stationName, stationTime);
+            case "/add-head" -> addHead(metroLineName, stationName, stationTime);
+        }
+    }
+
+    private void appendStation(String metroLineName, String stationName, int stationTime) {
+        try {
+            metroService.appendStation(metroLineName, stationName, stationTime);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private void addHead(String metroLineName, String stationName, int stationTime) {
+        try {
+            metroService.addHead(metroLineName, stationName, stationTime);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
     private void removeStation(Matcher matcher) {
         String metroLineName = removeQuotes(matcher.group(7));
         String stationName = removeQuotes(matcher.group(8));
-        metroService.removeStation(metroLineName, stationName);
+        try {
+            metroService.removeStation(metroLineName, stationName);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     private void printStation(Matcher matcher) {
         String metroLineName = removeQuotes(matcher.group(10));
-        String information = metroService.getMetroLineInformation(metroLineName);
-        System.out.println(information);
+        try {
+            String information = metroService.getMetroLineInformation(metroLineName);
+            System.out.println(information);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
 
@@ -95,17 +119,31 @@ public class MetrosController {
     }
 
     private void connectStations(String metroLineName, String stationName, String toMetroLine, String toStation) {
-        metroService.connectMetroLine(metroLineName, stationName, toMetroLine, toStation);
+        try {
+            metroService.connectMetroLine(metroLineName, stationName, toMetroLine, toStation);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     private void printShortestRoute(String metroLineName, String stationName, String toMetroLine, String toStation) {
-        System.out.println(metroService.findShortestPath(metroLineName, stationName, toMetroLine, toStation));
+        try {
+            String shortestRoute = metroService.findShortestPath(metroLineName, stationName, toMetroLine, toStation);
+            System.out.println(shortestRoute);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
+
     }
 
     private void printFastestRoute(String metroLineName, String stationName, String toMetroLine, String toStation) {
-        System.out.println(metroService.findFastestPath(metroLineName, stationName, toMetroLine, toStation));
+        try {
+            String fastestRoute = metroService.findFastestPath(metroLineName, stationName, toMetroLine, toStation);
+            System.out.println(fastestRoute);
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
-
 
     private String removeQuotes(String input) {
         return input.replaceAll("\"", "");

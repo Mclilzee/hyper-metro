@@ -1,282 +1,343 @@
 {
   "Linka A": {
+    "0": {
+      "name": "Nemocnice Motol",
+      "transfer": [],
+      "time": 5
+    },
     "1": {
-      "name": "Nemocnice Motol" ,
-      "transfer": []
-    } ,
+      "name": "Petriny",
+      "transfer": [],
+      "time": 5
+    },
     "2": {
-      "name": "Petriny" ,
-      "transfer": []
-    } ,
+      "name": "Nadrazi Veleslavin",
+      "transfer": [],
+      "time": 3
+    },
     "3": {
-      "name": "Nadrazi Veleslavin" ,
-      "transfer": []
-    } ,
+      "name": "Borislavka",
+      "transfer": [],
+      "time": 3
+    },
     "4": {
-      "name": "Borislavka" ,
-      "transfer": []
-    } ,
+      "name": "Dejvicka",
+      "transfer": [],
+      "time": 4
+    },
     "5": {
-      "name": "Dejvicka" ,
-      "transfer": []
-    } ,
+      "name": "Hradcanska",
+      "transfer": [],
+      "time": 4
+    },
     "6": {
-      "name": "Hradcanska" ,
-      "transfer": []
-    } ,
+      "name": "Malostranska",
+      "transfer": [],
+      "time": 1
+    },
     "7": {
-      "name": "Malostranska" ,
-      "transfer": []
-    } ,
+      "name": "Staromestska",
+      "transfer": [],
+      "time": 7
+    },
     "8": {
-      "name": "Staromestska" ,
-      "transfer": []
-    } ,
-    "9": {
-      "name": "Mustek" ,
+      "name": "Mustek",
       "transfer": [
         {
-          "line": "Linka B" ,
+          "line": "Linka B",
           "station": "Mustek"
         }
-      ]
-    } ,
-    "10": {
-      "name": "Muzeum" ,
+      ],
+      "time": 8
+    },
+    "9": {
+      "name": "Muzeum",
       "transfer": [
         {
-          "line": "Linka C" ,
+          "line": "Linka C",
           "station": "Muzeum"
         }
-      ]
-    } ,
+      ],
+      "time": 5
+    },
+    "10": {
+      "name": "Namesti Miru",
+      "transfer": [],
+      "time": 7
+    },
     "11": {
-      "name": "Namesti Miru" ,
-      "transfer": []
-    } ,
+      "name": "Jiriho z Podebrad",
+      "transfer": [],
+      "time": 5
+    },
     "12": {
-      "name": "Jiriho z Podebrad" ,
-      "transfer": []
-    } ,
+      "name": "Flora",
+      "transfer": [],
+      "time": 7
+    },
     "13": {
-      "name": "Flora" ,
-      "transfer": []
-    } ,
+      "name": "Zelivskeho",
+      "transfer": [],
+      "time": 1
+    },
     "14": {
-      "name": "Zelivskeho" ,
-      "transfer": []
-    } ,
+      "name": "Strasnicka",
+      "transfer": [],
+      "time": 7
+    },
     "15": {
-      "name": "Strasnicka" ,
-      "transfer": []
-    } ,
+      "name": "Skalka",
+      "transfer": [],
+      "time": 2
+    },
     "16": {
-      "name": "Skalka" ,
-      "transfer": []
-    } ,
-    "17": {
-      "name": "Depo Hostivar" ,
-      "transfer": []
+      "name": "Depo Hostivar",
+      "transfer": [],
+      "time": null
     }
-  } ,
+  },
   "Linka B": {
+    "0": {
+      "name": "Cerny Most",
+      "transfer": [],
+      "time": 3
+    },
     "1": {
-      "name": "Cerny Most" ,
-      "transfer": []
-    } ,
+      "name": "Rajska zahrada",
+      "transfer": [],
+      "time": 5
+    },
     "2": {
-      "name": "Rajska zahrada" ,
-      "transfer": []
-    } ,
+      "name": "Hloubetin",
+      "transfer": [],
+      "time": 4
+    },
     "3": {
-      "name": "Hloubetin" ,
-      "transfer": []
-    } ,
+      "name": "Kolbenova",
+      "transfer": [],
+      "time": 1
+    },
     "4": {
-      "name": "Kolbenova" ,
-      "transfer": []
-    } ,
+      "name": "Vysocanska",
+      "transfer": [],
+      "time": 6
+    },
     "5": {
-      "name": "Vysocanska" ,
-      "transfer": []
-    } ,
+      "name": "Ceskomoravska",
+      "transfer": [],
+      "time": 5
+    },
     "6": {
-      "name": "Ceskomoravska" ,
-      "transfer": []
-    } ,
+      "name": "Palmovka",
+      "transfer": [],
+      "time": 7
+    },
     "7": {
-      "name": "Palmovka" ,
-      "transfer": []
-    } ,
+      "name": "Invalidovna",
+      "transfer": [],
+      "time": 5
+    },
     "8": {
-      "name": "Invalidovna" ,
-      "transfer": []
-    } ,
+      "name": "Krizikova",
+      "transfer": [],
+      "time": 1
+    },
     "9": {
-      "name": "Krizikova" ,
-      "transfer": []
-    } ,
-    "10": {
-      "name": "Florenc" ,
+      "name": "Florenc",
       "transfer": [
         {
-          "line": "Linka C" ,
+          "line": "Linka C",
           "station": "Florenc"
         }
-      ]
-    } ,
+      ],
+      "time": 5
+    },
+    "10": {
+      "name": "Namesti Republiky",
+      "transfer": [],
+      "time": 3
+    },
     "11": {
-      "name": "Namesti Republiky" ,
-      "transfer": []
-    } ,
-    "12": {
-      "name": "Mustek" ,
+      "name": "Mustek",
       "transfer": [
         {
-          "line": "Linka A" ,
+          "line": "Linka A",
           "station": "Mustek"
         }
-      ]
-    } ,
+      ],
+      "time": 7
+    },
+    "12": {
+      "name": "Narodni trida",
+      "transfer": [],
+      "time": 3
+    },
     "13": {
-      "name": "Narodni trida" ,
-      "transfer": []
-    } ,
+      "name": "Karlovo namesti",
+      "transfer": [],
+      "time": 4
+    },
     "14": {
-      "name": "Karlovo namesti" ,
-      "transfer": []
-    } ,
+      "name": "Andel",
+      "transfer": [],
+      "time": 3
+    },
     "15": {
-      "name": "Andel" ,
-      "transfer": []
-    } ,
+      "name": "Smichovske nadrazi",
+      "transfer": [],
+      "time": 3
+    },
     "16": {
-      "name": "Smichovske nadrazi" ,
-      "transfer": []
-    } ,
+      "name": "Radlicka",
+      "transfer": [],
+      "time": 4
+    },
     "17": {
-      "name": "Radlicka" ,
-      "transfer": []
-    } ,
+      "name": "Jinonice",
+      "transfer": [],
+      "time": 7
+    },
     "18": {
-      "name": "Jinonice" ,
-      "transfer": []
-    } ,
+      "name": "Nove Butovice",
+      "transfer": [],
+      "time": 2
+    },
     "19": {
-      "name": "Nove Butovice" ,
-      "transfer": []
-    } ,
+      "name": "Hurka",
+      "transfer": [],
+      "time": 7
+    },
     "20": {
-      "name": "Hurka" ,
-      "transfer": []
-    } ,
+      "name": "Luziny",
+      "transfer": [],
+      "time": 5
+    },
     "21": {
-      "name": "Luziny" ,
-      "transfer": []
-    } ,
+      "name": "Luka",
+      "transfer": [],
+      "time": 6
+    },
     "22": {
-      "name": "Luka" ,
-      "transfer": []
-    } ,
+      "name": "Stodulky",
+      "transfer": [],
+      "time": 7
+    },
     "23": {
-      "name": "Stodulky" ,
-      "transfer": []
-    } ,
-    "24": {
-      "name": "Zlicin" ,
-      "transfer": []
+      "name": "Zlicin",
+      "transfer": [],
+      "time": null
     }
-  } ,
+  },
   "Linka C": {
+    "0": {
+      "name": "Letnany",
+      "transfer": [],
+      "time": 3
+    },
     "1": {
-      "name": "Letnany" ,
-      "transfer": []
-    } ,
+      "name": "Prosek",
+      "transfer": [],
+      "time": 7
+    },
     "2": {
-      "name": "Prosek" ,
-      "transfer": []
-    } ,
+      "name": "Strizkov",
+      "transfer": [],
+      "time": 5
+    },
     "3": {
-      "name": "Strizkov" ,
-      "transfer": []
-    } ,
+      "name": "Ladvi",
+      "transfer": [],
+      "time": 4
+    },
     "4": {
-      "name": "Ladvi" ,
-      "transfer": []
-    } ,
+      "name": "Kobylisy",
+      "transfer": [],
+      "time": 5
+    },
     "5": {
-      "name": "Kobylisy" ,
-      "transfer": []
-    } ,
+      "name": "Nadrazi Holesovice",
+      "transfer": [],
+      "time": 7
+    },
     "6": {
-      "name": "Nadrazi Holesovice" ,
-      "transfer": []
-    } ,
+      "name": "Vltavska",
+      "transfer": [],
+      "time": 2
+    },
     "7": {
-      "name": "Vltavska" ,
-      "transfer": []
-    } ,
-    "8": {
-      "name": "Florenc" ,
+      "name": "Florenc",
       "transfer": [
         {
-          "line": "Linka B" ,
+          "line": "Linka B",
           "station": "Florenc"
         }
-      ]
-    } ,
+      ],
+      "time": 7
+    },
+    "8": {
+      "name": "Hlavni nadrazi",
+      "transfer": [],
+      "time": 2
+    },
     "9": {
-      "name": "Hlavni nadrazi" ,
-      "transfer": []
-    } ,
-    "10": {
-      "name": "Muzeum" ,
+      "name": "Muzeum",
       "transfer": [
         {
-          "line": "Linka A" ,
+          "line": "Linka A",
           "station": "Muzeum"
         }
-      ]
-    } ,
+      ],
+      "time": 5
+    },
+    "10": {
+      "name": "I.P.Pavlova",
+      "transfer": [],
+      "time": 5
+    },
     "11": {
-      "name": "I.P.Pavlova" ,
-      "transfer": []
-    } ,
+      "name": "Vysehrad",
+      "transfer": [],
+      "time": 4
+    },
     "12": {
-      "name": "Vysehrad" ,
-      "transfer": []
-    } ,
+      "name": "Prazskeho povstani",
+      "transfer": [],
+      "time": 7
+    },
     "13": {
-      "name": "Prazskeho povstani" ,
-      "transfer": []
-    } ,
+      "name": "Pankrac",
+      "transfer": [],
+      "time": 5
+    },
     "14": {
-      "name": "Pankrac" ,
-      "transfer": []
-    } ,
+      "name": "Budejovicka",
+      "transfer": [],
+      "time": 5
+    },
     "15": {
-      "name": "Budejovicka" ,
-      "transfer": []
-    } ,
+      "name": "Kacerov",
+      "transfer": [],
+      "time": 4
+    },
     "16": {
-      "name": "Kacerov" ,
-      "transfer": []
-    } ,
+      "name": "Roztyly",
+      "transfer": [],
+      "time": 7
+    },
     "17": {
-      "name": "Roztyly" ,
-      "transfer": []
-    } ,
+      "name": "Chodov",
+      "transfer": [],
+      "time": 6
+    },
     "18": {
-      "name": "Chodov" ,
-      "transfer": []
-    } ,
+      "name": "Opatov",
+      "transfer": [],
+      "time": 5
+    },
     "19": {
-      "name": "Opatov" ,
-      "transfer": []
-    } ,
-    "20": {
-      "name": "Haje" ,
-      "transfer": []
+      "name": "Haje",
+      "transfer": [],
+      "time": null
     }
   }
 }

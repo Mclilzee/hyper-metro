@@ -215,18 +215,22 @@ class MetroMemoryServiceTest {
     }
 
     @Test
-    void doesNotConnectIfMetroLineDoesntExist() {
+    void throwsIfMetroLineDoesntExist() {
         MetroLine germany = new MetroLine("Germany");
         metroMemoryService.addMetroLine(germany);
         metroMemoryService.appendStation("Germany", "Berlin", 0);
-
-        metroMemoryService.connectMetroLine("Germany", "Berlin", "Lebanon", "Beirut");
+        assertThrows(IllegalArgumentException.class,
+                () -> metroMemoryService.connectMetroLine("Germany",
+                        "Berlin",
+                        "Lebanon",
+                        "Beirut"));
 
         Station berlin = germany.findStationByName("Berlin").orElseThrow();
 
 
-        Set<LineConnection> expected = Set.of();
-        assertEquals(expected, berlin.getLineConnections());
+
+        Set<LineConnection> expectedConnection = Set.of();
+        assertEquals(expectedConnection, berlin.getLineConnections());
     }
 
     @Test
