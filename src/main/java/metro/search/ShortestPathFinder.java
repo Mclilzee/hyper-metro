@@ -10,51 +10,41 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ShortestPathFinder implements StationPathFinder{
+public class ShortestPathFinder implements PathFinder {
     Frontier frontier = FrontierFactory.getBreadthFrontier();
 
     @Override
-    public Optional<String> findPathString(Station start, Station end) {
+    public List<Node> findPath(Station start, Station end) {
         Node startNode = new Node(start);
         Node endNode = new Node(end);
 
         frontier.addNode(startNode);
 
-        Optional<String> foundString = getPathString(endNode);
+        List<Node> nodePath = getPath(endNode);
         frontier.clear();
-        return foundString;
+        return nodePath;
     }
 
-    private Optional<String> getPathString(Node end) {
+    private List<Node> getPath(Node end) {
        while (!frontier.isEmpty()) {
            Node current = frontier.pollNode();
 
            if (current.equals(end)) {
-               return Optional.of(parsePathString(current));
+               return backtrackNode(current);
            }
 
            frontier.addNeighbors(current);
        }
 
-       return Optional.empty();
+       return List.of();
     }
 
-    private String parsePathString(Node end) {
+    private List<Node> backtrackNode(Node end) {
         List<Node> nodes = Stream.iterate(Optional.ofNullable(end), Optional::isPresent, node -> node.flatMap(Node::getPrev))
                 .map(Optional::orElseThrow)
                 .collect(Collectors.toList());
 
         Collections.reverse(nodes);
-        return nodes.stream()
-                .map(this::getNodeString)
-                .collect(Collectors.joining("\n"));
-    }
-
-    private String getNodeString(Node node) {
-        if (node.getTransferLine().isPresent()) {
-            return String.format("Transition to line %s\n%s", node.getTransferLine().get(), node.getName());
-        }
-
-        return node.getStation().getName();
+        return nodes;
     }
 }

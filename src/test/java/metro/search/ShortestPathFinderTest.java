@@ -5,46 +5,50 @@ import metro.Station;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.text.BreakIterator;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ShortestPathFinderTest {
 
     @Test
     void getCorrectPathString() {
+        ShortestPathFinder finder = new ShortestPathFinder();
         MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
         Station frankfurt = new Station("Frankfurt", 0);
         germany.append(berlin).append(bremen).append(frankfurt);
 
-        ShortestPathFinder finder = new ShortestPathFinder();
-        String actual = finder.findPathString(berlin, frankfurt).orElseThrow();
+        List<Node> actual = finder.findPath(berlin, frankfurt);
 
-        String expected = """
-                          Berlin
-                          Bremen
-                          Frankfurt""";
+        List<Node> expected = List.of(new Node(berlin), new Node(bremen), new Node(frankfurt));
+
         assertEquals(expected, actual);
     }
 
     @Test
     void returnEmptyIfConnectionNotFound() {
-
+        ShortestPathFinder finder = new ShortestPathFinder();
         MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
         Station frankfurt = new Station("Frankfurt", 0);
         germany.append(berlin).append(bremen).append(frankfurt);
 
-
-        ShortestPathFinder finder = new ShortestPathFinder();
-
         Station beirut = new Station("Beirut", 0);
-        assertTrue(finder.findPathString(berlin, beirut).isEmpty());
+
+        List<Node> actual = finder.findPath(berlin, beirut);
+
+        List<Node> expected = List.of();
+        assertEquals(expected, actual);
     }
 
     @Test
     void pathTestBothDirections() {
+        ShortestPathFinder finder = new ShortestPathFinder();
+
         MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
@@ -52,19 +56,18 @@ class ShortestPathFinderTest {
         Station beirut = new Station("Beirut", 0);
         germany.append(berlin).append(bremen).append(frankfurt).append(beirut);
 
-        ShortestPathFinder finder = new ShortestPathFinder();
-        String actual = finder.findPathString(frankfurt, berlin).orElseThrow();
+        List<Node> actual = finder.findPath(frankfurt, berlin);
 
-        String expected = """
-                          Frankfurt
-                          Bremen
-                          Berlin""";
+        List<Node> expected = List.of(new Node(frankfurt), new Node(bremen), new Node(berlin));
+
         assertEquals(expected, actual);
     }
 
     @Test
     @DisplayName("Ger correct lines if stations has connections")
     void correctStringLineConnections() {
+        ShortestPathFinder finder = new ShortestPathFinder();
+
         MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
@@ -78,20 +81,17 @@ class ShortestPathFinderTest {
 
         germany.addLineConnection(bremen, france, beirut);
 
-        ShortestPathFinder finder = new ShortestPathFinder();
-        String actual = finder.findPathString(berlin, paris).orElseThrow();
+        List<Node> actual = finder.findPath(berlin, paris);
 
-        String expected = """
-                          Berlin
-                          Bremen
-                          Transition to line France
-                          Beirut
-                          Paris""";
+        List<Node> expected = List.of(new Node(berlin), new Node(bremen), new Node(beirut), new Node(paris));
+
         assertEquals(expected, actual);
     }
 
     @Test
     void testMultipleDirectionsAcrossLines() {
+        ShortestPathFinder finder = new ShortestPathFinder();
+
         MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
@@ -105,45 +105,41 @@ class ShortestPathFinderTest {
 
         MetroLine lebanon = new MetroLine("Lebanon");
         Station beirut = new Station("Beirut", 0);
-        Station aramount = new Station("Aramoun", 0);
+        Station aramoun = new Station("Aramoun", 0);
         Station matar = new Station("Matar", 0);
-        lebanon.append(beirut).append(aramount).append(matar);
+        lebanon.append(beirut).append(aramoun).append(matar);
 
         germany.addLineConnection(bremen, france, nice);
-        france.addLineConnection(paris, lebanon, aramount);
+        france.addLineConnection(paris, lebanon, aramoun);
 
-        ShortestPathFinder finder = new ShortestPathFinder();
-        String actual = finder.findPathString(berlin, beirut).orElseThrow();
+        List<Node> actual = finder.findPath(berlin, beirut);
 
-        String expected = """
-                          Berlin
-                          Bremen
-                          Transition to line France
-                          Nice
-                          Paris
-                          Transition to line Lebanon
-                          Aramoun
-                          Beirut""";
+        List<Node> expected = List.of(new Node(berlin),
+                new Node(bremen),
+                new Node(nice),
+                new Node(paris),
+                new Node(aramoun),
+                new Node(beirut));
+
         assertEquals(expected, actual);
 
     }
 
     @Test
     void canSearchMultipleTimes() {
+        ShortestPathFinder finder = new ShortestPathFinder();
+
         MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
         Station frankfurt = new Station("Frankfurt", 0);
         germany.append(berlin).append(bremen).append(frankfurt);
 
-        ShortestPathFinder finder = new ShortestPathFinder();
-        finder.findPathString(berlin, frankfurt);
-        String actual = finder.findPathString(berlin, frankfurt).orElseThrow();
+        finder.findPath(berlin, frankfurt);
+        List<Node> actual = finder.findPath(berlin, frankfurt);
 
-        String expected = """
-                          Berlin
-                          Bremen
-                          Frankfurt""";
+        List<Node> expected = List.of(new Node(berlin), new Node(bremen), new Node(frankfurt));
+
         assertEquals(expected, actual);
     }
 

@@ -293,18 +293,31 @@ class MetroMemoryServiceTest {
 
     @Test
     void getShortestPathReturnNotFound() {
-        String actual = metroMemoryService.findShortestPath("Germany", "Berlin", "Lebanon", "Beirut");
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () -> metroMemoryService.findShortestPath("Germany",
+                        "Berlin",
+                        "Lebanon",
+                        "Beirut"));
 
-        String expected = "No connection found";
+        String actual = exception.getMessage();
+        String expected = "No metro line with given name";
 
         assertEquals(expected, actual);
     }
 
     @Test
-    void getShortestPathReturnNotFoundStation() {
-        String actual =  metroMemoryService.findShortestPath("Germany", "Berlin", "Lebanon", "Beirut");
+    void getShortestPathReturnFoundStation() {
+        metroMemoryService.addMetroLine(new MetroLine("Germany"));
+        metroMemoryService.addMetroLine(new MetroLine("Lebanon"));
 
-        String expected = "No connection found";
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () ->  metroMemoryService.findShortestPath("Germany",
+                "Berlin",
+                "Lebanon",
+                "Beirut"));
+
+        String actual = exception.getMessage();
+        String expected = "No station with given name";
 
         assertEquals(expected, actual);
     }
@@ -316,9 +329,12 @@ class MetroMemoryServiceTest {
         MetroLine lebanon = new MetroLine("Lebanon");
         lebanon.append(new Station("Beirut", 0));
 
+        metroMemoryService.addMetroLine(germany);
+        metroMemoryService.addMetroLine(lebanon);
         String actual =  metroMemoryService.findShortestPath("Germany", "Berlin", "Lebanon", "Beirut");
 
-        String expected = "No connection found";
+        String expected = "";
+
         assertEquals(expected, actual);
     }
 

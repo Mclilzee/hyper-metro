@@ -2,8 +2,10 @@ package metro.service;
 
 import metro.MetroLine;
 import metro.Station;
+import metro.printing.PathPrinter;
+import metro.printing.ShortestPathPrinter;
 import metro.search.ShortestPathFinder;
-import metro.search.StationPathFinder;
+import metro.search.PathFinder;
 
 import java.util.*;
 
@@ -85,17 +87,19 @@ public class MetroMemoryService implements MetroService {
         MetroLine firstMetroLine = metroLines.get(metroLineName);
         MetroLine secondMetroLine = metroLines.get(toMetroLine);
         if (firstMetroLine == null || secondMetroLine == null) {
-            return "No connection found";
+            throw new IllegalArgumentException("No metro line with given name");
         }
 
         Optional<Station> startStation = firstMetroLine.findStationByName(stationName);
         Optional<Station> endStation = secondMetroLine.findStationByName(toStation);
         if (startStation.isPresent() && endStation.isPresent()) {
-            StationPathFinder finder = new ShortestPathFinder();
-            return finder.findPathString(startStation.get(), endStation.get()).orElse("No connection found");
+            PathFinder finder = new ShortestPathFinder();
+            PathPrinter printer = new ShortestPathPrinter();
+
+            return printer.getPathString(finder.findPath(startStation.get(), endStation.get()));
         }
 
-        return "No connection found";
+        throw new IllegalArgumentException("No station with given name");
     }
 
     @Override
