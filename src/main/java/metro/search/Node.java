@@ -5,19 +5,30 @@ import metro.Station;
 import java.util.Objects;
 import java.util.Optional;
 
-public class Node {
+public class Node implements Comparable<Node> {
     private final Station station;
     private final String transferLine;
+    private final int weight;
     private Node prev;
 
     public Node(Station station) {
-        this(station, "");
+        this(station, 0);
+    }
+
+    public Node(Station station, int weight) {
+        this.station = station;
+        this.transferLine = null;
+        this.weight = weight;
     }
 
     public Node(Station station, String transferLine) {
         this.station = station;
-        this.prev = null;
         this.transferLine = transferLine;
+        this.weight = 5;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 
     public Station getStation() {
@@ -29,7 +40,7 @@ public class Node {
     }
 
     public Optional<String> getTransferLine() {
-        return transferLine.isEmpty() ? Optional.empty() : Optional.of(transferLine);
+        return transferLine == null ? Optional.empty() : Optional.of(transferLine);
     }
 
     public void setPrev(Node node) {
@@ -38,6 +49,11 @@ public class Node {
 
     public Optional<Node> getPrev() {
         return Optional.ofNullable(prev);
+    }
+
+    @Override
+    public int compareTo(Node o) {
+        return Integer.compare(weight, o.weight);
     }
 
     @Override
@@ -56,4 +72,5 @@ public class Node {
     public int hashCode() {
         return Objects.hashCode(station);
     }
+
 }
