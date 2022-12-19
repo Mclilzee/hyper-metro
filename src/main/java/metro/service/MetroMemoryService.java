@@ -1,9 +1,13 @@
 package metro.service;
 
+import metro.LineConnection;
 import metro.MetroLine;
 import metro.Station;
+import metro.printing.LineConnectionsPrinter;
+import metro.printing.MetroPrinter;
 import metro.printing.PathPrinter;
 import metro.printing.ShortestPathPrinter;
+import metro.search.Node;
 import metro.search.ShortestPathFinder;
 import metro.search.PathFinder;
 
@@ -23,11 +27,6 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
-    public Optional<MetroLine> getMetroLine(String metroLineName) {
-        return Optional.ofNullable(metroLines.get(metroLineName));
-    }
-
-    @Override
     public void appendStation(String metroLineName, String stationName, int time) {
         MetroLine metroLine = metroLines.get(metroLineName);
         if (metroLine == null || metroLine.findStationByName(stationName).isPresent()) {
@@ -35,10 +34,6 @@ public class MetroMemoryService implements MetroService {
         }
 
         metroLine.append(new Station(stationName, time));
-    }
-
-    public void appendStation(String metroLine, String stationName) {
-        appendStation(metroLine, stationName, 0);
     }
 
     @Override
@@ -51,10 +46,6 @@ public class MetroMemoryService implements MetroService {
         metroLine.addHead(new Station(stationName, time));
     }
 
-    public void addHead(String metroLineName, String stationName) {
-        addHead(metroLineName, stationName, 0);
-    }
-
     @Override
     public void removeStation(String metroLineName, String stationName) {
         MetroLine metroLine = metroLines.get(metroLineName);
@@ -63,6 +54,14 @@ public class MetroMemoryService implements MetroService {
         }
 
         metroLine.removeStation(stationName);
+    }
+
+    @Override
+    public String getMetroLineInformation(String metroLineName) {
+        MetroLine metroLine = getMetroLine(metroLineName);
+        MetroPrinter printer = new LineConnectionsPrinter();
+
+        return printer.getMetroLinePrintString(metroLine);
     }
 
     @Override
@@ -84,22 +83,29 @@ public class MetroMemoryService implements MetroService {
 
     @Override
     public String findShortestPath(String metroLineName, String stationName, String toMetroLine, String toStation) {
-        MetroLine firstMetroLine = metroLines.get(metroLineName);
-        MetroLine secondMetroLine = metroLines.get(toMetroLine);
-        if (firstMetroLine == null || secondMetroLine == null) {
-            throw new IllegalArgumentException("No metro line with given name");
+        Station startStation = getStation(metroLineName, stationName);
+        Station endStation = getStation(toMetroLine, toStation);
+
+        PathFinder finder = new ShortestPathFinder();
+        List<Node> path = finder.findPath(startStation, endStation);
+        PathPrinter printer = new ShortestPathPrinter();
+
+        return printer.getPathString(path);
+    }
+
+    private MetroLine getMetroLine(String metroLineName) {
+        MetroLine metroLine = metroLines.get(metroLineName);
+        if (metroLine == null) {
+            throw new IllegalArgumentException("No metro line with name " + metroLineName);
         }
 
-        Optional<Station> startStation = firstMetroLine.findStationByName(stationName);
-        Optional<Station> endStation = secondMetroLine.findStationByName(toStation);
-        if (startStation.isPresent() && endStation.isPresent()) {
-            PathFinder finder = new ShortestPathFinder();
-            PathPrinter printer = new ShortestPathPrinter();
+        return metroLine;
+    }
 
-            return printer.getPathString(finder.findPath(startStation.get(), endStation.get()));
-        }
-
-        throw new IllegalArgumentException("No station with given name");
+    private Station getStation(String metroLineName, String stationName) {
+        MetroLine metroLine = getMetroLine(metroLineName);
+        Optional<Station> station = metroLine.findStationByName(stationName);
+        return station.orElseThrow(() -> new IllegalArgumentException("No station with name " + stationName + " found"));
     }
 
     @Override

@@ -79,13 +79,8 @@ public class MetrosController {
 
     private void printStation(Matcher matcher) {
         String metroLineName = removeQuotes(matcher.group(10));
-        Optional<MetroLine> metroLine = metroService.getMetroLine(metroLineName);
-        if (metroLine.isEmpty()) {
-            return;
-        }
-
-        MetroPrinter printer = new LineConnectionsPrinter();
-        System.out.println(printer.getMetroLinePrintString(metroLine.get()));
+        String information = metroService.getMetroLineInformation(metroLineName);
+        System.out.println(information);
     }
 
 

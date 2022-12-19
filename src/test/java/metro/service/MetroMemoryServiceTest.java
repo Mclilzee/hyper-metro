@@ -3,6 +3,7 @@ package metro.service;
 import metro.LineConnection;
 import metro.MetroLine;
 import metro.Station;
+import metro.printing.LineConnectionsPrinter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ class MetroMemoryServiceTest {
 
         assertTrue(metroMemoryService.getKeys()
                                      .contains("Germany"));
-        assertEquals(germany, metroMemoryService.getMetroLine("Germany").orElseThrow());
+        assertTrue(metroMemoryService.getValues().contains(germany));
     }
 
     @Test
@@ -46,7 +47,7 @@ class MetroMemoryServiceTest {
         otherGermany.append(new Station("Berlin", 0));
         metroMemoryService.addMetroLine(otherGermany);
 
-        MetroLine actual = metroMemoryService.getMetroLine("Germany").orElseThrow();
+        MetroLine actual = metroMemoryService.getValues().get(0);
 
         assertEquals(germany, actual);
         assertNotEquals(otherGermany, actual);
@@ -62,70 +63,64 @@ class MetroMemoryServiceTest {
 
         germany.append(new Station("Berlin", 0));
 
-        assertEquals(germany, metroMemoryService.getMetroLine("Germany").orElseThrow());
-        assertEquals(lebanon, metroMemoryService.getMetroLine("Lebanon").orElseThrow());
-        assertNotEquals(metroMemoryService.getMetroLine("Germany"), metroMemoryService.getMetroLine("Beirut"));
+        List<MetroLine> actual = metroMemoryService.getValues();
+
+        List<MetroLine> expected = List.of(germany, lebanon);
+
+        assertTrue(actual.containsAll(expected));
     }
 
     @Test
     void appendStation() {
-        metroMemoryService.addMetroLine(new MetroLine("Germany"));
-        metroMemoryService.appendStation("Germany", "Berlin");
-
-        MetroLine expected = new MetroLine("Germany");
-        expected.append(new Station("Berlin", 0));
-
-        assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
-    }
-
-
-    @Test
-    void appendStationHasCorrectTime() {
         metroMemoryService.addMetroLine(new MetroLine("Germany"));
         metroMemoryService.appendStation("Germany", "Berlin", 1);
 
         MetroLine expected = new MetroLine("Germany");
         expected.append(new Station("Berlin", 1));
 
-        assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
+        assertTrue(metroMemoryService.getValues().contains(expected));
     }
 
     @Test
     void addHead() {
         metroMemoryService.addMetroLine(new MetroLine("Germany"));
-        metroMemoryService.addHead("Germany", "Berlin");
+        metroMemoryService.addHead("Germany", "Berlin", 2);
 
         MetroLine expected = new MetroLine("Germany");
-        expected.addHead(new Station("Berlin", 0));
+        expected.addHead(new Station("Berlin", 2));
 
-        assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
-    }
-
-    @Test
-    void addHeadHasCorrectTime() {
-        metroMemoryService.addMetroLine(new MetroLine("Germany"));
-        metroMemoryService.addHead("Germany", "Berlin", 1);
-
-        MetroLine expected = new MetroLine("Germany");
-        expected.append(new Station("Berlin", 1));
-
-        assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
+        assertTrue(metroMemoryService.getValues().contains(expected));
     }
 
     @Test
     void removeStation() {
         metroMemoryService.addMetroLine(new MetroLine("Germany"));
-        metroMemoryService.appendStation("Germany", "Berlin");
-        metroMemoryService.appendStation("Germany", "Bremen");
-        metroMemoryService.appendStation("Germany", "Beirut");
+        metroMemoryService.appendStation("Germany", "Berlin", 1);
+        metroMemoryService.appendStation("Germany", "Bremen", 2);
+        metroMemoryService.appendStation("Germany", "Beirut", 3);
 
         metroMemoryService.removeStation("Germany", "Bremen");
 
         MetroLine expected = new MetroLine("Germany");
-        expected.append(new Station("Berlin", 0))
-                .append(new Station("Beirut", 0));
+        expected.append(new Station("Berlin", 1))
+                .append(new Station("Beirut", 3));
 
-        assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
+        assertTrue(metroMemoryService.getValues().contains(expected));
+    }
+
+    @Test
+    void getInformationString() {
+        MetroLine germany = new MetroLine("Germany");
+        metroMemoryService.addMetroLine(germany);
+        metroMemoryService.appendStation("Germany", "Berlin", 1);
+        metroMemoryService.appendStation("Germany", "Bremen", 2);
+        metroMemoryService.appendStation("Germany", "Beirut", 3);
+
+        String actual = metroMemoryService.getMetroLineInformation("Germany");
+
+        String expected = new LineConnectionsPrinter().getMetroLinePrintString(germany);
+
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -149,13 +144,6 @@ class MetroMemoryServiceTest {
     }
 
     @Test
-    @DisplayName("Key set is unmodifieble")
-    void immutableKeySet() {
-        assertThrows(UnsupportedOperationException.class, () -> metroMemoryService.getKeys()
-                                                                                  .add("Key"));
-    }
-
-    @Test
     @DisplayName("Return empty value set if no metro lines exists")
     void emptyValueSet() {
         List<MetroLine> expected = List.of();
@@ -167,20 +155,20 @@ class MetroMemoryServiceTest {
     @DisplayName("Return correct value list if metro line exists")
     void correctValueSet() {
         metroMemoryService.addMetroLine(new MetroLine("Germany"));
-        metroMemoryService.appendStation("Germany", "Berlin");
-        metroMemoryService.appendStation("Germany", "Bremen");
+        metroMemoryService.appendStation("Germany", "Berlin", 1);
+        metroMemoryService.appendStation("Germany", "Bremen", 2);
 
         metroMemoryService.addMetroLine(new MetroLine("Lebanon"));
-        metroMemoryService.appendStation("Lebanon", "Beirut");
-        metroMemoryService.appendStation("Lebanon", "Aramoun");
+        metroMemoryService.appendStation("Lebanon", "Beirut", 3);
+        metroMemoryService.appendStation("Lebanon", "Aramoun", 4);
 
         MetroLine firstExpected = new MetroLine("Germany");
-        firstExpected.append(new Station("Berlin", 0))
-                     .append(new Station("Bremen", 0));
+        firstExpected.append(new Station("Berlin", 1))
+                     .append(new Station("Bremen", 2));
 
         MetroLine secondExpected = new MetroLine("Lebanon");
-        secondExpected.append(new Station("Beirut", 0))
-                      .append(new Station("Aramoun", 0));
+        secondExpected.append(new Station("Beirut", 3))
+                      .append(new Station("Aramoun", 4));
 
         List<MetroLine> expected = List.of(firstExpected, secondExpected);
 
@@ -191,11 +179,11 @@ class MetroMemoryServiceTest {
     void connectMetrosCorrectly() {
         MetroLine germany = new MetroLine("Germany");
         metroMemoryService.addMetroLine(germany);
-        metroMemoryService.appendStation("Germany", "Berlin");
+        metroMemoryService.appendStation("Germany", "Berlin", 0);
 
         MetroLine lebanon = new MetroLine("Lebanon");
         metroMemoryService.addMetroLine(lebanon);
-        metroMemoryService.appendStation("Lebanon", "Beirut");
+        metroMemoryService.appendStation("Lebanon", "Beirut", 0);
 
         metroMemoryService.connectMetroLine("Germany", "Berlin", "Lebanon", "Beirut");
 
@@ -210,11 +198,11 @@ class MetroMemoryServiceTest {
     void connectBothWaysCorrectly() {
         MetroLine germany = new MetroLine("Germany");
         metroMemoryService.addMetroLine(germany);
-        metroMemoryService.appendStation("Germany", "Berlin");
+        metroMemoryService.appendStation("Germany", "Berlin", 0);
 
         MetroLine lebanon = new MetroLine("Lebanon");
         metroMemoryService.addMetroLine(lebanon);
-        metroMemoryService.appendStation("Lebanon", "Beirut");
+        metroMemoryService.appendStation("Lebanon", "Beirut", 0);
 
         metroMemoryService.connectMetroLine("Germany", "Berlin", "Lebanon", "Beirut");
 
@@ -230,7 +218,7 @@ class MetroMemoryServiceTest {
     void doesNotConnectIfMetroLineDoesntExist() {
         MetroLine germany = new MetroLine("Germany");
         metroMemoryService.addMetroLine(germany);
-        metroMemoryService.appendStation("Germany", "Berlin");
+        metroMemoryService.appendStation("Germany", "Berlin", 0);
 
         metroMemoryService.connectMetroLine("Germany", "Berlin", "Lebanon", "Beirut");
 
@@ -245,7 +233,7 @@ class MetroMemoryServiceTest {
     void handleNoStationCorrectly() {
         MetroLine germany = new MetroLine("Germany");
         metroMemoryService.addMetroLine(germany);
-        metroMemoryService.appendStation("Germany", "Berlin");
+        metroMemoryService.appendStation("Germany", "Berlin", 0);
 
         MetroLine lebanon = new MetroLine("Lebanon");
         metroMemoryService.addMetroLine(lebanon);
@@ -300,7 +288,7 @@ class MetroMemoryServiceTest {
                         "Beirut"));
 
         String actual = exception.getMessage();
-        String expected = "No metro line with given name";
+        String expected = "No metro line with name Germany";
 
         assertEquals(expected, actual);
     }
@@ -317,7 +305,7 @@ class MetroMemoryServiceTest {
                 "Beirut"));
 
         String actual = exception.getMessage();
-        String expected = "No station with given name";
+        String expected = "No station with name Berlin found";
 
         assertEquals(expected, actual);
     }
