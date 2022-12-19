@@ -5,12 +5,22 @@ import java.util.*;
 public class Station {
 
     private final String name;
+    private final int time;
     private Station nextStation;
     private Station previousStation;
     private final Set<LineConnection> lineConnections = new HashSet<>();
 
-    public Station(String name) {
+    public Station(String name, int time) {
         this.name = name;
+        this.time = time;
+    }
+
+    public Station(String name) {
+        this(name, 0);
+    }
+
+    public int getTime() {
+        return time;
     }
 
     public String getName() {
