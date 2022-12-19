@@ -61,6 +61,7 @@ public class Station {
         }
         Station station = (Station) o;
         return Objects.equals(name, station.name) &&
+                time == station.time &&
                 otherStationsEqual(nextStation, station.nextStation) &&
                 otherStationsEqual(previousStation, station.previousStation) &&
                 Objects.equals(lineConnections.toString(), station.lineConnections.toString());

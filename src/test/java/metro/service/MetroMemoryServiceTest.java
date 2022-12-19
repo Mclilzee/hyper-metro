@@ -78,6 +78,7 @@ class MetroMemoryServiceTest {
         assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
     }
 
+
     @Test
     void appendStationHasCorrectTime() {
         metroMemoryService.addMetroLine(new MetroLine("Germany"));
@@ -96,6 +97,17 @@ class MetroMemoryServiceTest {
 
         MetroLine expected = new MetroLine("Germany");
         expected.addHead(new Station("Berlin"));
+
+        assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
+    }
+
+    @Test
+    void addHeadHasCorrectTime() {
+        metroMemoryService.addMetroLine(new MetroLine("Germany"));
+        metroMemoryService.addHead("Germany", "Berlin", 1);
+
+        MetroLine expected = new MetroLine("Germany");
+        expected.append(new Station("Berlin", 1));
 
         assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
     }

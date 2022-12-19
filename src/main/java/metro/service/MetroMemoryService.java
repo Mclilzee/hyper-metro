@@ -40,13 +40,17 @@ public class MetroMemoryService implements MetroService {
     }
 
     @Override
-    public void addHead(String metroLineName, String stationName) {
+    public void addHead(String metroLineName, String stationName, int time) {
         MetroLine metroLine = metroLines.get(metroLineName);
         if (metroLine == null || metroLine.findStationByName(stationName).isPresent()) {
             return;
         }
 
-        metroLine.addHead(new Station(stationName));
+        metroLine.addHead(new Station(stationName, time));
+    }
+
+    public void addHead(String metroLineName, String stationName) {
+        addHead(metroLineName, stationName, 0);
     }
 
     @Override

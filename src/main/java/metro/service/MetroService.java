@@ -18,6 +18,8 @@ public interface MetroService {
 
     void addHead(String metroLineName, String stationName);
 
+    void addHead(String metroLineName, String stationName, int time);
+
     void removeStation(String metroLineName, String stationName);
 
     void connectMetroLine(String metroLineName, String stationName, String toMetroLine, String toStation);

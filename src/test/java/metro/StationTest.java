@@ -120,6 +120,13 @@ class StationTest {
     }
 
     @Test
+    void notEqualIfTimeDiffers() {
+        Station secondStation = new Station("Berlin", 1);
+
+        assertNotEquals(secondStation, station);
+    }
+
+    @Test
     @DisplayName("Not equal if connected stations are not the same")
     void notEqualConnectedStations() {
         Station secondStation = new Station("Berlin");
