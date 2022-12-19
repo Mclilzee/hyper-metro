@@ -10,8 +10,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ShortestPathFinder implements PathFinder {
-    Frontier frontier = FrontierFactory.getBreadthFrontier();
+public class BreadthPathFinder implements PathFinder {
+    private final Frontier frontier;
+
+    public BreadthPathFinder(Frontier frontier) {
+        this.frontier = frontier;
+    }
 
     @Override
     public List<Node> findPath(Station start, Station end) {

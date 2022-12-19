@@ -1,9 +1,7 @@
 package metro.printing;
 
-import metro.MetroLine;
 import metro.Station;
 import metro.search.Node;
-import metro.search.ShortestPathFinder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

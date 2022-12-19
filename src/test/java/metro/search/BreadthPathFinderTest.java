@@ -2,24 +2,42 @@ package metro.search;
 
 import metro.MetroLine;
 import metro.Station;
+import metro.search.frontier.FrontierFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.text.BreakIterator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ShortestPathFinderTest {
+class BreadthPathFinderTest {
+
+    BreadthPathFinder finder = new BreadthPathFinder(FrontierFactory.getBreadthFrontier());
 
     @Test
-    void getCorrectPathString() {
-        ShortestPathFinder finder = new ShortestPathFinder();
-        MetroLine germany = new MetroLine("Germany");
+    void getShortestRoad() {
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
+        berlin.setNextStation(bremen);
+
         Station frankfurt = new Station("Frankfurt", 0);
-        germany.append(berlin).append(bremen).append(frankfurt);
+        bremen.setNextStation(frankfurt);
+
+        List<Node> actual = finder.findPath(berlin, frankfurt);
+
+        List<Node> expected = List.of(new Node(berlin), new Node(bremen), new Node(frankfurt));
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getFastestRoute() {
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        berlin.setNextStation(bremen);
+
+        Station frankfurt = new Station("Frankfurt", 0);
+        bremen.setNextStation(frankfurt);
 
         List<Node> actual = finder.findPath(berlin, frankfurt);
 
@@ -30,13 +48,7 @@ class ShortestPathFinderTest {
 
     @Test
     void returnEmptyIfConnectionNotFound() {
-        ShortestPathFinder finder = new ShortestPathFinder();
-        MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin", 0);
-        Station bremen = new Station("Bremen", 0);
-        Station frankfurt = new Station("Frankfurt", 0);
-        germany.append(berlin).append(bremen).append(frankfurt);
-
         Station beirut = new Station("Beirut", 0);
 
         List<Node> actual = finder.findPath(berlin, beirut);
@@ -47,14 +59,12 @@ class ShortestPathFinderTest {
 
     @Test
     void pathTestBothDirections() {
-        ShortestPathFinder finder = new ShortestPathFinder();
-
-        MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
+        bremen.setPreviousStation(berlin);
+
         Station frankfurt = new Station("Frankfurt", 0);
-        Station beirut = new Station("Beirut", 0);
-        germany.append(berlin).append(bremen).append(frankfurt).append(beirut);
+        frankfurt.setPreviousStation(bremen);
 
         List<Node> actual = finder.findPath(frankfurt, berlin);
 
@@ -66,20 +76,19 @@ class ShortestPathFinderTest {
     @Test
     @DisplayName("Ger correct lines if stations has connections")
     void correctStringLineConnections() {
-        ShortestPathFinder finder = new ShortestPathFinder();
-
-        MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
+        berlin.setNextStation(bremen);
+
         Station frankfurt = new Station("Frankfurt", 0);
-        germany.append(berlin).append(bremen).append(frankfurt);
+        bremen.setNextStation(frankfurt);
 
-        MetroLine france = new MetroLine("France");
         Station beirut = new Station("Beirut", 0);
-        Station paris = new Station("Paris", 0);
-        france.append(beirut).append(paris);
+        bremen.addLineConnection(new MetroLine(""), beirut);
 
-        germany.addLineConnection(bremen, france, beirut);
+        Station paris = new Station("Paris", 0);
+        beirut.setNextStation(paris);
+
 
         List<Node> actual = finder.findPath(berlin, paris);
 
@@ -90,27 +99,24 @@ class ShortestPathFinderTest {
 
     @Test
     void testMultipleDirectionsAcrossLines() {
-        ShortestPathFinder finder = new ShortestPathFinder();
-
-        MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
-        Station frankfurt = new Station("Frankfurt", 0);
-        germany.append(berlin).append(bremen).append(frankfurt);
+        berlin.setNextStation(bremen);
 
-        MetroLine france = new MetroLine("France");
         Station nice = new Station("Nice", 0);
+        bremen.addLineConnection(new MetroLine(""), nice);
+
         Station paris = new Station("Paris", 0);
-        france.append(nice).append(paris);
+        nice.setNextStation(paris);
 
-        MetroLine lebanon = new MetroLine("Lebanon");
         Station beirut = new Station("Beirut", 0);
-        Station aramoun = new Station("Aramoun", 0);
-        Station matar = new Station("Matar", 0);
-        lebanon.append(beirut).append(aramoun).append(matar);
+        paris.addLineConnection(new MetroLine(""), beirut);
 
-        germany.addLineConnection(bremen, france, nice);
-        france.addLineConnection(paris, lebanon, aramoun);
+        Station aramoun = new Station("Aramoun", 0);
+        beirut.setNextStation(aramoun);
+
+        Station matar = new Station("Matar", 0);
+        aramoun.setNextStation(matar);
 
         List<Node> actual = finder.findPath(berlin, beirut);
 
@@ -122,18 +128,55 @@ class ShortestPathFinderTest {
                 new Node(beirut));
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void fastestRouteReturnCorrectOrder() {
+        finder = new BreadthPathFinder(FrontierFactory.getGreedyBreadthFrontier());
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 6);
+        berlin.setNextStation(bremen);
+
+        Station nice = new Station("Nice", 2);
+        bremen.addLineConnection(new MetroLine(""), nice);
+        berlin.addLineConnection(new MetroLine(""), nice);
+
+        Station paris = new Station("Paris", 12);
+        nice.setNextStation(paris);
+
+        Station beirut = new Station("Beirut", 0);
+        paris.addLineConnection(new MetroLine(""), beirut);
+        paris.setNextStation(beirut);
+
+        Station aramoun = new Station("Aramoun", 2);
+        aramoun.setPreviousStation(beirut);
+        beirut.setNextStation(aramoun);
+
+        Station matar = new Station("Matar", 1);
+        matar.setPreviousStation(aramoun);
+        aramoun.setNextStation(matar);
+        nice.addLineConnection(new MetroLine(""), matar);
+
+        List<Node> actual = finder.findPath(berlin, beirut);
+
+        List<Node> expected = List.of(new Node(berlin),
+                new Node(nice),
+                new Node(matar),
+                new Node(aramoun),
+                new Node(beirut));
+
+        assertEquals(expected, actual);
 
     }
 
     @Test
     void canSearchMultipleTimes() {
-        ShortestPathFinder finder = new ShortestPathFinder();
-
-        MetroLine germany = new MetroLine("Germany");
         Station berlin = new Station("Berlin", 0);
         Station bremen = new Station("Bremen", 0);
+        berlin.setNextStation(bremen);
+
         Station frankfurt = new Station("Frankfurt", 0);
-        germany.append(berlin).append(bremen).append(frankfurt);
+        bremen.setNextStation(frankfurt);
 
         finder.findPath(berlin, frankfurt);
         List<Node> actual = finder.findPath(berlin, frankfurt);
