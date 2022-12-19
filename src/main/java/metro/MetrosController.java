@@ -21,7 +21,8 @@ public class MetrosController {
 
     public void start() {
         Pattern pattern = Pattern.compile(
-                "^((/remove|/add-head|/append) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+)" +
+                "^((/add-head|/append) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+) \\d+" +
+                        "|(/remove) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+)" +
                         "|(/output) (\".*\"|[^\"\\s]+)" +
                         "|(/connect|/route) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+) (\".*\"|[^\"\\s]+))$",
                 Pattern.CASE_INSENSITIVE
@@ -51,14 +52,16 @@ public class MetrosController {
             printStation(matcher);
         } else if (matcherString.startsWith("/connect") || matcherString.startsWith("/route")) {
             parseConnectionRouteInput(matcher);
+        } else if (matcherString.startsWith("/remove")) {
+            removeStation(matcher);
         } else {
-            parseControllerInput(matcher);
+            addStation(matcher);
         }
 
     }
 
     private void printStation(Matcher matcher) {
-        String metroLineName = removeQuotes(matcher.group(6));
+        String metroLineName = removeQuotes(matcher.group(9));
         Optional<MetroLine> metroLine = metroService.getMetroLine(metroLineName);
         if (metroLine.isEmpty()) {
             return;
@@ -68,35 +71,28 @@ public class MetrosController {
         System.out.println(printer.getMetroLinePrintString(metroLine.get()));
     }
 
-    private void parseControllerInput(Matcher matcher) {
+    private void removeStation(Matcher matcher) {
+        String metroLineName = removeQuotes(matcher.group(6));
+        String stationName = removeQuotes(matcher.group(7));
+        metroService.removeStation(metroLineName, stationName);
+    }
+
+    private void addStation(Matcher matcher) {
         String metroLineName = removeQuotes(matcher.group(3));
         String stationName = removeQuotes(matcher.group(4));
         switch (matcher.group(2).toLowerCase()) {
-            case "/append" -> appendStation(metroLineName, stationName);
-            case "/remove" -> removeStation(metroLineName, stationName);
-            case "/add-head" -> addHeadStation(metroLineName, stationName);
+            case "/append" -> metroService.appendStation(metroLineName, stationName);
+            case "/add-head" -> metroService.addHead(metroLineName, stationName);
         }
     }
 
-    private void appendStation(String MetroLineName, String stationName) {
-        metroService.appendStation(MetroLineName, stationName);
-    }
-
-    private void addHeadStation(String metroLineName, String stationName) {
-        metroService.addHead(metroLineName, stationName);
-    }
-
-    private void removeStation(String MetroLineName, String stationName) {
-        metroService.removeStation(MetroLineName, stationName);
-    }
-
     private void parseConnectionRouteInput(Matcher matcher) {
-        String metroLineName = removeQuotes(matcher.group(8));
-        String stationName = removeQuotes(matcher.group(9));
-        String toMetroLine = removeQuotes(matcher.group(10));
-        String toStation = removeQuotes(matcher.group(11));
+        String metroLineName = removeQuotes(matcher.group(11));
+        String stationName = removeQuotes(matcher.group(12));
+        String toMetroLine = removeQuotes(matcher.group(13));
+        String toStation = removeQuotes(matcher.group(14));
 
-        switch (matcher.group(7).toLowerCase()) {
+        switch (matcher.group(10).toLowerCase()) {
             case "/connect" -> connectStations(metroLineName, stationName, toMetroLine, toStation);
             case "/route" -> printRoute(metroLineName, stationName, toMetroLine, toStation);
         }

@@ -40,7 +40,17 @@ class MetrosControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/output something else", "/remove three value present", "/append \"missing qute", "/output \"first value\" second", "/append three values present", "/add-head ends with\"", "/connect only three values", "/connect two values", "/connect missing \""})
+    @ValueSource(strings = {"/output something else",
+            "/remove three value present",
+            "/append \"missing qute",
+            "/output \"first value\" second",
+            "/append three values present",
+            "/add-head ends with\"",
+            "/connect only three values",
+            "/connect two values",
+            "/connect missing \"",
+            "/append missing time",
+            "/add-head missing time"})
     void printInvalidCommand(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
         controller.start();
@@ -87,7 +97,10 @@ class MetrosControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/append Germany Berlin\n/append Germany Bremen", "/append \"Germany\" Berlin\n/append \"Germany\" Bremen", "/append Germany \"Berlin\"\n/append Germany \"Bremen\"", "/append \"Germany\" \"Berlin\"\n/append \"Germany\" \"Bremen\""})
+    @ValueSource(strings = {"/append Germany Berlin 1\n/append Germany Bremen 2",
+            "/append \"Germany\" Berlin 1\n/append \"Germany\" Bremen 2",
+            "/append Germany \"Berlin\" 1\n/append Germany \"Bremen\" 1",
+            "/append \"Germany\" \"Berlin\" 1\n/append \"Germany\" \"Bremen\" 2"})
     void appendStation(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
         MetroLine germany = new MetroLine("Germany");
@@ -106,7 +119,7 @@ class MetrosControllerTest {
 
     @Test
     void appendStationWithSpaces() {
-        MetrosController controller = new MetrosController(new Scanner("/append \"Hammer City\" \"Beirut Tower\"\n/exit"), metroService);
+        MetrosController controller = new MetrosController(new Scanner("/append \"Hammer City\" \"Beirut Tower\" 2\n/exit"), metroService);
         MetroLine hammerCity = new MetroLine("Hammer City");
         metroService.addMetroLine(hammerCity);
         controller.start();
@@ -115,7 +128,10 @@ class MetrosControllerTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"/add-head Germany Berlin\n/add-head Germany Bremen", "/add-head \"Germany\" Berlin\n/add-head \"Germany\" Bremen", "/add-head Germany \"Berlin\"\n/add-head Germany \"Bremen\"", "/add-head \"Germany\" \"Berlin\"\n/add-head \"Germany\" \"Bremen\""})
+    @ValueSource(strings = {"/add-head Germany Berlin 1\n/add-head Germany Bremen 5",
+            "/add-head \"Germany\" Berlin 9\n/add-head \"Germany\" Bremen 22",
+            "/add-head Germany \"Berlin\" 20\n/add-head Germany \"Bremen\" 0",
+            "/add-head \"Germany\" \"Berlin\" 2\n/add-head \"Germany\" \"Bremen\" 5"})
     void addHeadStation(String input) {
         MetrosController controller = new MetrosController(new Scanner(input + "\n/exit"), metroService);
         MetroLine germany = new MetroLine("Germany");
@@ -134,7 +150,7 @@ class MetrosControllerTest {
 
     @Test
     void addHeadStationWithSpaces() {
-        MetrosController controller = new MetrosController(new Scanner("/add-head \"Germany Town\" \"Berlin Bridge\"\n/exit"), metroService);
+        MetrosController controller = new MetrosController(new Scanner("/add-head \"Germany Town\" \"Berlin Bridge\" 2\n/exit"), metroService);
         MetroLine germanyTown = new MetroLine("Germany Town");
         metroService.addMetroLine(germanyTown);
         controller.start();
