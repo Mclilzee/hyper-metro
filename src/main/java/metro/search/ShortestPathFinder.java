@@ -7,63 +7,32 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ShortestPathFinder implements StationPathFinder{
-    Queue<Node> queue = new ArrayDeque<>();
-    Set<Node> visited = new HashSet<>();
+    Frontier frontier = new BreadthFrontier();
 
     @Override
     public Optional<String> findPathString(Station start, Station end) {
         Node startNode = new Node(start);
         Node endNode = new Node(end);
 
-        queue.add(startNode);
-        visited.add(startNode);
+        frontier.addNode(startNode);
 
         Optional<String> foundString = getPathString(endNode);
-        queue.clear();
-        visited.clear();
+        frontier.clear();
         return foundString;
     }
 
     private Optional<String> getPathString(Node end) {
-       while (!queue.isEmpty()) {
-           Node current = queue.poll();
+       while (!frontier.isEmpty()) {
+           Node current = frontier.pollNode();
 
            if (current.equals(end)) {
                return Optional.of(parsePathString(current));
            }
 
-           addNeighbors(current);
+           frontier.addNeighbors(current);
        }
 
        return Optional.empty();
-    }
-
-    private void addNeighbors(Node current) {
-        current.getStation().getNextStation().ifPresent(station -> addConnectedNode(current, station));
-        current.getStation().getPreviousStation().ifPresent(station -> addConnectedNode(current, station));
-        addLineConnectedNodes(current);
-    }
-
-    private void addConnectedNode(Node current, Station station) {
-        Node prevNode = new Node(station);
-        if (!visited.contains(prevNode)) {
-            prevNode.setPrev(current);
-            queue.add(prevNode);
-            visited.add(prevNode);
-        }
-    }
-
-    private void addLineConnectedNodes(Node current) {
-        List<Node> nodes = current.getStation().getLineConnections().stream()
-                .map(connection -> new Node(connection.station(), connection.metroLine().getName()))
-                .filter(eachNode -> !visited.contains(eachNode))
-                .toList();
-
-        for (Node node : nodes) {
-            queue.add(node);
-            visited.add(node);
-            node.setPrev(current);
-        }
     }
 
     private String parsePathString(Node end) {

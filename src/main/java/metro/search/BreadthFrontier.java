@@ -60,5 +60,6 @@ public class BreadthFrontier implements Frontier {
         @Override
     public void clear() {
         queue.clear();
+        visited.clear();
     }
 }

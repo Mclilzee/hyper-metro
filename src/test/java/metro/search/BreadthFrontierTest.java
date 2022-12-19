@@ -161,4 +161,15 @@ class BreadthFrontierTest {
         assertTrue(frontier.isEmpty());
     }
 
+    @Test
+    void clearVisitedNodes() {
+        Node berlin = new Node(new Station("Berlin", 0));
+        frontier.addNode(berlin);
+        frontier.clear();
+
+        frontier.addNode(berlin);
+
+        assertFalse(frontier.isEmpty());
+    }
+
 }
