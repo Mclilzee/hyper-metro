@@ -78,10 +78,10 @@ class MetroMemoryFileReaderTest {
         MetroService service = reader.loadMetroServiceFromFile(metroPath);
 
         MetroLine m1 = new MetroLine("m1");
-        m1.append(new Station("Bishops-road")).append(new Station("Edgver road")).append(new Station("Baker street"));
+        m1.append(new Station("Bishops-road", 1)).append(new Station("Edgver road", 1)).append(new Station("Baker street", 1));
 
         MetroLine m2 = new MetroLine("m2");
-        m2.append(new Station("Hammersmith")).append(new Station("Westbourne-park"));
+        m2.append(new Station("Hammersmith", 1)).append(new Station("Westbourne-park", 1));
 
         MetroService mockService = new MetroMemoryService();
         mockService.addMetroLine(new MetroLine("Metro-Railway"));

@@ -14,10 +14,10 @@ class ThreeStationsPrinterTest {
     @DisplayName("print stations list of three connected stations")
     void getConnectedThreeStationsList() {
         MetroLine metroLine = new MetroLine("");
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station hamburg = new Station("Hamburg");
-        Station beirut = new Station("Beirut");
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station hamburg = new Station("Hamburg", 0);
+        Station beirut = new Station("Beirut", 0);
         metroLine.append(berlin)
                  .append(bremen)
                  .append(hamburg)

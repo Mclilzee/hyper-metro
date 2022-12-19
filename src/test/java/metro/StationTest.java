@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StationTest {
 
-    Station station = new Station("Berlin");
+    Station station = new Station("Berlin", 0);
 
     @Test
     void hasCorrectName() {
@@ -42,7 +42,7 @@ class StationTest {
     @Test
     @DisplayName("Previous station is set correctly")
     void previousStation() {
-       Station frankfurt = new Station("Frankfurt");
+       Station frankfurt = new Station("Frankfurt", 0);
        station.setPreviousStation(frankfurt);
 
        String expected = "Frankfurt";
@@ -53,7 +53,7 @@ class StationTest {
     @Test
     @DisplayName("Next station is set correctly")
     void nextStation() {
-        Station nextStation = new Station("Bremen");
+        Station nextStation = new Station("Bremen", 0);
         station.setNextStation(nextStation);
 
         String expected = "Bremen";
@@ -73,11 +73,11 @@ class StationTest {
     @Test
     void addLineConnections() {
         MetroLine germany = new MetroLine("Germany");
-        Station berlin = new Station("Berlin");
+        Station berlin = new Station("Berlin", 0);
         station.addLineConnection(germany, berlin);
 
         MetroLine lebanon = new MetroLine("Lebanon");
-        Station beirut = new Station("Beirut");
+        Station beirut = new Station("Beirut", 0);
         station.addLineConnection(lebanon, beirut);
 
         Set<LineConnection> expected = Set.of(
@@ -91,11 +91,11 @@ class StationTest {
 
     @Test
     void lineConnectionNotAddedIfExists() {
-        station.addLineConnection(new MetroLine("Germany"), new Station("Berlin"));
-        station.addLineConnection(new MetroLine("Germany"), new Station("Berlin"));
-        station.addLineConnection(new MetroLine("Germany"), new Station("Berlin"));
-        station.addLineConnection(new MetroLine("Lebanon"), new Station( "Beirut"));
-        station.addLineConnection(new MetroLine("Lebanon"), new Station( "Beirut"));
+        station.addLineConnection(new MetroLine("Germany"), new Station("Berlin", 0));
+        station.addLineConnection(new MetroLine("Germany"), new Station("Berlin", 0));
+        station.addLineConnection(new MetroLine("Germany"), new Station("Berlin", 0));
+        station.addLineConnection(new MetroLine("Lebanon"), new Station( "Beirut", 0));
+        station.addLineConnection(new MetroLine("Lebanon"), new Station( "Beirut", 0));
 
         assertEquals(2, station.getLineConnections().size());
     }
@@ -107,14 +107,14 @@ class StationTest {
 
     @Test
     void equalsCorrect() {
-        Station secondStation = new Station("Berlin");
+        Station secondStation = new Station("Berlin", 0);
 
         assertEquals(secondStation, station);
     }
 
     @Test
     void notEqual() {
-        Station secondStation = new Station("Bremen");
+        Station secondStation = new Station("Bremen", 0);
 
         assertNotEquals(secondStation, station);
     }
@@ -129,8 +129,8 @@ class StationTest {
     @Test
     @DisplayName("Not equal if connected stations are not the same")
     void notEqualConnectedStations() {
-        Station secondStation = new Station("Berlin");
-        secondStation.addLineConnection(new MetroLine("Metro"), new Station("Frankfurt"));
+        Station secondStation = new Station("Berlin", 0);
+        secondStation.addLineConnection(new MetroLine("Metro"), new Station("Frankfurt", 0));
 
         assertNotEquals(secondStation, station);
 
@@ -138,7 +138,7 @@ class StationTest {
 
     @Test
     void containsSameHashcode() {
-        Station secondStation = new Station("Berlin");
+        Station secondStation = new Station("Berlin", 0);
 
         assertEquals(secondStation.hashCode(), station.hashCode());
     }

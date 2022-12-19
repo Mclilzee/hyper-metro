@@ -16,7 +16,7 @@ class LineConnectionsPrinterTest {
     @Test
     void printStationsWithNoLineConnections() {
         MetroLine metroLine = new MetroLine("");
-        metroLine.append(new Station("Berlin")).append(new Station("Bremen")).append(new Station("Beirut"));
+        metroLine.append(new Station("Berlin", 0)).append(new Station("Bremen", 0)).append(new Station("Beirut", 0));
 
         String actual =printer.getMetroLinePrintString(metroLine);
         String expected = """
@@ -33,15 +33,15 @@ class LineConnectionsPrinterTest {
     void printStationWithLineConnections() {
         MetroLine metroLine = new MetroLine("");
 
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station beirut = new Station("Beirut");
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station beirut = new Station("Beirut", 0);
 
         metroLine.append(berlin).append(bremen).append(beirut);
 
 
         MetroLine germany = new MetroLine("Germany");
-        Station frankfurt = new Station("Frankfurt");
+        Station frankfurt = new Station("Frankfurt", 0);
         metroLine.addLineConnection(bremen, germany, frankfurt);
 
         String actual = printer.getMetroLinePrintString(metroLine);
@@ -58,22 +58,22 @@ class LineConnectionsPrinterTest {
     @Test
     void printStationWithMultipleConnections() {
         MetroLine metroLine = new MetroLine("");
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station beirut = new Station("Beirut");
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station beirut = new Station("Beirut", 0);
 
         metroLine.append(berlin).append(bremen).append(beirut);
 
         MetroLine germany = new MetroLine("Germany");
-        Station frankfurt = new Station("Frankfurt");
+        Station frankfurt = new Station("Frankfurt", 0);
         metroLine.addLineConnection(bremen, germany, frankfurt);
 
         MetroLine lebanon = new MetroLine("Lebanon");
-        Station aramount = new Station("Aramount");
+        Station aramount = new Station("Aramount", 0);
         metroLine.addLineConnection(bremen, lebanon, aramount);
 
         MetroLine france = new MetroLine("France");
-        Station paris = new Station("Paris");
+        Station paris = new Station("Paris", 0);
         metroLine.addLineConnection(beirut, france, paris);
 
         String actual = printer.getMetroLinePrintString(metroLine);

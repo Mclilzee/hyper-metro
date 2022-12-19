@@ -7,20 +7,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class LineConnectionTest {
 
     MetroLine germany = new MetroLine("Germany");
-    Station berlin = new Station("Berlin");
+    Station berlin = new Station("Berlin", 5);
     LineConnection lineConnection = new LineConnection(germany, berlin);
 
     @Test
-    void metroLineName() {
-        String expected = "Germany";
-
-        assertEquals(expected, lineConnection.metroLine().getName());
+    void getMetroLine() {
+        assertEquals(germany, lineConnection.metroLine());
     }
 
     @Test
-    void stationName() {
-        String expected = "Berlin";
-
-        assertEquals(expected, lineConnection.station().getName());
+    void getStation() {
+        assertEquals(berlin, lineConnection.station());
     }
 }

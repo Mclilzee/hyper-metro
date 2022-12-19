@@ -192,12 +192,12 @@ class MetrosControllerTest {
     void connectStationsCorrectly() {
         MetrosController controller = new MetrosController(new Scanner("/connect Germany Berlin Lebanon Beirut\n/exit"), metroService);
         MetroLine germany = new MetroLine("Germany");
-        Station berlin = new Station("Berlin");
+        Station berlin = new Station("Berlin", 0);
         germany.append(berlin);
         metroService.addMetroLine(germany);
 
         MetroLine lebanon = new MetroLine("Lebanon");
-        Station beirut = new Station("Beirut");
+        Station beirut = new Station("Beirut", 0);
         lebanon.append(beirut);
         metroService.addMetroLine(lebanon);
 
@@ -214,12 +214,12 @@ class MetrosControllerTest {
     void connectStationsCorrectlyWithSpaces() {
         MetrosController controller = new MetrosController(new Scanner("/connect Hammersmith-and-City Hammersmith Metro-Railway \"Edgver road\"\n/exit"), metroService);
         MetroLine hammersmithAndCity = new MetroLine("Hammersmith-and-City");
-        Station hammersmith = new Station("Hammersmith");
+        Station hammersmith = new Station("Hammersmith", 0);
         hammersmithAndCity.append(hammersmith);
         metroService.addMetroLine(hammersmithAndCity);
 
         MetroLine metroRailway = new MetroLine("Metro-Railway");
-        Station edgverRoad = new Station("Edgver road");
+        Station edgverRoad = new Station("Edgver road", 0);
         metroRailway.append(edgverRoad);
         metroService.addMetroLine(metroRailway);
         controller.start();
@@ -237,14 +237,14 @@ class MetrosControllerTest {
         MetrosController controller = new MetrosController(new Scanner("/route Germany Berlin Lebanon Aramoun\n/exit"), metroMemoryService);
 
         MetroLine germany = new MetroLine("Germany");
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station frankfurt = new Station("Frankfurt", 0);
         germany.append(berlin).append(bremen).append(frankfurt);
 
         MetroLine lebanon = new MetroLine("Lebanon");
-        Station beirut = new Station("Beirut");
-        Station aramoun = new Station("Aramoun");
+        Station beirut = new Station("Beirut", 0);
+        Station aramoun = new Station("Aramoun", 0);
         lebanon.append(beirut).append(aramoun);
 
         germany.addLineConnection(frankfurt, lebanon, beirut);
@@ -271,14 +271,14 @@ class MetrosControllerTest {
         MetrosController controller = new MetrosController(new Scanner("/route \"German Town\" \"Berlin Tower\" \"Lebanon Main\" \"Aramoun Hill\"\n/exit"), metroMemoryService);
 
         MetroLine germany = new MetroLine("German Town");
-        Station berlin = new Station("Berlin Tower");
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
+        Station berlin = new Station("Berlin Tower", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station frankfurt = new Station("Frankfurt", 0);
         germany.append(berlin).append(bremen).append(frankfurt);
 
         MetroLine lebanon = new MetroLine("Lebanon Main");
-        Station beirut = new Station("Beirut");
-        Station aramoun = new Station("Aramoun Hill");
+        Station beirut = new Station("Beirut", 0);
+        Station aramoun = new Station("Aramoun Hill", 0);
         lebanon.append(beirut).append(aramoun);
 
         germany.addLineConnection(frankfurt, lebanon, beirut);

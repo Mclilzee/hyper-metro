@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class NodeTest {
 
-    Node node = new Node(new Station("Berlin"));
+    Node node = new Node(new Station("Berlin", 0));
 
     @Test
     void nodeHasCorrectStation() {
@@ -23,7 +23,7 @@ class NodeTest {
 
     @Test
     void transferLineSetCorrectly() {
-        node = new Node(new Station(""), "Transfer test");
+        node = new Node(new Station("", 0), "Transfer test");
         String expected = "Transfer test";
         assertEquals(expected, node.getTransferLine().orElseThrow());
     }
@@ -37,7 +37,7 @@ class NodeTest {
     @Test
     @DisplayName("Prev returns correct value")
     void prevReturnsValue() {
-        Node bremen = new Node(new Station("Bremen"));
+        Node bremen = new Node(new Station("Bremen", 0));
         node.setPrev(bremen);
 
         assertEquals(bremen, node.getPrev().orElseThrow());
@@ -45,26 +45,26 @@ class NodeTest {
 
     @Test
     void equals() {
-        Node expected = new Node(new Station("Berlin"));
+        Node expected = new Node(new Station("Berlin", 0));
         assertEquals(expected, node);
     }
 
     @Test
     void notEqual() {
-        Node expected = new Node(new Station("Bremen"));
+        Node expected = new Node(new Station("Bremen", 0));
         assertNotEquals(expected, node);
     }
 
 
     @Test
     void equalsHashCode() {
-        Node expected = new Node(new Station("Berlin"));
+        Node expected = new Node(new Station("Berlin", 0));
         assertEquals(expected.hashCode(), node.hashCode());
     }
 
     @Test
     void notEqualHashCode() {
-        Node expected = new Node(new Station("Bremen"));
+        Node expected = new Node(new Station("Bremen", 0));
         assertNotEquals(expected.hashCode(), node.hashCode());
     }
 }

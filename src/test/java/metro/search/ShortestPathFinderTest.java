@@ -12,9 +12,9 @@ class ShortestPathFinderTest {
     @Test
     void getCorrectPathString() {
         MetroLine germany = new MetroLine("Germany");
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station frankfurt = new Station("Frankfurt", 0);
         germany.append(berlin).append(bremen).append(frankfurt);
 
         ShortestPathFinder finder = new ShortestPathFinder();
@@ -31,25 +31,25 @@ class ShortestPathFinderTest {
     void returnEmptyIfConnectionNotFound() {
 
         MetroLine germany = new MetroLine("Germany");
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station frankfurt = new Station("Frankfurt", 0);
         germany.append(berlin).append(bremen).append(frankfurt);
 
 
         ShortestPathFinder finder = new ShortestPathFinder();
 
-        Station beirut = new Station("Beirut");
+        Station beirut = new Station("Beirut", 0);
         assertTrue(finder.findPathString(berlin, beirut).isEmpty());
     }
 
     @Test
     void pathTestBothDirections() {
         MetroLine germany = new MetroLine("Germany");
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
-        Station beirut = new Station("Beirut");
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station frankfurt = new Station("Frankfurt", 0);
+        Station beirut = new Station("Beirut", 0);
         germany.append(berlin).append(bremen).append(frankfurt).append(beirut);
 
         ShortestPathFinder finder = new ShortestPathFinder();
@@ -66,14 +66,14 @@ class ShortestPathFinderTest {
     @DisplayName("Ger correct lines if stations has connections")
     void correctStringLineConnections() {
         MetroLine germany = new MetroLine("Germany");
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station frankfurt = new Station("Frankfurt", 0);
         germany.append(berlin).append(bremen).append(frankfurt);
 
         MetroLine france = new MetroLine("France");
-        Station beirut = new Station("Beirut");
-        Station paris = new Station("Paris");
+        Station beirut = new Station("Beirut", 0);
+        Station paris = new Station("Paris", 0);
         france.append(beirut).append(paris);
 
         germany.addLineConnection(bremen, france, beirut);
@@ -93,20 +93,20 @@ class ShortestPathFinderTest {
     @Test
     void testMultipleDirectionsAcrossLines() {
         MetroLine germany = new MetroLine("Germany");
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station frankfurt = new Station("Frankfurt", 0);
         germany.append(berlin).append(bremen).append(frankfurt);
 
         MetroLine france = new MetroLine("France");
-        Station nice = new Station("Nice");
-        Station paris = new Station("Paris");
+        Station nice = new Station("Nice", 0);
+        Station paris = new Station("Paris", 0);
         france.append(nice).append(paris);
 
         MetroLine lebanon = new MetroLine("Lebanon");
-        Station beirut = new Station("Beirut");
-        Station aramount = new Station("Aramoun");
-        Station matar = new Station("Matar");
+        Station beirut = new Station("Beirut", 0);
+        Station aramount = new Station("Aramoun", 0);
+        Station matar = new Station("Matar", 0);
         lebanon.append(beirut).append(aramount).append(matar);
 
         germany.addLineConnection(bremen, france, nice);
@@ -131,9 +131,9 @@ class ShortestPathFinderTest {
     @Test
     void canSearchMultipleTimes() {
         MetroLine germany = new MetroLine("Germany");
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station frankfurt = new Station("Frankfurt", 0);
         germany.append(berlin).append(bremen).append(frankfurt);
 
         ShortestPathFinder finder = new ShortestPathFinder();

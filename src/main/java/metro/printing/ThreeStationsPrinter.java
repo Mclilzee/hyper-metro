@@ -24,7 +24,7 @@ public class ThreeStationsPrinter implements MetroPrinter {
 
     private String generateStationsString(Station station) {
         Station secondStation = station.getNextStation().orElseThrow();
-        Station thirdStation = secondStation.getNextStation().orElse(new Station("depot"));
+        Station thirdStation = secondStation.getNextStation().orElse(new Station("depot", 0));
 
         return String.format("%s - %s - %s", station.getName(), secondStation.getName(), thirdStation.getName());
     }

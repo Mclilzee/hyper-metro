@@ -15,10 +15,6 @@ public class Station {
         this.time = time;
     }
 
-    public Station(String name) {
-        this(name, 0);
-    }
-
     public int getTime() {
         return time;
     }

@@ -18,9 +18,9 @@ class MetroMemoryServiceTest {
     @Test
     void addMetroLine() {
         MetroLine germany = new MetroLine("Germany");
-        germany.append(new Station("Berlin"))
-               .append(new Station("Bremen"))
-               .append(new Station("Beirut"));
+        germany.append(new Station("Berlin", 0))
+               .append(new Station("Bremen", 0))
+               .append(new Station("Beirut", 0));
 
         metroMemoryService.addMetroLine(germany);
 
@@ -43,7 +43,7 @@ class MetroMemoryServiceTest {
         metroMemoryService.addMetroLine(germany);
 
         MetroLine otherGermany = new MetroLine("Germany");
-        otherGermany.append(new Station("Berlin"));
+        otherGermany.append(new Station("Berlin", 0));
         metroMemoryService.addMetroLine(otherGermany);
 
         MetroLine actual = metroMemoryService.getMetroLine("Germany").orElseThrow();
@@ -60,7 +60,7 @@ class MetroMemoryServiceTest {
         MetroLine lebanon = new MetroLine("Lebanon");
         metroMemoryService.addMetroLine(lebanon);
 
-        germany.append(new Station("Berlin"));
+        germany.append(new Station("Berlin", 0));
 
         assertEquals(germany, metroMemoryService.getMetroLine("Germany").orElseThrow());
         assertEquals(lebanon, metroMemoryService.getMetroLine("Lebanon").orElseThrow());
@@ -73,7 +73,7 @@ class MetroMemoryServiceTest {
         metroMemoryService.appendStation("Germany", "Berlin");
 
         MetroLine expected = new MetroLine("Germany");
-        expected.append(new Station("Berlin"));
+        expected.append(new Station("Berlin", 0));
 
         assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
     }
@@ -96,7 +96,7 @@ class MetroMemoryServiceTest {
         metroMemoryService.addHead("Germany", "Berlin");
 
         MetroLine expected = new MetroLine("Germany");
-        expected.addHead(new Station("Berlin"));
+        expected.addHead(new Station("Berlin", 0));
 
         assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
     }
@@ -122,8 +122,8 @@ class MetroMemoryServiceTest {
         metroMemoryService.removeStation("Germany", "Bremen");
 
         MetroLine expected = new MetroLine("Germany");
-        expected.append(new Station("Berlin"))
-                .append(new Station("Beirut"));
+        expected.append(new Station("Berlin", 0))
+                .append(new Station("Beirut", 0));
 
         assertEquals(expected, metroMemoryService.getMetroLine("Germany").orElseThrow());
     }
@@ -175,12 +175,12 @@ class MetroMemoryServiceTest {
         metroMemoryService.appendStation("Lebanon", "Aramoun");
 
         MetroLine firstExpected = new MetroLine("Germany");
-        firstExpected.append(new Station("Berlin"))
-                     .append(new Station("Bremen"));
+        firstExpected.append(new Station("Berlin", 0))
+                     .append(new Station("Bremen", 0));
 
         MetroLine secondExpected = new MetroLine("Lebanon");
-        secondExpected.append(new Station("Beirut"))
-                      .append(new Station("Aramoun"));
+        secondExpected.append(new Station("Beirut", 0))
+                      .append(new Station("Aramoun", 0));
 
         List<MetroLine> expected = List.of(firstExpected, secondExpected);
 
@@ -260,15 +260,15 @@ class MetroMemoryServiceTest {
     @Test
     void getShortestPath() {
         MetroLine germany = new MetroLine("Germany");
-        Station berlin = new Station("Berlin");
-        Station bremen = new Station("Bremen");
-        Station frankfurt = new Station("Frankfurt");
+        Station berlin = new Station("Berlin", 0);
+        Station bremen = new Station("Bremen", 0);
+        Station frankfurt = new Station("Frankfurt", 0);
         germany.append(berlin).append(bremen).append(frankfurt);
 
 
         MetroLine lebanon = new MetroLine("Lebanon");
-        Station beirut = new Station("Beirut");
-        Station aramoun = new Station("Aramoun");
+        Station beirut = new Station("Beirut", 0);
+        Station aramoun = new Station("Aramoun", 0);
         lebanon.append(beirut).append(aramoun);
 
         germany.addLineConnection(frankfurt, lebanon, beirut);
@@ -302,9 +302,6 @@ class MetroMemoryServiceTest {
 
     @Test
     void getShortestPathReturnNotFoundStation() {
-        MetroLine germany = new MetroLine("Germany");
-        MetroLine lebanon = new MetroLine("Lebanon");
-
         String actual =  metroMemoryService.findShortestPath("Germany", "Berlin", "Lebanon", "Beirut");
 
         String expected = "No connection found";
@@ -315,9 +312,9 @@ class MetroMemoryServiceTest {
     @Test
     void getShortestPathNotFoundConnection() {
         MetroLine germany = new MetroLine("Germany");
-        germany.append(new Station("Berlin"));
+        germany.append(new Station("Berlin", 0));
         MetroLine lebanon = new MetroLine("Lebanon");
-        lebanon.append(new Station("Beirut"));
+        lebanon.append(new Station("Beirut", 0));
 
         String actual =  metroMemoryService.findShortestPath("Germany", "Berlin", "Lebanon", "Beirut");
 

@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 public class MetroLine {
 
     private final String name;
-    private final Station head = new Station("depot");
+    private final Station head = new Station("depot", 0);
 
     public MetroLine(String name) {
         this.name = name;
