@@ -17,9 +17,9 @@ class MetroLineFactoryTest {
 
     @BeforeEach
     void setup() {
-        stationsMap.put("2", new StationDTO("Bremen", List.of()));
-        stationsMap.put("1", new StationDTO("Berlin", List.of()));
-        stationsMap.put("3", new StationDTO("Frankfurt", List.of()));
+        stationsMap.put("2", new StationDTO("Bremen", List.of(), 1));
+        stationsMap.put("1", new StationDTO("Berlin", List.of(), 1));
+        stationsMap.put("3", new StationDTO("Frankfurt", List.of(), 1));
     }
 
     @Test

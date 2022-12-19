@@ -16,7 +16,8 @@ class StationDTOTest {
                         "transfer":[{
                         "line": "Hammersmith-and-City",
                         "station": "Baker street"
-                        }]
+                        }],
+                        "time": 1
                         }
                         """;
 
@@ -28,6 +29,15 @@ class StationDTOTest {
 
         assertEquals(expected, stationDTO.getName());
     }
+
+    @Test
+    void getTime() {
+    StationDTO stationDTO = gson.fromJson(jsonString, StationDTO.class);
+
+    int expected = 1;
+    assertEquals(expected, stationDTO.getTime());
+    }
+
 
     @Test
     void getTransfer() {
@@ -84,10 +94,18 @@ class StationDTOTest {
 
     @Test
     void equals() {
-        StationDTO stationDTO = new StationDTO("Berlin", List.of());
-        StationDTO otherStationDTO = new StationDTO("Berlin", List.of());
+        StationDTO stationDTO = new StationDTO("Berlin", List.of(), 1);
+        StationDTO otherStationDTO = new StationDTO("Berlin", List.of(), 1);
 
         assertEquals(stationDTO, otherStationDTO);
+    }
+
+    @Test
+    void notEqualDifferentTime() {
+        StationDTO stationDTO = new StationDTO("Berlin", List.of(), 2);
+        StationDTO otherStationDTO = new StationDTO("Berlin", List.of(), 1);
+
+        assertNotEquals(stationDTO, otherStationDTO);
     }
 
     @Test
@@ -101,8 +119,8 @@ class StationDTOTest {
                 new ConnectionDTO("Germany", "Bremen")
                                                       );
 
-        StationDTO stationDTO = new StationDTO("Berlin", firstConnections);
-        StationDTO otherStationDTO = new StationDTO("Berlin", secondConnections);
+        StationDTO stationDTO = new StationDTO("Berlin", firstConnections, 1);
+        StationDTO otherStationDTO = new StationDTO("Berlin", secondConnections, 1);
 
         assertEquals(stationDTO, otherStationDTO);
     }

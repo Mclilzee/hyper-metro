@@ -42,18 +42,18 @@ class MetroJsonReaderTest {
 
         Map<String, Map<String, StationDTO>> expected = new HashMap<>();
         expected.put("Metro-Railway", new HashMap<>());
-        ConnectionDTO metroRailwayConnection = new ConnectionDTO("Hammersmith-and-City", "Baker Street");
+        ConnectionDTO metroRailwayConnection = new ConnectionDTO("Hammersmith-and-City", "Baker street");
 
-        expected.get("Metro-Railway").put("3", new StationDTO("Baker Street", List.of(metroRailwayConnection)));
-        expected.get("Metro-Railway").put("1", new StationDTO("Bishops-road", List.of()));
-        expected.get("Metro-Railway").put("2", new StationDTO("Edgver road", List.of()));
+        expected.get("Metro-Railway").put("3", new StationDTO("Baker street", List.of(metroRailwayConnection), 1));
+        expected.get("Metro-Railway").put("1", new StationDTO("Bishops-road", List.of(), 2));
+        expected.get("Metro-Railway").put("2", new StationDTO("Edgver road", List.of(), 3));
 
         expected.put("Hammersmith-and-City", new HashMap<>());
-        ConnectionDTO hammerSmithConnection = new ConnectionDTO("Metro-Railway", "Baker Street");
+        ConnectionDTO hammerSmithConnection = new ConnectionDTO("Metro-Railway", "Baker street");
 
-        expected.get("Hammersmith-and-City").put("2", new StationDTO("Westbourne-park", List.of()));
-        expected.get("Hammersmith-and-City").put("1", new StationDTO("Hammersmith", List.of()));
-        expected.get("Hammersmith-and-City").put("3", new StationDTO("Baker Street", List.of(hammerSmithConnection)));
+        expected.get("Hammersmith-and-City").put("2", new StationDTO("Westbourne-park", List.of(), 3));
+        expected.get("Hammersmith-and-City").put("1", new StationDTO("Hammersmith", List.of(), 1));
+        expected.get("Hammersmith-and-City").put("3", new StationDTO("Baker street", List.of(hammerSmithConnection), 3));
 
         assertEquals(expected, actual);
     }

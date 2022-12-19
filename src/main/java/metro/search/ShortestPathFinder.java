@@ -18,13 +18,13 @@ public class ShortestPathFinder implements StationPathFinder{
         queue.add(startNode);
         visited.add(startNode);
 
-        Optional<String> foundString = getShortestPathString(endNode);
+        Optional<String> foundString = getPathString(endNode);
         queue.clear();
         visited.clear();
         return foundString;
     }
 
-    private Optional<String> getShortestPathString(Node end) {
+    private Optional<String> getPathString(Node end) {
        while (!queue.isEmpty()) {
            Node current = queue.poll();
 
