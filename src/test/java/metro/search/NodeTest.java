@@ -50,9 +50,9 @@ class NodeTest {
     @Test
     void weightOfTransferNodeIsInit() {
         Station station = new Station("Berlin", 0);
-        node = new Node(station, "Line Transfer");
+        node = new Node(station, "Line Transfer", 2);
 
-        int expected = 5;
+        int expected = 7;
         assertEquals(expected, node.getWeight());
 
     }
@@ -64,7 +64,7 @@ class NodeTest {
 
     @Test
     void transferLineSetCorrectly() {
-        node = new Node(new Station("", 0), "Transfer test");
+        node = new Node(new Station("", 0), "Transfer test", 0);
         String expected = "Transfer test";
         assertEquals(expected, node.getTransferLine().orElseThrow());
     }

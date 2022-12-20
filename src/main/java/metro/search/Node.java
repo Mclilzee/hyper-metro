@@ -21,10 +21,10 @@ public class Node implements Comparable<Node> {
         this.weight = weight;
     }
 
-    public Node(Station station, String transferLine) {
+    public Node(Station station, String transferLine, int weight) {
         this.station = station;
         this.transferLine = transferLine;
-        this.weight = 5;
+        this.weight = 5 + weight;
     }
 
     public int getWeight() {

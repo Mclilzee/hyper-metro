@@ -45,14 +45,14 @@ public class QueueFrontier implements Frontier {
     }
 
     private void addConnectedNode(Node node, Station station) {
-        Node neighborNode = new Node(station, station.getTime());
+        Node neighborNode = new Node(station, node.getWeight() + station.getTime());
         neighborNode.setPrev(node);
         addNode(neighborNode);
     }
 
     private void addLineConnectedNodes(Node current) {
         List<Node> nodes = current.getStation().getLineConnections().stream()
-                                  .map(connection -> new Node(connection.station(), connection.metroLine().getName()))
+                                  .map(connection -> new Node(connection.station(), connection.metroLine().getName(), current.getWeight()))
                                   .filter(eachNode -> !visited.contains(eachNode))
                                   .toList();
 

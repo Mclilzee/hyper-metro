@@ -29,8 +29,6 @@ public class FastestPathPrinter implements PathPrinter {
     }
 
     private int getTotalTime(List<Node> nodes) {
-        return nodes.stream()
-                .mapToInt(Node::getWeight)
-                .sum();
+        return nodes.get(nodes.size() - 1).getWeight();
     }
 }

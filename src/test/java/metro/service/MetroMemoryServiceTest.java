@@ -286,7 +286,7 @@ class MetroMemoryServiceTest {
     @Test
     void getFastestPath() {
         MetroLine germany = new MetroLine("Germany");
-        Station berlin = new Station("Berlin", 2);
+        Station berlin = new Station("Berlin", 5);
         Station bremen = new Station("Bremen", 5);
         Station frankfurt = new Station("Frankfurt", 5);
         germany.append(berlin).append(bremen).append(frankfurt);

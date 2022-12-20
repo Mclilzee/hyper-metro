@@ -45,13 +45,13 @@ class QueueFrontierTest {
     void greedyFrontierReturnsCorrectOrder() {
         Frontier frontier = FrontierFactory.getGreedyBreadthFrontier();
 
-        Station berlin = new Station("Berlin", 0);
-        Station bremen = new Station("Bremen", 0);
+        Station berlin = new Station("Berlin", 2);
+        Station bremen = new Station("Bremen", 1);
         Station frankfurt = new Station("Frankfurt", 0);
-        Station beirut = new Station("Beirut", 0);
+        Station beirut = new Station("Beirut", 10);
 
-        // should contain weight of 5
-        Node berlinNode = new Node(berlin, "Transfer Line Included");
+        // weight should be 5
+        Node berlinNode = new Node(berlin, "Transfer Line Included", 0);
 
         Node bremenNode = new Node(bremen, 2);
         Node frankfurtNode = new Node(frankfurt, 1);

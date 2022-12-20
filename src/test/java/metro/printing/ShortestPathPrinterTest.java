@@ -46,7 +46,7 @@ class ShortestPathPrinterTest {
         Station beirut = new Station("Beirut", 0);
         Station paris = new Station("Paris", 0);
 
-        List<Node> nodes = List.of(new Node(berlin), new Node(bremen), new Node(beirut, "France"), new Node(paris));
+        List<Node> nodes = List.of(new Node(berlin), new Node(bremen), new Node(beirut, "France", 0), new Node(paris));
         String actual = printer.getPathString(nodes);
 
         String expected = """
