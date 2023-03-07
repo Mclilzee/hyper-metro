@@ -26,7 +26,7 @@ Two json of metro line connections is provided, one that is shorter for testing 
 Metro json format example :
 ```json lines
 {
-  "Metro Line Name": {
+  "Metro-Railway": {
     "3": {
       "name": "Station A",
       "transfer": [
@@ -64,7 +64,7 @@ Metro json format example :
       "transfer": [
         {
           "line": "Metro-Railway",
-          "station": "Baker street"
+          "station": "Station A"
         }
       ],
       "time": 3
