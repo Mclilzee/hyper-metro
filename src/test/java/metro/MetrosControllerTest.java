@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.Set;
 
