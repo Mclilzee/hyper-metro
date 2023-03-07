@@ -8,18 +8,21 @@ Hyper metro is a project I enjoyed working on a lot, however challenging in some
 It represents a connection of metro systems, and make use of searching algorithms where you can search for fastest, shortest routes to take from one station to another.
 
 Start by building the project with `gradle build`
-Launch the program with `java -jar ./build/libs/hyper-metro-1.0.jar "path to metro lines json file"`
+
+Navigate to `./build/distributions` Unzip the tar or zip files and navigate into `hyper-metro-1.0/bin`
+- If you are using Windows run `$ hyper-metro-1.0.bat "path to metro json"`
+- If you are using Unix based system run `$ hyper-metro-1.0 "path to metro json"`
 
 After launching the program you will be prompt for command, use one of the following commands
 Note line and station names can have spaces in them, if so then it need to be put inside double quotes such as "Linka A".
 - `/output "Metro line name"` will print out all metro stations connections, including other metro lines connections for the current chosen metro line.
-`/append "Metro line name" "Metro station name" "Duration from last station"` will append a station to the end of the metro line, plus how long it takes to arrived there.
-The unit of measurement is not defined, it could be anything from hours, to minutes, to seconds. It is used for calculating the fastest route.
-- `/add-head "Metro line name" "Metro station name" "Duration from depot"` Will add station to the begining after depot station directly, duration will be the units of measuremnts from depot.
+`/append "Metro line name" "Metro station name" "Duration from last station"` will append a station to the end of the metro line, plus how long it takes to arrived there. Duration is in minutes, and is used to calculate the fastest route.
+- `/add-head "Metro line name" "Metro station name" "Duration from depot"` Will add station to the beginning after depot station directly, duration in minutes.
 - `/remove "Metro line name" "Metro station name"` Will remove a station from the metro line.
 - `/connect "First Metro line name" "First metro line station" "Second metro line name" "Second metro line station"` Will connect two metro lines, using two metro stations.
 - `/route "First Metro line name" "First metro line station" "Second metro line name" "Second metro line station"` The first searching algorithm to find the shortest route using a Breadth first search algorithm.
 - `/fastest-route "First Metro line name" "First metro line station" "Second metro line name" "Second metro line station"` The second searching algorithm to find the fastest route using A* searching algorithm, taking the duration between each stations into consideration.
+- `/exit` to quit the application
 
 Two json of metro line connections is provided, one that is shorter for testing purposes while the other is a real metro station connections based of (Prague Metro).
 

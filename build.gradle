@@ -4,6 +4,7 @@ plugins {
 
 group 'hyper-metro'
 version '1.0'
+mainClassName = "metro.Main"
 
 repositories {
     mavenCentral()
@@ -18,10 +19,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-jar {
-    manifest {
-        attributes("Main-Class": "metro.Main")
-    }
 }
