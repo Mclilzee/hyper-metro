@@ -79,6 +79,7 @@ public class MetrosController {
     private void addHead(String metroLineName, String stationName, int stationTime) {
         try {
             metroService.addHead(metroLineName, stationName, stationTime);
+            System.out.printf("Successfully added head station \"%s\" to Line \"%s\".%n", stationName, metroLineName);
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
