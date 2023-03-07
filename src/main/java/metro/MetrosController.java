@@ -90,6 +90,7 @@ public class MetrosController {
         String stationName = removeQuotes(matcher.group(8));
         try {
             metroService.removeStation(metroLineName, stationName);
+            System.out.printf("Successfully removed station \"%s\" to Line \"%s\".%n", stationName, metroLineName);
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
@@ -123,6 +124,7 @@ public class MetrosController {
     private void connectStations(String metroLineName, String stationName, String toMetroLine, String toStation) {
         try {
             metroService.connectMetroLine(metroLineName, stationName, toMetroLine, toStation);
+            System.out.printf("Successfully connected Lines %s and %s on stations %s and %s.%n", metroLineName, toMetroLine, stationName, toStation);
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
