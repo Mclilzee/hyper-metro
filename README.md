@@ -22,24 +22,19 @@ The unit of measurement is not defined, it could be anything from hours, to minu
 - `/fastest-route "First Metro line name" "First metro line station" "Second metro line name" "Second metro line station"` The second searching algorithm to find the fastest route using A* searching algorithm, taking the duration between each stations into consideration.
 
 Two json of metro line connections is provided, one that is shorter for testing purposes while the other is a real metro station connections based of (Prague Metro).
-The format of the json is as follow
+
+Metro json format example :
 ```json lines
 {
   "Metro Line Name": {
-    // metro station position number, determens order of stations
     "3": {
-      // station name
       "name": "Station A",
-      // provide connection detail of which line nad station Staion A connects to as transfer station
       "transfer": [
         {
-          // other metro line to provide connection
           "line": "Hammersmith-and-City",
-          // the station in the other metro line to connect this station on
           "station": "Baker street"
         }
       ],
-      // unit of measurement of how long to arrive from previous station.
       "time": 1
     },
     "1": {
