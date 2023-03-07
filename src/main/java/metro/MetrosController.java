@@ -70,6 +70,7 @@ public class MetrosController {
     private void appendStation(String metroLineName, String stationName, int stationTime) {
         try {
             metroService.appendStation(metroLineName, stationName, stationTime);
+            System.out.printf("Successfully appended station \"%s\" to Line \"%s\".%n", stationName, metroLineName);
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
         }
