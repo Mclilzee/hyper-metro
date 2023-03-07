@@ -75,4 +75,64 @@ Metro json format example :
   }
 }
 ```
-Examples : 
+Examples :
+```
+$ hyper-metro metros.json
+Loading metro: metros.json
+Metro Ready, Check README.md for commands
+$ /output Metro-Railway
+
+depot
+Bishops-road
+Edgver road
+Baker street - Baker street (Hammersmith-and-City)
+depot
+$ /output Metro-Railway
+
+depot
+Bishops-road
+Edgver road
+Baker street - Baker street (Hammersmith-and-City)
+depot
+$ /exit
+```
+
+Finding Routes :
+```
+$ hyper-metro prague.json
+Loading metro: prague.json
+Metro Ready, Check README.md for commands
+$ /route "Linka A" Malostranska "Linka B" Zlicin
+
+Malostranska
+Staromestska
+Mustek
+Transition to line Linka B
+Mustek
+Narodni trida
+Karlovo namesti
+Andel
+Smichovske nadrazi
+Radlicka
+Jinonice
+Nove Butovice
+Hurka
+Luziny
+Luka
+Stodulky
+Zlicin
+
+$ /fastest-route "Linka A" Dejvicka "Linka B" "Karlovo namesti"
+
+Dejvicka
+Hradcanska
+Malostranska
+Staromestska
+Mustek
+Transition to line Linka B
+Mustek
+Narodni trida
+Karlovo namesti
+Total: 32 minutes in the way
+/exit
+```
