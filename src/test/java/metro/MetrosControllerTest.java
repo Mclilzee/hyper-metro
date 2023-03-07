@@ -42,7 +42,7 @@ class MetrosControllerTest {
     @ParameterizedTest
     @ValueSource(strings = {"/output something else",
             "/remove three value present",
-            "/append \"missing qute",
+            "/append \"missing quote",
             "/output \"first value\" second",
             "/append three values present",
             "/add-head ends with\"",
@@ -73,7 +73,7 @@ class MetrosControllerTest {
 
         // Use specific printer and add lineSeparator for printing
         MetroPrinter printer = new LineConnectionsPrinter();
-        String expected = printer.getMetroLinePrintString(germany) + System.lineSeparator();
+        String expected = System.lineSeparator() + printer.getMetroLinePrintString(germany) + System.lineSeparator();
 
         assertEquals(expected, outputStream.toString());
     }
@@ -91,7 +91,7 @@ class MetrosControllerTest {
 
         // Use specific printer and add lineSeparator for printing
         MetroPrinter printer = new LineConnectionsPrinter();
-        String expected = printer.getMetroLinePrintString(hammerCity) + System.lineSeparator();
+        String expected = System.lineSeparator() + printer.getMetroLinePrintString(hammerCity) + System.lineSeparator();
 
         assertEquals(expected, outputStream.toString());
     }
@@ -253,7 +253,7 @@ class MetrosControllerTest {
 
         controller.start();
 
-        String expected = """
+        String expected = System.lineSeparator() + """
                           Berlin
                           Bremen
                           Frankfurt
@@ -287,7 +287,7 @@ class MetrosControllerTest {
 
         controller.start();
 
-        String expected = """
+        String expected = System.lineSeparator() + """
                           Berlin Tower
                           Bremen
                           Frankfurt
@@ -321,7 +321,7 @@ class MetrosControllerTest {
 
         controller.start();
 
-        String expected = """
+        String expected = System.lineSeparator() + """
                           Berlin
                           Bremen
                           Frankfurt
@@ -357,7 +357,7 @@ class MetrosControllerTest {
 
         controller.start();
 
-        String expected = """
+        String expected = System.lineSeparator() + """
                           Berlin Tower
                           Bremen
                           Frankfurt

@@ -100,6 +100,7 @@ public class MetrosController {
         String metroLineName = removeQuotes(matcher.group(10));
         try {
             String information = metroService.getMetroLineInformation(metroLineName);
+            System.out.println();
             System.out.println(information);
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
@@ -133,6 +134,7 @@ public class MetrosController {
     private void printShortestRoute(String metroLineName, String stationName, String toMetroLine, String toStation) {
         try {
             String shortestRoute = metroService.findShortestPath(metroLineName, stationName, toMetroLine, toStation);
+            System.out.println();
             System.out.println(shortestRoute);
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
@@ -143,6 +145,7 @@ public class MetrosController {
     private void printFastestRoute(String metroLineName, String stationName, String toMetroLine, String toStation) {
         try {
             String fastestRoute = metroService.findFastestPath(metroLineName, stationName, toMetroLine, toStation);
+            System.out.println();
             System.out.println(fastestRoute);
         } catch (IllegalArgumentException ex) {
             System.out.println(ex.getMessage());
