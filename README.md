@@ -5,7 +5,7 @@ Hyper metro is a project I enjoyed working on a lot, however challenging in some
 It represents a connection of metro systems, and make use of searching algorithms where you can search for fastest, shortest routes to take from one station to another.
 
 Start by building the project with `gradle build`
-Launch the program with `java -jar ./build/libs/hyper-metro "path to metro lines json file"`
+Launch the program with `java -jar ./build/libs/hyper-metro-1.0.jar "path to metro lines json file"`
 
 After launching the program you will be prompt for command, use one of the following commands
 Note line and station names can have spaces in them, if so then it need to be put inside double quotes such as "Linka A".
