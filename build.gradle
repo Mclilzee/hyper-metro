@@ -20,6 +20,8 @@ test {
     useJUnitPlatform()
 }
 
-application {
-    mainClass = 'metro.Main'
+jar {
+    manifest {
+        attributes("Main-Class": "metro.Main")
+    }
 }
