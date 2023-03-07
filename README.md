@@ -1,5 +1,8 @@
 # Hyper Metro System
 
+- Require Java version 17+ <a href="https://www.oracle.com/de/java/technologies/downloads/">Java download Link</a>
+- Requires Gradle build tools <a href="https://gradle.org/install/">Gradle Installation Walkthrough</a>
+
 Hyper metro is a project I enjoyed working on a lot, however challenging in some area.
 
 It represents a connection of metro systems, and make use of searching algorithms where you can search for fastest, shortest routes to take from one station to another.
@@ -20,10 +23,9 @@ The unit of measurement is not defined, it could be anything from hours, to minu
 
 Two json of metro line connections is provided, one that is shorter for testing purposes while the other is a real metro station connections based of (Prague Metro).
 The format of the json is as follow
-```json
+```json lines
 {
-  // metro line name
-  "Metro-Railway": {
+  "Metro Line Name": {
     // metro station position number, determens order of stations
     "3": {
       // station name
