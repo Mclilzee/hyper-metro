@@ -16,7 +16,7 @@ Navigate to `./build/distributions` Unzip the tar or zip files and navigate into
 After launching the program you will be prompt for command, use one of the following commands
 Note line and station names can have spaces in them, if so then it need to be put inside double quotes such as "Linka A".
 - `/output "Metro line name"` will print out all metro stations connections, including other metro lines connections for the current chosen metro line.
-`/append "Metro line name" "Metro station name" "Duration from last station"` will append a station to the end of the metro line, plus how long it takes to arrived there. Duration is in minutes, and is used to calculate the fastest route.
+- `/append "Metro line name" "Metro station name" "Duration from last station"` will append a station to the end of the metro line, plus how long it takes to arrived there. Duration is in minutes, and is used to calculate the fastest route.
 - `/add-head "Metro line name" "Metro station name" "Duration from depot"` Will add station to the beginning after depot station directly, duration in minutes.
 - `/remove "Metro line name" "Metro station name"` Will remove a station from the metro line.
 - `/connect "First Metro line name" "First metro line station" "Second metro line name" "Second metro line station"` Will connect two metro lines, using two metro stations.
