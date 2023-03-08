@@ -5,6 +5,7 @@ import metro.service.MetroService;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class MetrosController {
 
@@ -29,6 +30,9 @@ public class MetrosController {
             String input = scanner.nextLine();
             if (input.equalsIgnoreCase("/exit")) {
                 return;
+            } else if (input.equalsIgnoreCase("/metro-lines")) {
+                printMetroLines();
+                continue;
             }
 
             processInput(pattern.matcher(input));
@@ -54,6 +58,13 @@ public class MetrosController {
         } else {
             parseRouteInput(matcher);
         }
+    }
+
+    private void printMetroLines() {
+        System.out.println();
+        metroService.getValues().stream()
+                .map(MetroLine::getName)
+                .forEach(System.out::println);
     }
 
     private void addStation(Matcher matcher) {
