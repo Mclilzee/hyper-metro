@@ -33,7 +33,7 @@ Note line and station names can have spaces in them, if so then it need to be pu
 
 Two json of metro line connections is provided, one that is shorter for testing purposes while the other is a real metro station connections based of (Prague Metro).
 
-Metro json format example :
+# Metro Json Format
 ```json lines
 {
   "Metro-Railway": {
@@ -104,7 +104,7 @@ depot
 $ /exit
 ```
 
-# Finding Routes Examples
+# Finding Shortest Routes Examples
 ```
 $ hyper-metro prague.json
 Loading metro: prague.json
@@ -128,7 +128,9 @@ Luziny
 Luka
 Stodulky
 Zlicin
-
+```
+# Finding Fastest Route
+```
 $ /fastest-route "Linka A" Dejvicka "Linka B" "Karlovo namesti"
 
 Dejvicka
