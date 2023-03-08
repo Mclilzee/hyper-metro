@@ -1,15 +1,21 @@
 # Hyper Metro System
 
 - Require Java version 17+ <a href="https://www.oracle.com/de/java/technologies/downloads/">Java download Link</a>
-- Requires Gradle build tools <a href="https://gradle.org/install/">Gradle Installation Walkthrough</a>
 
 Hyper metro is a project I enjoyed working on a lot, however challenging in some area.
 
 It represents a connection of metro systems, and make use of searching algorithms where you can search for fastest, shortest routes to take from one station to another.
 
-Start by building the project with `gradle build`
+# Build project from scratch - Requires Gradle
+- Requires Gradle build tools <a href="https://gradle.org/install/">Gradle Installation Walkthrough</a> If you want to build it yourself.
+- Start by building the project with `gradle build`
+- Navigate to `./build/distributions` Unzip the tar or zip files and navigate into `hyper-metro-1.0/bin`
 
-Navigate to `./build/distributions` Unzip the tar or zip files and navigate into `hyper-metro-1.0/bin`
+# Pre-build projects - Does not require Gradle
+- <a href="./release/hyper-metro-1.0.zip">Unix</a>
+- <a href="./release/hyper-metro-1.0 - win.zip">Windows</a>
+
+# Launching Project
 - If you are using Windows run `$ hyper-metro-1.0.bat "path to metro json"`
 - If you are using Unix based system run `$ hyper-metro-1.0 "path to metro json"`
 
