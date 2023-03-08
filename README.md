@@ -12,8 +12,8 @@ It represents a connection of metro systems, and make use of searching algorithm
 - Navigate to `./build/distributions` Unzip the tar or zip files and navigate into `hyper-metro-1.0/bin`
 
 # Pre-build projects - Does not require Gradle
-- <a href="https://github.com/Mclilzee/hyper-metro/raw/main/release/hyper-metro-1.0.zip">Unix</a>
-- <a href="https://github.com/Mclilzee/hyper-metro/raw/main/release/hyper-metro-1.0%20-%20win.zip">Windows</a>
+- <a href="https://github.com/Mclilzee/hyper-metro/raw/main/release/hyper-metro-1.0.zip">Unix Download</a>
+- <a href="https://github.com/Mclilzee/hyper-metro/raw/main/release/hyper-metro-1.0%20-%20win.zip">Windows Download</a>
 
 # Launching Project
 - If you are using Windows run `$ hyper-metro-1.0.bat "path to metro json"`
