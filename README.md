@@ -82,7 +82,7 @@ Metro json format example :
   }
 }
 ```
-Examples :
+# Example Usage
 ```
 $ hyper-metro metros.json
 Loading metro: metros.json
@@ -104,7 +104,7 @@ depot
 $ /exit
 ```
 
-Finding Routes :
+# Finding Routes Examples
 ```
 $ hyper-metro prague.json
 Loading metro: prague.json
