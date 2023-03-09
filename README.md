@@ -9,10 +9,9 @@ It represents a connection of metro systems, and make use of searching algorithm
 
 # Build - Run Project
 - Clone repository and navigate into repo's directory
-- Run project with `$ ./gradlew run --args="path/to/file" --console=plain`
+- Run project with `$ ./gradlew run --args="path/to/file"`
 - `--arg=""` takes arguments saparated by spaces, if your path file include spaces in the name, use single quotes.
   Example: `--args="'File with space in name' other/argument`
-- `--console=plain` option is not necessary, but it provides cleaner terminal view without Gradle execution build timer.
 
 
 After launching the program you will be prompt for command, use one of the following commands
@@ -32,11 +31,11 @@ Two json of metro line connections is provided, one that is shorter for testing 
 - `prague.json`
 
 # Metro Json Format
-```json lines
+```json
 {
   "Metro-Railway": {
     "3": {
-      "name": "Station A",
+      "name": "Baker street",
       "transfer": [
         {
           "line": "Hammersmith-and-City",
@@ -72,7 +71,7 @@ Two json of metro line connections is provided, one that is shorter for testing 
       "transfer": [
         {
           "line": "Metro-Railway",
-          "station": "Station A"
+          "station": "Baker street"
         }
       ],
       "time": 3
@@ -80,7 +79,6 @@ Two json of metro line connections is provided, one that is shorter for testing 
   }
 }
 ```
-
 # Example Usage
 ```
 $ ./gradlew run --args="metros.json" --console=plain
