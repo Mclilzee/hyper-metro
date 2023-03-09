@@ -10,7 +10,7 @@ It represents a connection of metro systems, and make use of searching algorithm
 # Build - Run Project
 - Clone repository and navigate into repo's directory
 - Run project with `$ ./gradlew run --args="path/to/file"`
-- `--arg=""` takes arguments saparated by spaces, if your path file include spaces in the name, use single quotes.
+- `--args=""` takes arguments separated by spaces, if your path file include spaces in the name, use single quotes.
   Example: `--args="'File with space in name' other/argument`
 
 
