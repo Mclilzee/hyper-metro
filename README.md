@@ -28,6 +28,8 @@ Note line and station names can have spaces in them, if so then it need to be pu
 - `/exit` to quit the application
 
 Two json of metro line connections is provided, one that is shorter for testing purposes while the other is a real metro station connections based of (Prague Metro).
+- `metros.json`
+- `prague.json`
 
 # Metro Json Format
 ```json lines
@@ -78,6 +80,7 @@ Two json of metro line connections is provided, one that is shorter for testing 
   }
 }
 ```
+
 # Example Usage
 ```
 $ ./gradlew run --args="metros.json" --console=plain
