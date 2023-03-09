@@ -12,7 +12,7 @@ It represents a connection of metro systems, and make use of searching algorithm
 - Run project with `$ ./gradlew run --args="path/to/file" --console=plain`
 - `--arg=""` takes arguments saparated by spaces, if your path file include spaces in the name, use single quotes.
   Example: `--args="'File with space in name' other/argument`
-- `--console=plain` option is not necessary, but it provides more clean terminal view without Gradle execution build timer.
+- `--console=plain` option is not necessary, but it provides cleaner terminal view without Gradle execution build timer.
 
 
 After launching the program you will be prompt for command, use one of the following commands
