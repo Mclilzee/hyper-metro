@@ -26,7 +26,7 @@ Note line and station names can have spaces in them, if so then it need to be pu
 - `/fastest-route "First Metro line name" "First metro line station" "Second metro line name" "Second metro line station"` The second searching algorithm to find the fastest route using A* searching algorithm, taking the duration between each stations into consideration.
 - `/exit` to quit the application
 
-Two json of metro line connections is provided, one that is shorter for testing purposes while the other is a real metro station connections based of (Prague Metro).
+Two json of metro line connections is provided, one that is shorter for testing purposes while the other is a real metro station connections based of ( <a href="https://en.wikipedia.org/wiki/Prague_Metro">Prague Metro</a> ).
 - `metros.json`
 - `prague.json`
 
