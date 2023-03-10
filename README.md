@@ -80,7 +80,7 @@ Two json of metro line connections is provided, one that is shorter for testing 
 }
 ```
 # Example Usage
-```
+```console
 $ ./gradlew run --args="metros.json" --console=plain
 Loading metro: metros.json
 Metro Ready, Check README.md for commands
@@ -102,7 +102,7 @@ $ /exit
 ```
 
 # Finding Shortest Routes Examples
-```
+```console
 $ ./gradlew run --args="prague.json" --console=plain
 Loading metro: prague.json
 Metro Ready, Check README.md for commands
@@ -127,7 +127,7 @@ Stodulky
 Zlicin
 ```
 # Finding Fastest Route
-```
+```console
 $ /fastest-route "Linka A" Dejvicka "Linka B" "Karlovo namesti"
 
 Dejvicka
